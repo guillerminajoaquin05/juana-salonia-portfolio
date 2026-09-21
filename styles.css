@@ -12,6 +12,7 @@
   --color-eggplant:   #66253D;
   --color-pink:       #F6C1C1;
   --color-terracotta: #ED5C30;
+  --color-accent-text: #C2410F;   /* darker terracotta for TEXT (4.7:1 on cream; the bright one is 3.1:1) */
   --color-lime:       #C9C65F;
   --color-cyan:       #B8D8F0;
 
@@ -27,8 +28,6 @@
       to the zackmillsaps.com / iarasnei.com references than a single
       static italic serif. */
   --font-serif: 'Fraunces', 'Georgia', serif;
-  --font-script: 'Permanent Marker', cursive;
-  --font-hand: 'Caveat', cursive;
   --font-sans: 'Inter', -apple-system, sans-serif;
   --font-mono: 'Space Mono', 'Courier New', monospace;
 
@@ -62,7 +61,6 @@ button{ font: inherit; background: none; border: none; cursor: pointer; color: i
 h1,h2,h3,h4{ margin: 0; font-weight: 600; }
 p{ margin: 0; }
 .container{ max-width: var(--container); margin-inline: auto; padding-inline: var(--side-pad); }
-.visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 
 /* ---------- brand star stickers (real sprite sheet) ---------- */
 /* Elementos gráficos/estrellita.jpg is a fixed 2x3 grid (540px cells) of
@@ -78,18 +76,13 @@ p{ margin: 0; }
   pointer-events: none;
 }
 /* legacy data-cell / sticker variants all render as the same plain yellow star */
-.star--blend, .star--sticker{ filter: none; box-shadow: none; border-radius: 0; }
-.star--spin{ animation: star-rotate 24s linear infinite; }
+.star--sticker{ filter: none; box-shadow: none; border-radius: 0; }
+
 .star--bob{ animation: star-bob 4.5s ease-in-out infinite; }
-@keyframes star-rotate{ to{ transform: rotate(360deg); } }
+
 @keyframes star-bob{ 0%,100%{ transform: translateY(0) rotate(-5deg);} 50%{ transform: translateY(-9px) rotate(5deg);} }
 
 /* hand-drawn line doodle (flor.jpg) — multiply blend hides its near-white backing */
-.line-doodle{
-  mix-blend-mode: multiply;
-  opacity: .8;
-  pointer-events: none;
-}
 
 /* washi-tape strip, pure CSS */
 .tape{
@@ -131,7 +124,7 @@ p{ margin: 0; }
   background: currentColor; transform: scaleX(0); transform-origin: right;
   transition: transform .35s cubic-bezier(.65,0,.35,1);
 }
-.header-nav-inline a:hover, .header-nav-inline a[aria-current="page"]{ color: var(--color-terracotta); }
+.header-nav-inline a:hover, .header-nav-inline a[aria-current="page"]{ color: var(--color-accent-text); }
 .header-nav-inline a:hover::after, .header-nav-inline a[aria-current="page"]::after{ transform: scaleX(1); transform-origin: left; }
 
 .header-right{ display: flex; align-items: center; gap: 1.5rem; }
@@ -163,8 +156,8 @@ p{ margin: 0; }
 .site-nav.is-open{ transform: translateY(0); }
 .site-nav ul{ display:flex; flex-direction: column; gap: 1rem; text-align: center; }
 .site-nav a{ font-family: var(--font-serif); font-weight: 600; font-size: clamp(1.6rem, 5vw, 2.6rem); }
-.site-nav a[aria-current="page"]{ color: var(--color-terracotta); }
-.site-nav a:hover{ color: var(--color-terracotta); }
+.site-nav a[aria-current="page"]{ color: var(--color-accent-text); }
+.site-nav a:hover{ color: var(--color-accent-text); }
 
 /* ---------- thick framing bar (Anna Koyn moodboard reference) ---------- */
 /* a bold structural bar instead of a hairline, used to frame a key
@@ -174,9 +167,6 @@ p{ margin: 0; }
 /* ---------- confetti dots ---------- */
 /* small flat-color circle stickers — a lighter-weight alternative to the
    star doodle for scattering across photo collages */
-.confetti-dot{ position: absolute; border-radius: 50%; pointer-events: none; }
-.confetti-dot--sm{ width: 14px; height: 14px; }
-.confetti-dot--md{ width: 22px; height: 22px; }
 
 /* ---------- dividers ---------- */
 .divider{ position: relative; border-top: var(--rule); margin-inline: var(--side-pad); height: 2px; }
@@ -216,10 +206,8 @@ p{ margin: 0; }
   background: currentColor; transform: scaleX(0); transform-origin: right;
   transition: transform .4s cubic-bezier(.65,0,.35,1);
 }
-.link-arrow:hover{ color: var(--color-terracotta); }
+.link-arrow:hover{ color: var(--color-accent-text); }
 .link-arrow:hover::after{ transform: scaleX(1); transform-origin: left; }
-
-.script-accent{ font-family: var(--font-script); color: var(--color-terracotta); font-size: 1.3rem; transform: rotate(-4deg); display: inline-block; line-height: 1; }
 
 [data-reveal]{ opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
 [data-reveal].in-view{ opacity: 1; transform: translateY(0); }
@@ -231,22 +219,15 @@ p{ margin: 0; }
   border-radius: 2px; transition: background .25s ease, color .25s ease;
 }
 .btn-primary{ background: var(--color-eggplant); color: var(--color-background); }
-.btn-primary:hover{ background: var(--color-terracotta); border-color: var(--color-terracotta); }
-.btn-outline:hover{ background: var(--color-eggplant); color: var(--color-background); }
+.btn-primary:hover{ background: var(--color-accent-text); border-color: var(--color-accent-text); }
 
 /* ---------- full-bleed color blocks (iarasnei.com) ---------- */
 /* A mini-section can opt into an edge-to-edge flat color background
    instead of a bordered card — bolder punctuation between the quiet
    cream sections. */
 .block-lime{ background: var(--color-lime); }
-.block-pink{ background: var(--color-pink); }
+
 .block-cyan{ background: var(--color-cyan); }
-.block-eggplant{ background: var(--color-eggplant); color: var(--color-background); }
-.block-eggplant .section-number, .block-eggplant .section-title, .block-eggplant .eyebrow{
-  color: color-mix(in srgb, var(--color-background) 75%, transparent);
-}
-.block-eggplant .service-text{ color: color-mix(in srgb, var(--color-background) 82%, transparent); }
-.block-eggplant .service-row{ border-color: color-mix(in srgb, var(--color-background) 35%, transparent); }
 
 /* ==========================================================
    HERO — full-bleed photo with the wordmark overlaid directly on the
@@ -265,7 +246,7 @@ p{ margin: 0; }
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(180deg, rgba(102,37,61,.68) 0%, rgba(102,37,61,.52) 38%, rgba(102,37,61,.78) 100%);
 }
-.hero-star-accent{ position: absolute; z-index: 2; --size: 58px; top: 6%; right: 6%; }
+
 .hero-overlay{
   position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 1.1rem;
   max-width: 720px; color: var(--color-background);
@@ -288,7 +269,7 @@ p{ margin: 0; }
 }
 .page-lede{ max-width: 56ch; font-size: 1.05rem; color: var(--color-text-muted); margin-top: 1.25rem; }
 .back-link{ font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
-.back-link:hover{ opacity: 1; color: var(--color-terracotta); }
+.back-link:hover{ opacity: 1; color: var(--color-accent-text); }
 
 /* ==========================================================
    ABOUT — minimalist: the client's own ready-made polaroid cutout
@@ -306,7 +287,7 @@ p{ margin: 0; }
 .about-simple-photo img{ width: 100%; height: auto; display: block; }
 .about-simple-copy{ display: flex; flex-direction: column; gap: 1.5rem; max-width: 60ch; }
 .about-simple-copy p{ font-size: 1.05rem; line-height: 1.7; }
-.about-simple-copy .highlight{ color: var(--color-terracotta); }
+.about-simple-copy .highlight{ color: var(--color-accent-text); }
 
 /* small photo carousel — About page only, same minimal polaroid frame
    but cycling through a few real photos instead of one fixed shot */
@@ -339,97 +320,30 @@ p{ margin: 0; }
    in the home page's About preview (index.html). The full About page
    uses the notebook spread above instead.
    ========================================================== */
-.about-grid{ display: grid; grid-template-columns: 1fr; gap: 3.5rem; align-items: center; }
-.about-collage{ position: relative; justify-self: center; width: min(86vw, 320px); aspect-ratio: 4/5; margin-inline: auto; }
-.about-backing{ position: absolute; inset: -10px -18px -18px 12px; background: var(--color-pink); transform: rotate(-3deg); z-index: 0; }
-.about-collage .script-accent{ position: absolute; top: -20px; left: -10px; z-index: 6; }
-.about-stack-card{
-  position: absolute; top: 50%; left: 50%; width: 76%;
-  background: #fff; padding: .5rem .5rem 2rem; border: 1px solid var(--color-eggplant);
-  box-shadow: 4px 6px 14px rgba(102,37,61,.18);
-}
-.about-stack-card img{ width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
-.about-stack-card--0{ transform: translate(-50%,-50%) translate(0,-3%) rotate(2deg) scale(1); z-index: 4; }
-.about-stack-card--1{ transform: translate(-50%,-50%) translate(10%,2%) rotate(9deg) scale(.94); z-index: 3; }
-.about-stack-card--2{ transform: translate(-50%,-50%) translate(-9%,6%) rotate(-10deg) scale(.9); z-index: 2; }
-.about-stack-card--3{ transform: translate(-50%,-50%) translate(4%,9%) rotate(6deg) scale(.87); z-index: 1; }
-.about-nametag{
-  position: absolute; z-index: 7; width: 112px;
-  top: -12%; right: -9%; transform: rotate(9deg);
-  filter: drop-shadow(3px 5px 8px rgba(102,37,61,.28));
-  pointer-events: none;
-}
-.about-tape-2{ top: 34%; left: -13%; transform: rotate(72deg); z-index: 2; }
-.about-flower{ position: absolute; z-index: 8; width: 64px; bottom: 3%; left: 3%; opacity: .9; transform: rotate(-8deg); mix-blend-mode: multiply; pointer-events: none; }
-.about-collage .about-paperclip{
-  position: absolute; z-index: 9; width: 46px; height: 46px;
-  top: 1%; left: 50%; transform: translateX(-50%) rotate(-10deg);
-  color: var(--color-eggplant); pointer-events: none;
-  filter: drop-shadow(1.5px 2.5px 2px rgba(102,37,61,.35));
-}
-@media (min-width: 720px){
-  .about-grid{ grid-template-columns: 320px 1fr; gap: 5.5rem; }
-}
 
-.about-copy{ display: flex; flex-direction: column; gap: 1.5rem; max-width: 52ch; }
-.about-copy p{ font-size: 1.05rem; }
+@media (min-width: 720px){
+  
+}
 
 /* ==========================================================
    ORIGINAL SCRAPBOOK ACCENTS — built in-house (not the stock/Pinterest
    stickers from the moodboard reference) in Juana's own palette: a
    ribbon banner tag + a circular "stamp" badge for photo corners.
    ========================================================== */
-.ribbon-banner{
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: .5rem 1.7rem; background: var(--color-terracotta); color: var(--color-background);
-  font-family: var(--font-mono); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  clip-path: polygon(0% 50%, 6% 0%, 100% 0%, 94% 50%, 100% 100%, 6% 100%);
-  box-shadow: 2px 3px 8px rgba(102,37,61,.25);
-  white-space: nowrap;
-}
-.stamp-badge{ width: 108px; height: 108px; color: var(--color-eggplant); pointer-events: none; animation: star-rotate 50s linear infinite; }
-.stamp-badge circle{ fill: none; }
+
 /* solid variant — filled disc for sitting on top of a photo, cream text on eggplant */
-.stamp-badge--solid{ color: var(--color-background); }
-.stamp-badge--solid circle:first-of-type{ fill: var(--color-eggplant); }
 
 /* typed "character file" card, per the folder-tab moodboard reference */
-.dossier{ border: 1px solid var(--color-eggplant); padding: 1.35rem 1.5rem; margin-top: .25rem; }
-.dossier-tab{
-  font-family: var(--font-mono); font-size: .66rem; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--color-text-muted); display: flex; justify-content: space-between; gap: 1rem;
-  margin-bottom: .9rem; padding-bottom: .75rem; border-bottom: 1px dashed color-mix(in srgb, var(--color-eggplant) 35%, transparent);
-}
-.meta-list{ display: flex; flex-direction: column; gap: .55rem; font-family: var(--font-mono); font-size: .82rem; }
-.meta-list li{ display: flex; gap: .6rem; }
-.meta-list li span:first-child{ color: var(--color-text-muted); min-width: 9ch; }
 
 /* ==========================================================
    SELECTED WORK — grid + b/w-to-color hover
    ========================================================== */
-.work-grid{ display: grid; grid-template-columns: 1fr; gap: clamp(2.5rem, 6vw, 5rem); margin-bottom: 2.5rem; }
-.work-item{ display: block; cursor: pointer; }
-.work-image{ aspect-ratio: 4/3; overflow: hidden; background: var(--color-pink); }
-.work-image img{ width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: transform .6s ease, filter .6s ease; }
-.work-item:not(.work-item--color) .work-image img{ filter: grayscale(1); }
-.work-item:hover .work-image img{ filter: grayscale(0); transform: scale(1.03); }
+
 /* plain stacked caption, no rule/italic — zackmillsaps.com reads quieter than a boxed label */
-.work-caption{ display: flex; flex-direction: column; gap: .2rem; margin-top: 1.1rem; }
-.work-title{ font-size: .98rem; font-weight: 600; }
-.work-meta{ font-size: .82rem; color: var(--color-text-muted); }
 
 /* Landing preview only — small, playful square tiles instead of the big
    rectangular cards used on the full archive (work.html), per the
    "creative projects" 6-tile moodboard reference. */
-.work-tile-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1.5rem; margin-bottom: 2.5rem; }
-.work-tile{ display: block; cursor: pointer; text-align: center; }
-.work-tile-image{ position: relative; aspect-ratio: 1/1; overflow: hidden; border-radius: 10px; background: var(--color-pink); }
-.work-tile-image img{ width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: transform .5s ease, filter .5s ease; }
-.work-tile:hover .work-tile-image img{ filter: grayscale(0); transform: scale(1.06); }
-.work-tile-image .star{ position: absolute; top: -10px; right: -10px; --size: 34px; z-index: 2; }
-.work-tile-caption{ margin-top: .65rem; }
-.work-tile-title{ display: block; font-size: .88rem; font-weight: 600; }
-.work-tile-meta{ display: block; font-size: .74rem; color: var(--color-text-muted); margin-top: .1rem; }
 
 /* Landing preview — auto-scrolling ribbon/marquee, per the client's
    reference: the track holds the project set twice and glides on its
@@ -458,8 +372,8 @@ p{ margin: 0; }
 
 .filter-tags{ display: flex; flex-wrap: wrap; gap: .6rem 1rem; margin-bottom: 3rem; }
 .filter-tag{ font-size: .78rem; letter-spacing: .07em; text-transform: uppercase; padding-block: .35rem; border-bottom: 1.5px solid transparent; }
-.filter-tag[aria-pressed="true"]{ border-color: var(--color-terracotta); color: var(--color-terracotta); }
-.filter-tag:hover{ color: var(--color-terracotta); }
+.filter-tag[aria-pressed="true"]{ border-color: var(--color-terracotta); color: var(--color-accent-text); }
+.filter-tag:hover{ color: var(--color-accent-text); }
 
 /* Work archive — trial list layout: numbered text rows that reveal the
    project photo on hover (wipe-in from the right), per the Harriet
@@ -474,7 +388,7 @@ p{ margin: 0; }
 .work-list-index{ font-family: var(--font-mono); font-size: .8rem; color: var(--color-text-muted); }
 .work-list-title{ font-family: var(--font-serif); font-size: clamp(1.3rem, 3.5vw, 2rem); font-weight: 600; transition: color .3s ease; }
 .work-list-meta{ margin-left: auto; font-size: .82rem; color: var(--color-text-muted); }
-.work-list-row:hover .work-list-title{ color: var(--color-terracotta); }
+.work-list-row:hover .work-list-title{ color: var(--color-accent-text); }
 .work-list-media{
   position: absolute; top: 0; right: 0; bottom: 0; width: 0; overflow: hidden; z-index: 0;
   transition: width .5s cubic-bezier(.65,0,.35,1);
@@ -507,7 +421,7 @@ p{ margin: 0; }
 .project-meta div span:first-child{ display:block; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: .3rem; }
 .project-meta div span:last-child{ font-size: 1rem; }
 .project-copy{ max-width: 62ch; display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 3rem; }
-.project-copy h3{ font-family: var(--font-serif); font-style: italic; font-size: 1.3rem; }
+.project-copy h2{ font-family: var(--font-serif); font-style: italic; font-size: 1.3rem; }
 .gallery-grid{ display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
 .gallery-grid img{ aspect-ratio: 1/1; object-fit: cover; filter: grayscale(1); }
 
@@ -522,7 +436,7 @@ p{ margin: 0; }
 .service-text{ color: var(--color-text-muted); font-size: .95rem; max-width: 60ch; }
 .service-detail{ margin-top: 1rem; display: flex; flex-direction: column; gap: .4rem; }
 .service-detail li{ font-size: .92rem; padding-left: 1.1rem; position: relative; }
-.service-detail li::before{ content: "—"; position: absolute; left: 0; color: var(--color-terracotta); }
+.service-detail li::before{ content: "—"; position: absolute; left: 0; color: var(--color-accent-text); }
 
 /* image wipes in from the right edge on hover — per the Harriet (Webflow)
    reference's list-row interaction */
@@ -545,7 +459,6 @@ p{ margin: 0; }
 .lately-grid{ display: grid; grid-template-columns: 1fr; }
 .lately-item{ padding-block: 1.25rem; border-top: 1px solid color-mix(in srgb, var(--color-eggplant) 25%, transparent); display: flex; gap: 1.25rem; align-items: baseline; }
 .lately-item:last-child{ border-bottom: 1px solid color-mix(in srgb, var(--color-eggplant) 25%, transparent); }
-.lately-date{ font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-terracotta); font-weight: 600; white-space: nowrap; }
 
 /* ==========================================================
    CONTACT — copy-email / LinkedIn + testimonials
@@ -560,8 +473,8 @@ p{ margin: 0; }
 .contact-method:last-child{ border-bottom: var(--rule); }
 .contact-method-label{ font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--color-text-muted); }
 .contact-method-value{ font-family: var(--font-serif); font-weight: 600; font-size: clamp(1.1rem, 5vw, 1.7rem); overflow-wrap: break-word; word-break: break-word; }
-.contact-method-action{ font-size: .85rem; color: var(--color-terracotta); }
-.contact-method:hover .contact-method-value{ color: var(--color-terracotta); }
+.contact-method-action{ font-size: .85rem; color: var(--color-accent-text); }
+.contact-method:hover .contact-method-value{ color: var(--color-accent-text); }
 .testimonials{ display: grid; grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2rem; }
 .testimonial{ padding-top: 1.75rem; border-top: var(--rule); }
 .testimonial p{ font-family: var(--font-serif); font-style: italic; font-size: 1.15rem; line-height: 1.5; margin-bottom: .85rem; }
@@ -576,7 +489,7 @@ p{ margin: 0; }
 .footer-claim{ font-family: var(--font-serif); font-style: italic; font-size: clamp(1.4rem, 3.4vw, 2.2rem); max-width: 20ch; }
 .footer-contact{ display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
 .footer-contact .btn-primary{ background: var(--color-background); color: var(--color-eggplant); border-color: var(--color-background); }
-.footer-contact .btn-primary:hover{ background: var(--color-terracotta); color: var(--color-background); border-color: var(--color-terracotta); }
+.footer-contact .btn-primary:hover{ background: var(--color-accent-text); color: var(--color-background); border-color: var(--color-accent-text); }
 .collab-row{ display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; padding-block: 2rem; border-block: 1px solid color-mix(in srgb, var(--color-background) 35%, transparent); margin-bottom: 2rem; }
 .collab-row span{ font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: color-mix(in srgb, var(--color-background) 75%, transparent); }
 /* real logos sit on a small white card so every source file (color, black,
@@ -588,8 +501,8 @@ p{ margin: 0; }
 
 /* ---------- responsive ---------- */
 @media (min-width: 720px){
-  .work-grid{ grid-template-columns: 1fr 1fr; }
-  .work-tile-grid{ grid-template-columns: repeat(4, 1fr); }
+  
+  
   .gallery-grid{ grid-template-columns: repeat(3,1fr); }
   .testimonials{ grid-template-columns: repeat(3, 1fr); }
 }
@@ -603,24 +516,22 @@ p{ margin: 0; }
 .credential-degree{ font-family: var(--font-serif, "Fraunces", serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.25; color: var(--color-eggplant); }
 .credential-school{ font-family: "Inter", sans-serif; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--color-eggplant); opacity: .8; }
 
-
 /* Lately: single-column editorial list */
 .lately-grid{ max-width: 900px; }
 .lately-item{ padding-block: 1.5rem; align-items: baseline; gap: 1.5rem; transition: padding-left .3s ease; }
 .lately-item:hover{ padding-left: .5rem; }
-.lately-num{ font-family: 'Space Mono', monospace; font-size: .75rem; color: var(--color-terracotta); min-width: 1.75rem; }
+.lately-num{ font-family: 'Space Mono', monospace; font-size: .75rem; color: var(--color-accent-text); min-width: 1.75rem; }
 .lately-item p{ flex: 1; font-family: 'Fraunces', serif; font-size: clamp(1.1rem, 2.2vw, 1.5rem); line-height: 1.3; }
-.lately-status{ font-family: 'Space Mono', monospace; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; opacity: .6; white-space: nowrap; }
+.lately-status{ font-family: 'Space Mono', monospace; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; opacity: .8; white-space: nowrap; }
 @media (max-width: 560px){ .lately-item{ flex-wrap: wrap; } .lately-status{ width: 100%; padding-left: 3.25rem; } }
 
 /* Services: whole row links to filtered Work */
-.service-row-link{ position: absolute; inset: 0; z-index: 3; }
+
 .service-cta{ display: inline-block; margin-top: 1.25rem; font-size: .9rem; font-weight: 600; color: var(--color-eggplant); border-bottom: 1px solid currentColor; }
 .work-list-row[hidden]{ display: none; }
 
-.admin-link{ display:inline-flex; vertical-align:middle; margin-left:.25rem; opacity:.55; color:inherit; transition:opacity .2s; }
+.admin-link{ display:inline-flex; vertical-align:middle; margin-left:.25rem; opacity:.7; color:inherit; transition:opacity .2s; }
 .admin-link:hover, .admin-link:focus-visible{ opacity:1; }
-
 
 /* Touch targets: on phones / touch screens, enlarge the tappable area of the tiny
    controls with an invisible pseudo-element, without changing how they look. */
@@ -646,5 +557,23 @@ p{ margin: 0; }
 .cf-hp{ position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .cf-status{ min-height: 1.4em; font-size: .95rem; }
 .cf-status.is-ok{ color: var(--color-eggplant); font-weight: 600; }
-.cf-status.is-err{ color: var(--color-terracotta); }
+.cf-status.is-err{ color: var(--color-accent-text); }
 
+
+/* ---------- accessibility ---------- */
+/* keyboard focus ring everywhere (mouse clicks don't show it) */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible{ outline: 2px solid var(--color-accent-text); outline-offset: 3px; }
+.site-nav :focus-visible{ outline-color: var(--color-background); }
+
+/* skip link: first tab stop, visible only when focused */
+.skip-link{ position: absolute; left: 1rem; top: -4rem; z-index: 1000; padding: .7rem 1.1rem; background: var(--color-eggplant); color: var(--color-background); font-weight: 600; transition: top .15s ease; }
+.skip-link:focus{ top: .75rem; }
+
+/* closed drawer must not be reachable by keyboard / screen readers */
+.site-nav:not(.is-open){ visibility: hidden; transition: transform .45s cubic-bezier(.65,0,.35,1), visibility 0s .45s; }
+
+/* pause controls for auto-moving content (WCAG 2.2.2) */
+.motion-toggle{ display: inline-flex; align-items: center; gap: .5rem; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; padding: .5rem .2rem; color: var(--color-eggplant); border-bottom: 1px solid transparent; }
+.motion-toggle:hover{ border-bottom-color: var(--color-accent-text); }
+.work-carousel.is-paused .work-carousel-track{ animation-play-state: paused; }
+.about-carousel-controls{ display: flex; justify-content: center; margin-top: .25rem; }

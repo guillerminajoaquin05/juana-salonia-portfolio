@@ -16,6 +16,8 @@
     siteNav.classList.add("is-open");
     siteNav.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+    var first = siteNav.querySelector("a");
+    if (first) setTimeout(function(){ first.focus(); }, 50);
   }
   if (hamburgerBtn && siteNav){
     hamburgerBtn.addEventListener("click", function(){
@@ -26,7 +28,7 @@
       link.addEventListener("click", closeNav);
     });
     document.addEventListener("keydown", function(e){
-      if (e.key === "Escape") closeNav();
+      if (e.key === "Escape" && siteNav.classList.contains("is-open")){ closeNav(); hamburgerBtn.focus(); }
     });
   }
 
@@ -58,23 +60,58 @@
     var acIndex = 0;
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    function mark(i, on){
+      if (!acDots[i]) return;
+      acDots[i].classList.toggle("is-active", on);
+      if (on) acDots[i].setAttribute("aria-current", "true"); else acDots[i].removeAttribute("aria-current");
+    }
     function acShow(i){
       acImages[acIndex].classList.remove("is-active");
-      if (acDots[acIndex]) acDots[acIndex].classList.remove("is-active");
+      mark(acIndex, false);
       acIndex = (i + acImages.length) % acImages.length;
       acImages[acIndex].classList.add("is-active");
-      if (acDots[acIndex]) acDots[acIndex].classList.add("is-active");
+      mark(acIndex, true);
     }
-    function acStart(){ clearInterval(acTimer); if (!reduce && acImages.length > 1) acTimer = setInterval(function(){ acShow(acIndex + 1); }, 4500); }
+    function acStart(){
+      clearInterval(acTimer);
+      if (!reduce && !window.__acPaused && acImages.length > 1) acTimer = setInterval(function(){ acShow(acIndex + 1); }, 4500);
+    }
     function acStop(){ clearInterval(acTimer); }
 
     acDots.forEach(function(dot, i){
       dot.onclick = function(){ acStop(); acShow(i); acStart(); };
     });
+    mark(0, true);
     aboutCarousel.onmouseenter = acStop;
     aboutCarousel.onmouseleave = acStart;
+
+    /* explicit pause / play button (WCAG 2.2.2) */
+    var toggle = document.getElementById("acToggle");
+    if (toggle){
+      var paint = function(){
+        toggle.setAttribute("aria-pressed", String(!!window.__acPaused));
+        toggle.textContent = window.I18N ? window.I18N.t(window.__acPaused ? "Play" : "Pause") : (window.__acPaused ? "Play" : "Pause");
+      };
+      toggle.onclick = function(){ window.__acPaused = !window.__acPaused; paint(); if (window.__acPaused) acStop(); else acStart(); };
+      paint();
+      document.addEventListener("langchange", paint);
+    }
     acStart();
   };
+
+  /* pause / play the work marquee on the home page */
+  var marqueeToggle = document.getElementById("marqueeToggle");
+  var marqueeBox = document.getElementById("workCarousel");
+  if (marqueeToggle && marqueeBox){
+    var paintMarquee = function(){
+      var p = marqueeBox.classList.contains("is-paused");
+      marqueeToggle.setAttribute("aria-pressed", String(p));
+      marqueeToggle.textContent = window.I18N ? window.I18N.t(p ? "Play" : "Pause") : (p ? "Play" : "Pause");
+    };
+    marqueeToggle.addEventListener("click", function(){ marqueeBox.classList.toggle("is-paused"); paintMarquee(); });
+    document.addEventListener("langchange", paintMarquee);
+    paintMarquee();
+  }
   window.initAboutCarousel();
 
   /* ---- work filter tags (Selected Work page); supports ?filter=Podcast ---- */

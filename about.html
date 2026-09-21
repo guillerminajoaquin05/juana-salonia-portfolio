@@ -22,10 +22,11 @@
 <link rel="apple-touch-icon" href="favicon.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..600&family=Permanent+Marker&family=Caveat:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..600&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <header class="site-header">
   <a href="index.html#top" class="logo-mark" aria-label="Juana Salonia — home">
@@ -57,7 +58,7 @@
   </ul>
 </nav>
 
-<main>
+<main id="main-content" tabindex="-1">
 
   <div class="page-header" data-reveal>
     <a href="index.html#top" class="back-link">← Back to home</a>
@@ -84,7 +85,7 @@
           <img src="Fotos/web/balloons-2.jpg" alt="Juana at sunrise" loading="lazy">
           <img src="Fotos/web/balloons-3.jpg" alt="Juana in Cappadocia" loading="lazy">
         </div>
-        <div class="about-carousel-dots" role="tablist" aria-label="Photos of Juana">
+        <div class="about-carousel-dots" role="group" aria-label="Photos of Juana">
           <button type="button" class="about-carousel-dot is-active" aria-label="Photo 1"></button>
           <button type="button" class="about-carousel-dot" aria-label="Photo 2"></button>
           <button type="button" class="about-carousel-dot" aria-label="Photo 3"></button>
@@ -94,6 +95,7 @@
           <button type="button" class="about-carousel-dot" aria-label="Photo 7"></button>
           <button type="button" class="about-carousel-dot" aria-label="Photo 8"></button>
         </div>
+        <div class="about-carousel-controls"><button type="button" class="motion-toggle" id="acToggle" aria-pressed="false">Pause</button></div>
       </div>
       <div class="about-simple-copy">
         <!-- DRAFT copy from the client's brief — replace with her final wording -->
@@ -109,7 +111,7 @@
          can go here, without needing a layout change -->
 
     <div class="hero-ctas" style="margin-top:2rem;">
-      <a href="https://www.linkedin.com/in/juanasalonia/" target="_blank" rel="noopener" class="btn btn-primary">Visit LinkedIn</a>
+      <a href="https://www.linkedin.com/in/juanasalonia/" target="_blank" rel="noopener" class="btn btn-primary">Visit LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>
     </div>
   </section>
 
@@ -137,7 +139,7 @@
       <p class="footer-claim">Have something in mind? Let's talk.</p>
       <div class="footer-contact">
         <a href="contact.html" class="btn btn-primary">Get in touch</a>
-        <a href="https://www.linkedin.com/in/juanasalonia/" target="_blank" rel="noopener" class="link-arrow">LinkedIn →</a>
+        <a href="https://www.linkedin.com/in/juanasalonia/" target="_blank" rel="noopener" class="link-arrow">LinkedIn →<span class="visually-hidden"> (opens in a new tab)</span></a>
       </div>
     </div>
 

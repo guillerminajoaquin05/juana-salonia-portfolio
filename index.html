@@ -25,10 +25,11 @@
 <link rel="apple-touch-icon" href="favicon.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..600&family=Permanent+Marker&family=Caveat:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..600&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <header class="site-header">
   <a href="index.html#top" class="logo-mark" aria-label="Juana Salonia — home">
@@ -62,13 +63,15 @@
 
 <div class="thick-bar" aria-hidden="true"></div>
 
-<main id="top">
+<main id="main-content" tabindex="-1">
+  <span id="top"></span>
 
   <!-- HERO ================================================= -->
   <!-- Full-bleed portrait with the wordmark overlaid, per the client's
        "brand book" cover reference. Per her own brief: no long intro
        paragraph — just name, a one-line tagline, photo, two CTAs max. -->
   <section class="hero" id="hero">
+    <h1 class="visually-hidden">Juana Salonia — Digital Production &amp; Creative Assistance</h1>
     <div class="hero-photo-full" aria-hidden="true">
       <!-- PENDING: swap for the chosen hero/"protagonist" photo -->
       <img src="Fotos/web/hero.jpg" alt="" fetchpriority="high" decoding="async">
@@ -118,7 +121,7 @@
     <!-- landing preview: auto-scrolling ribbon/marquee, per the client's
          reference — the track renders the set twice back to back and
          animates -50% for a seamless loop. Pauses on hover. -->
-    <div class="work-carousel">
+    <div class="work-carousel" id="workCarousel">
       <div class="work-carousel-track">
         <a href="work-detail.html" class="work-carousel-item">
           <div class="work-carousel-image">
@@ -235,7 +238,10 @@
         </a>
       </div>
     </div>
-    <a href="work.html" class="link-arrow">View full archive →</a>
+    <div class="hero-ctas" style="align-items:center;">
+      <a href="work.html" class="link-arrow">View full archive →</a>
+      <button type="button" class="motion-toggle" id="marqueeToggle" aria-pressed="false" aria-controls="workCarousel">Pause</button>
+    </div>
   </section>
 
   <!-- SERVICES PREVIEW ====================================== -->
@@ -304,7 +310,7 @@
       <p class="footer-claim">Have something in mind? Let's talk.</p>
       <div class="footer-contact">
         <a href="contact.html" class="btn btn-primary">Get in touch</a>
-        <a href="https://www.linkedin.com/in/juanasalonia/" target="_blank" rel="noopener" class="link-arrow">LinkedIn →</a>
+        <a href="https://www.linkedin.com/in/juanasalonia/" target="_blank" rel="noopener" class="link-arrow">LinkedIn →<span class="visually-hidden"> (opens in a new tab)</span></a>
       </div>
     </div>
 

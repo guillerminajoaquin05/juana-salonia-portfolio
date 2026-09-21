@@ -127,6 +127,7 @@
         frame.innerHTML = photos.map(function(p, i){
           return '<img src="' + esc(p) + '" alt="Juana Salonia"' + (i === 0 ? ' class="is-active"' : ' loading="lazy"') + ">";
         }).join("");
+        dots.setAttribute("role", "group");
         dots.innerHTML = photos.map(function(p, i){
           return '<button type="button" class="about-carousel-dot' + (i === 0 ? " is-active" : "") + '" aria-label="Photo ' + (i + 1) + '"></button>';
         }).join("");
@@ -166,7 +167,7 @@
       facts[0].lastElementChild.textContent = cats.join(", ");
       facts[1].lastElementChild.textContent = pick(w, "year_place") || "";
       facts[2].lastElementChild.textContent = pick(w, "role") || "";
-      facts[3].lastElementChild.innerHTML = w.drive_url ? '<a href="' + esc(w.drive_url) + '" target="_blank" rel="noopener" class="link-arrow">' + esc(t("Gallery →")) + "</a>" : "";
+      facts[3].lastElementChild.innerHTML = w.drive_url ? '<a href="' + esc(w.drive_url) + '" target="_blank" rel="noopener" class="link-arrow">' + esc(t("Gallery →")) + '<span class="visually-hidden"> ' + esc(t("(opens in a new tab)")) + "</span></a>" : "";
       facts[3].style.display = w.drive_url ? "" : "none";
     }
     var blocks = page.children;

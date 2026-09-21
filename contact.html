@@ -22,10 +22,11 @@
 <link rel="apple-touch-icon" href="favicon.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..600&family=Permanent+Marker&family=Caveat:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..600&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <header class="site-header">
   <a href="index.html#top" class="logo-mark" aria-label="Juana Salonia — home">
@@ -57,7 +58,7 @@
   </ul>
 </nav>
 
-<main>
+<main id="main-content" tabindex="-1">
 
   <div class="page-header" data-reveal>
     <a href="index.html#top" class="back-link">← Back to home</a>
@@ -76,7 +77,7 @@
         <span class="contact-method-label">LinkedIn</span>
         <span class="contact-method-value">Juana Salonia</span>
         <span class="contact-method-action">Visit profile →</span>
-      </a>
+      <span class="visually-hidden"> (opens in a new tab)</span></a>
     </div>
   </section>
 
@@ -150,7 +151,7 @@
       <p class="footer-claim">Have something in mind? Let's talk.</p>
       <div class="footer-contact">
         <a href="mailto:saloniajuana@gmail.com" class="btn btn-primary">Email me</a>
-        <a href="https://www.linkedin.com/in/juanasalonia/" target="_blank" rel="noopener" class="link-arrow">LinkedIn →</a>
+        <a href="https://www.linkedin.com/in/juanasalonia/" target="_blank" rel="noopener" class="link-arrow">LinkedIn →<span class="visually-hidden"> (opens in a new tab)</span></a>
       </div>
     </div>
 

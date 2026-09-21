@@ -58,6 +58,11 @@
     "Email": "Correo", "Click to copy →": "Clic para copiar →", "Copied ✓": "Copiado ✓", "Visit profile →": "Ver perfil →",
     "What people say": "Lo que dicen", "Email me": "Escríbeme",
 
+    /* accessibility */
+    "Skip to content": "Saltar al contenido", "Pause": "Pausar", "Play": "Reproducir",
+    "(opens in a new tab)": "(se abre en una pestaña nueva)",
+    "Juana Salonia — Digital Production & Creative Assistance": "Juana Salonia — Producción digital y asistencia creativa",
+
     /* contact form */
     "Send a message": "Envía un mensaje", "Name": "Nombre", "What are you looking for?": "¿Qué buscas?", "Message": "Mensaje",
     "LinkedIn & content": "LinkedIn y contenido", "A project or event": "Un proyecto o evento", "Something else": "Otra cosa",

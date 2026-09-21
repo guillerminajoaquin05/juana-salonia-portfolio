@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /login.html
+Disallow: /admin.html
+
+Sitemap: https://juanasalonia-portfolio.netlify.app/sitemap.xml

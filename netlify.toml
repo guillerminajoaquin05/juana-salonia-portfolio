@@ -1,0 +1,19 @@
+# Security headers for every page
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Photos and logos: cache for a day (files get replaced in place now and then)
+[[headers]]
+  for = "/Fotos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/Logos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

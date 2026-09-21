@@ -58,6 +58,11 @@
     "Email": "Correo", "Click to copy →": "Clic para copiar →", "Copied ✓": "Copiado ✓", "Visit profile →": "Ver perfil →",
     "What people say": "Lo que dicen", "Email me": "Escríbeme",
 
+    /* 404 */
+    "404": "404", "This page took": "Esta página se perdió", "a wrong turn.": "en el camino.",
+    "The link may be broken, or the page may have moved.": "Puede que el enlace esté roto o que la página se haya movido.",
+    "Back to home →": "Volver al inicio →",
+
     /* fallbacks for the static (pre-database) copy */
     "Podcast Production & Strategy": "Producción y estrategia de podcast",
     "LinkedIn & Content Strategy": "Estrategia de LinkedIn y contenido",
@@ -72,7 +77,8 @@
     "About Me | Juana Salonia": "Sobre mí | Juana Salonia",
     "Services | Juana Salonia": "Servicios | Juana Salonia",
     "Selected Work | Juana Salonia": "Trabajos seleccionados | Juana Salonia",
-    "Contact | Juana Salonia": "Contacto | Juana Salonia"
+    "Contact | Juana Salonia": "Contacto | Juana Salonia",
+    "Page not found | Juana Salonia": "Página no encontrada | Juana Salonia"
   };
 
   function norm(s){ return String(s).replace(/\s+/g, " ").trim(); }

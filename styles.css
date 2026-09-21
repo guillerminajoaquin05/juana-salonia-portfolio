@@ -497,8 +497,8 @@ p{ margin: 0; }
 .collab-row span{ font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: color-mix(in srgb, var(--color-background) 75%, transparent); }
 /* real logos sit on a small white card so every source file (color, black,
    or white-only artwork) stays legible on the dark footer */
-.collab-logo{ background: #fff; padding: .6rem 1.1rem; border-radius: 4px; display: flex; align-items: center; box-shadow: 2px 3px 8px rgba(0,0,0,.18); }
-.collab-logo img{ height: 26px; width: auto; max-width: 130px; object-fit: contain; }
+.collab-logo{ background: #fff; height: 64px; padding: 0 1.1rem; border-radius: 4px; display: flex; align-items: center; justify-content: center; box-shadow: 2px 3px 8px rgba(0,0,0,.18); }
+.collab-logo img{ height: 30px; width: auto; max-width: 130px; object-fit: contain; }
 .footer-bottom{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: .85rem; opacity: .85; }
 .footer-bottom nav ul{ display: flex; flex-wrap: wrap; gap: 1.25rem; }
 
@@ -596,5 +596,5 @@ p{ margin: 0; }
 .lightbox-close:hover, .lightbox-nav:hover{ color: var(--color-lime); }
 .lightbox-count{ position: absolute; bottom: 1rem; left: 0; right: 0; text-align: center; color: var(--color-background); font-size: .8rem; letter-spacing: .12em; }
 
-/* stacked / round logos (Fist Bump, UCA) need more height than the wide ones */
-.collab-logo--stack img{ height: 44px; width: auto; max-width: 64px; }
+/* stacked / round logos (Fist Bump, UCA) get more height inside the same-size tile */
+.collab-logo--stack img{ height: 46px; width: auto; max-width: 68px; }

@@ -577,3 +577,6 @@ p{ margin: 0; }
 .motion-toggle:hover{ border-bottom-color: var(--color-accent-text); }
 .work-carousel.is-paused .work-carousel-track{ animation-play-state: paused; }
 .about-carousel-controls{ display: flex; justify-content: center; margin-top: .25rem; }
+
+/* screen-reader-only text (visible to assistive tech, invisible on screen) */
+.visually-hidden{ position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }

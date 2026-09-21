@@ -621,3 +621,12 @@ p{ margin: 0; }
 .admin-link{ display:inline-flex; vertical-align:middle; margin-left:.25rem; opacity:.55; color:inherit; transition:opacity .2s; }
 .admin-link:hover, .admin-link:focus-visible{ opacity:1; }
 
+
+/* Touch targets: on phones / touch screens, enlarge the tappable area of the tiny
+   controls with an invisible pseudo-element, without changing how they look. */
+@media (pointer: coarse), (max-width: 719px){
+  .lang-toggle button, .admin-link, .hamburger, .about-carousel-dot{ position: relative; }
+  .lang-toggle button::after, .admin-link::after, .hamburger::after{ content: ''; position: absolute; inset: -10px -6px; }
+  .about-carousel-dot::after{ content: ''; position: absolute; inset: -14px; }
+  .filter-tag{ min-height: 44px; }
+}

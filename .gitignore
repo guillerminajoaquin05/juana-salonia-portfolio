@@ -15,3 +15,7 @@ Elementos gráficos/SANT4016.jpg
 # local tooling
 _serve.ps1
 .claude/
+
+# Illustrator temp files
+~ai-*.tmp
+*.tmp

@@ -46,7 +46,7 @@
         '<span class="work-list-index">' + pad(i + 1) + '</span>' +
         '<span class="work-list-title">' + esc(pick(w, "title")) + '</span>' +
         '<span class="work-list-meta">' + esc(pick(w, "meta")) + '</span>' +
-        (w.logo_url ? '<div class="work-list-media" aria-hidden="true"><img src="' + esc(w.logo_url) + '" alt=""></div>' : "") +
+        (w.logo_url ? '<div class="work-list-media" aria-hidden="true">X</div>' : "") +
         '</a>';
     }).join("");
     var tags = $(".filter-tags");
@@ -68,7 +68,7 @@
       var title = pick(w, "title");
       var img = w.cover_url || ("https://placehold.co/480x360/e7e2d6/66253D?text=" + encodeURIComponent(w.title));
       return '<a href="work-detail.html?id=' + esc(w.id) + '" class="work-carousel-item"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : "") + ">" +
-        '<div class="work-carousel-image"><img src="' + esc(img) + '" alt=""></div>' +
+        '<div class="work-carousel-image"><img src="' + esc(img) + '" alt="" loading="lazy" decoding="async"></div>' +
         '<div class="work-carousel-caption"><span class="work-carousel-title">' + esc(title) + "</span>" +
         '<span class="work-carousel-meta">' + esc(cats(w)) + "</span></div></a>";
     }
@@ -91,7 +91,7 @@
       return '<div class="service-row">' + STAR + "<div>" +
         "<" + Tag + ' class="service-title">' + (full ? pad(i + 1) + " — " : "") + esc(pick(s, "title")) + "</" + Tag + ">" +
         '<p class="service-text">' + esc(text) + "</p>" + details + cta + "</div>" +
-        (s.image_url ? '<div class="service-row-media" aria-hidden="true"><img src="' + esc(s.image_url) + '" alt=""></div>' : "") +
+        (s.image_url ? '<div class="service-row-media" aria-hidden="true"><img src="' + esc(s.image_url) + '" alt="" decoding="async"></div>' : "") +
         "</div>";
     }).join("");
   }

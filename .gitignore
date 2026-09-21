@@ -1,0 +1,17 @@
+# original photos (the site uses the light copies in Fotos/web/)
+Fotos/*
+!Fotos/web/
+
+# unused / heavy working files
+000186720005.jpg
+cuaderno 2.png
+libro.png
+libro1.png
+Elementos gráficos/SANT4016.jpg
+*.ai
+*.eps
+*.HEIC
+
+# local tooling
+_serve.ps1
+.claude/

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Ingresar | Juana Salonia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500&family=Space+Mono:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<main class="login-wrap">
+  <form class="login-card" id="loginForm" novalidate>
+    <p class="mono">Panel de administración</p>
+    <h1>Ingresar</h1>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" autocomplete="current-password" required>
+    </div>
+    <button class="btn" type="submit" id="loginBtn">Entrar</button>
+    <p class="msg" id="msg" role="alert"></p>
+  </form>
+</main>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  var cfg = window.SITE_CONFIG;
+  var msg = document.getElementById("msg");
+  if (!cfg || cfg.SUPABASE_URL.indexOf("YOUR_") === 0){
+    msg.className = "msg err";
+    msg.textContent = "Falta configurar Supabase en config.js.";
+    return;
+  }
+  var sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+  sb.auth.getSession().then(function(r){ if (r.data.session) location.replace("admin.html"); });
+
+  document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var btn = document.getElementById("loginBtn");
+    btn.disabled = true; msg.className = "msg"; msg.textContent = "";
+    sb.auth.signInWithPassword({
+      email: document.getElementById("email").value.trim(),
+      password: document.getElementById("password").value
+    }).then(function(r){
+      if (r.error){
+        btn.disabled = false;
+        msg.className = "msg err";
+        msg.textContent = "Email o contraseña incorrectos.";
+        return;
+      }
+      location.replace("admin.html");
+    });
+  });
+})();
+</script>
+</body>
+</html>

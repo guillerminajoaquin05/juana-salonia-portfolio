@@ -1,0 +1,620 @@
+/* ==========================================================
+   Juana Salonia — shared design system
+   Archetype: "Structured Playfulness" — editorial grid order
+   (Zack Millsaps / DesignThinkers-style hairlines, numbered
+   sections) + scrapbook collage warmth (tilted photos, tape,
+   handwritten annotations, brand star stickers).
+   ========================================================== */
+
+:root{
+  /* Palette 1 — finalized brand colors */
+  --color-background: #FAF4EB;
+  --color-eggplant:   #66253D;
+  --color-pink:       #F6C1C1;
+  --color-terracotta: #ED5C30;
+  --color-lime:       #C9C65F;
+  --color-cyan:       #B8D8F0;
+
+  --color-text: var(--color-eggplant);
+  --color-text-muted: #8a5063;
+
+  /* Typography — Google Fonts standing in for the licensed brand fonts
+     (Orpheus Pro / The Seasons Regular -> Fraunces,
+      Manslava / Six Hands -> Permanent Marker). Swap the font-family
+      values below once licensed font files are provided. Fraunces is a
+      variable serif that can go quiet/italic (logo, captions) and huge
+      high-contrast display (hero, page titles) from one family — closer
+      to the zackmillsaps.com / iarasnei.com references than a single
+      static italic serif. */
+  --font-serif: 'Fraunces', 'Georgia', serif;
+  --font-script: 'Permanent Marker', cursive;
+  --font-hand: 'Caveat', cursive;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+
+  --container: 1240px;
+  --side-pad: clamp(1.25rem, 4vw, 4rem);
+  --section-pad: clamp(3rem, 7vw, 6.5rem);
+  --rule: 1px solid var(--color-eggplant);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- reset / base ---------- */
+*,*::before,*::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img{ max-width: 100%; display: block; }
+a{ color: inherit; text-decoration: none; }
+ul{ margin: 0; padding: 0; list-style: none; }
+button{ font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+h1,h2,h3,h4{ margin: 0; font-weight: 600; }
+p{ margin: 0; }
+.container{ max-width: var(--container); margin-inline: auto; padding-inline: var(--side-pad); }
+.visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+/* ---------- brand star stickers (real sprite sheet) ---------- */
+/* Elementos gráficos/estrellita.jpg is a fixed 2x3 grid (540px cells) of
+   the finalized brand doodle across Palette 1 colors. We show one cell via
+   background-position instead of six separate cropped files. */
+.star{
+  --size: 56px;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  background: #F5C518;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  pointer-events: none;
+}
+/* legacy data-cell / sticker variants all render as the same plain yellow star */
+.star--blend, .star--sticker{ filter: none; box-shadow: none; border-radius: 0; }
+.star--spin{ animation: star-rotate 24s linear infinite; }
+.star--bob{ animation: star-bob 4.5s ease-in-out infinite; }
+@keyframes star-rotate{ to{ transform: rotate(360deg); } }
+@keyframes star-bob{ 0%,100%{ transform: translateY(0) rotate(-5deg);} 50%{ transform: translateY(-9px) rotate(5deg);} }
+
+/* hand-drawn line doodle (flor.jpg) — multiply blend hides its near-white backing */
+.line-doodle{
+  mix-blend-mode: multiply;
+  opacity: .8;
+  pointer-events: none;
+}
+
+/* washi-tape strip, pure CSS */
+.tape{
+  position: absolute;
+  width: 84px; height: 30px;
+  background: repeating-linear-gradient(45deg,
+    color-mix(in srgb, var(--color-pink) 85%, white),
+    color-mix(in srgb, var(--color-pink) 85%, white) 6px,
+    color-mix(in srgb, var(--color-pink) 55%, white) 6px,
+    color-mix(in srgb, var(--color-pink) 55%, white) 12px);
+  opacity: .9;
+  box-shadow: 0 2px 5px rgba(102,37,61,.12);
+  pointer-events: none;
+}
+
+/* ---------- header ---------- */
+.site-header{
+  position: sticky; top: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem var(--side-pad);
+  background: color-mix(in srgb, var(--color-background) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: var(--rule);
+}
+/* flat wordmark logo — no circle badge, per the client's real logo files.
+   The source PNG has a lot of transparent padding around the actual
+   letterforms, so we oversize the image and clip it in a fixed-size
+   box to make the visible logo read at a proper size. */
+.logo-mark{ display: flex; align-items: center; justify-content: center; flex-shrink: 0; height: 36px; width: 76px; overflow: hidden; }
+.logo-mark img{ height: 152px; width: auto; max-width: none; }
+.footer-wordmark{ display: block; width: min(70%, 220px); margin-inline: auto; margin-bottom: 2.5rem; filter: invert(1); opacity: .92; }
+
+/* nav links live directly in the header on tablet/desktop; the hamburger
+   + full-screen drawer only take over once they no longer fit (mobile) */
+.header-nav-inline{ display: none; align-items: center; gap: 1.75rem; }
+.header-nav-inline a{ position: relative; font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; padding-bottom: .2rem; }
+.header-nav-inline a::after{
+  content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 1.5px;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform .35s cubic-bezier(.65,0,.35,1);
+}
+.header-nav-inline a:hover, .header-nav-inline a[aria-current="page"]{ color: var(--color-terracotta); }
+.header-nav-inline a:hover::after, .header-nav-inline a[aria-current="page"]::after{ transform: scaleX(1); transform-origin: left; }
+
+.header-right{ display: flex; align-items: center; gap: 1.5rem; }
+.lang-toggle{
+  font-size: .75rem; letter-spacing: .1em; color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+.hamburger{ width: 34px; height: 26px; display:flex; flex-direction:column; justify-content:space-between; }
+.hamburger span{ display:block; height: 1.5px; width: 100%; background: var(--color-eggplant); transition: transform .3s ease, opacity .3s ease; }
+.hamburger[aria-expanded="true"] span:nth-child(1){ transform: translateY(11.5px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-11.5px) rotate(-45deg); }
+
+@media (min-width: 720px){
+  .header-nav-inline{ display: flex; }
+  .hamburger{ display: none; }
+}
+
+/* ---------- nav drawer ---------- */
+.site-nav{
+  position: fixed; inset: 0; z-index: 400;
+  background: var(--color-eggplant); color: var(--color-background);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.25rem;
+  transform: translateY(-100%); transition: transform .45s cubic-bezier(.65,0,.35,1);
+}
+.site-nav.is-open{ transform: translateY(0); }
+.site-nav ul{ display:flex; flex-direction: column; gap: 1rem; text-align: center; }
+.site-nav a{ font-family: var(--font-serif); font-weight: 600; font-size: clamp(1.6rem, 5vw, 2.6rem); }
+.site-nav a[aria-current="page"]{ color: var(--color-terracotta); }
+.site-nav a:hover{ color: var(--color-terracotta); }
+
+/* ---------- thick framing bar (Anna Koyn moodboard reference) ---------- */
+/* a bold structural bar instead of a hairline, used to frame a key
+   section edge-to-edge (e.g. under the header, or closing the hero) */
+.thick-bar{ height: 6px; background: var(--color-eggplant); }
+
+/* ---------- confetti dots ---------- */
+/* small flat-color circle stickers — a lighter-weight alternative to the
+   star doodle for scattering across photo collages */
+.confetti-dot{ position: absolute; border-radius: 50%; pointer-events: none; }
+.confetti-dot--sm{ width: 14px; height: 14px; }
+.confetti-dot--md{ width: 22px; height: 22px; }
+
+/* ---------- dividers ---------- */
+.divider{ position: relative; border-top: var(--rule); margin-inline: var(--side-pad); height: 2px; }
+.divider-walker{ position: absolute; top: 50%; left: 0; --size: 38px; transform: translateY(-50%); animation: walk 10s ease-in-out infinite alternate; }
+@keyframes walk{
+  0%{ left: 0%; transform: translateY(-50%) rotate(-6deg); }
+  50%{ transform: translateY(-64%) rotate(6deg); }
+  100%{ left: calc(100% - 38px); transform: translateY(-50%) rotate(-6deg); }
+}
+
+/* ---------- section scaffolding ---------- */
+.mini-section{ padding-block: var(--section-pad); padding-inline: var(--side-pad); position: relative; }
+/* cap each section's content on very wide screens so it doesn't sprawl
+   into empty space — the section itself stays full-bleed for block-lime
+   etc. backgrounds, only its children get centered/capped */
+.mini-section > *{ max-width: 1400px; margin-inline: auto; }
+/* Section markers read as a small "catalog" tag — [ 01 / ABOUT ME ] in a
+   typewriter face — per the Anna Koyn (ODW) moodboard reference, instead
+   of a big bold heading. */
+.section-head{ display: flex; align-items: baseline; gap: 0; margin-bottom: clamp(2.5rem, 6vw, 4.5rem); font-family: var(--font-mono); }
+.section-head::before{ content: "["; color: var(--color-text-muted); margin-right: .35em; }
+.section-head::after{ content: "]"; color: var(--color-text-muted); margin-left: .1em; }
+.section-number{ font-size: .72rem; letter-spacing: .06em; color: var(--color-text-muted); font-weight: 400; }
+.section-number::after{ content: " /"; margin-right: .35em; }
+.section-title{ font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; font-weight: 400; color: var(--color-text-muted); }
+.eyebrow{ font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--color-text-muted); font-weight: 500; }
+/* same catalog-tag treatment for the single-line labels in page headers */
+.tag-label{ font-family: var(--font-mono); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+.tag-label::before{ content: "["; margin-right: .35em; }
+.tag-label::after{ content: "]"; margin-left: .35em; }
+
+/* underline draws in on hover instead of sitting there statically —
+   per the Harriet (Webflow) reference's link/button interactions */
+.link-arrow{ position: relative; display: inline-flex; align-items: center; gap: .4rem; font-weight: 600; padding-bottom: .15rem; }
+.link-arrow::after{
+  content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 1.5px;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform .4s cubic-bezier(.65,0,.35,1);
+}
+.link-arrow:hover{ color: var(--color-terracotta); }
+.link-arrow:hover::after{ transform: scaleX(1); transform-origin: left; }
+
+.script-accent{ font-family: var(--font-script); color: var(--color-terracotta); font-size: 1.3rem; transform: rotate(-4deg); display: inline-block; line-height: 1; }
+
+[data-reveal]{ opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+[data-reveal].in-view{ opacity: 1; transform: translateY(0); }
+
+/* ---------- buttons — sharp corners, no pills ---------- */
+.btn{
+  display: inline-block; padding: .9rem 1.7rem; font-weight: 600; font-size: .82rem;
+  letter-spacing: .08em; text-transform: uppercase; border: 1.5px solid var(--color-eggplant);
+  border-radius: 2px; transition: background .25s ease, color .25s ease;
+}
+.btn-primary{ background: var(--color-eggplant); color: var(--color-background); }
+.btn-primary:hover{ background: var(--color-terracotta); border-color: var(--color-terracotta); }
+.btn-outline:hover{ background: var(--color-eggplant); color: var(--color-background); }
+
+/* ---------- full-bleed color blocks (iarasnei.com) ---------- */
+/* A mini-section can opt into an edge-to-edge flat color background
+   instead of a bordered card — bolder punctuation between the quiet
+   cream sections. */
+.block-lime{ background: var(--color-lime); }
+.block-pink{ background: var(--color-pink); }
+.block-cyan{ background: var(--color-cyan); }
+.block-eggplant{ background: var(--color-eggplant); color: var(--color-background); }
+.block-eggplant .section-number, .block-eggplant .section-title, .block-eggplant .eyebrow{
+  color: color-mix(in srgb, var(--color-background) 75%, transparent);
+}
+.block-eggplant .service-text{ color: color-mix(in srgb, var(--color-background) 82%, transparent); }
+.block-eggplant .service-row{ border-color: color-mix(in srgb, var(--color-background) 35%, transparent); }
+
+/* ==========================================================
+   HERO — full-bleed photo with the wordmark overlaid directly on the
+   image (per the client's "brand book" cover reference), name + claim
+   centered over a desaturated portrait instead of a split layout.
+   ========================================================== */
+.hero{
+  position: relative; overflow: hidden;
+  min-height: min(92vh, 820px);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: clamp(2rem,6vw,4rem) var(--side-pad);
+}
+.hero-photo-full{ position: absolute; inset: 0; z-index: 0; }
+.hero-photo-full img{ width: 100%; height: 100%; object-fit: cover; object-position: center 46%; filter: grayscale(1); }
+.hero-scrim{
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(102,37,61,.68) 0%, rgba(102,37,61,.52) 38%, rgba(102,37,61,.78) 100%);
+}
+.hero-star-accent{ position: absolute; z-index: 2; --size: 58px; top: 6%; right: 6%; }
+.hero-overlay{
+  position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 1.1rem;
+  max-width: 720px; color: var(--color-background);
+}
+.hero-wordmark{ width: min(88vw, 560px); filter: invert(1); }
+.hero-tagline{ font-size: .85rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; }
+.hero-overlay .hero-sub{ color: color-mix(in srgb, var(--color-background) 90%, transparent); font-size: 1.05rem; max-width: 42ch; }
+.hero-ctas{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.5rem; margin-top: .5rem; }
+.hero-overlay .link-arrow:hover{ color: var(--color-lime); }
+
+/* ==========================================================
+   PAGE HEADER — for internal pages (about/services/work/contact)
+   ========================================================== */
+.page-header{ padding: clamp(2.5rem,6vw,5rem) var(--side-pad) clamp(1.5rem,4vw,3rem); position: relative; }
+.page-header .eyebrow{ margin-bottom: .75rem; }
+.page-title{
+  font-family: var(--font-serif); font-weight: 500; font-style: italic;
+  font-size: clamp(2.2rem, 7vw, 4.4rem); line-height: 1.08;
+  overflow-wrap: break-word;
+}
+.page-lede{ max-width: 56ch; font-size: 1.05rem; color: var(--color-text-muted); margin-top: 1.25rem; }
+.back-link{ font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+.back-link:hover{ opacity: 1; color: var(--color-terracotta); }
+
+/* ==========================================================
+   ABOUT — minimalist: the client's own ready-made polaroid cutout
+   (photo + washi tape, already composited, transparent background)
+   on the left, plain serif copy on the right. No notebook, no card.
+   ========================================================== */
+.about-simple{ display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: start; }
+@media (min-width: 720px){
+  .about-simple{ grid-template-columns: minmax(240px, 320px) 1fr; gap: 4.5rem; }
+  .about-simple--lg{ grid-template-columns: minmax(300px, 460px) 1fr; gap: 3.5rem; }
+}
+.about-simple-photo{ justify-self: center; width: min(70vw, 320px); }
+.about-simple--lg .about-simple-photo{ width: min(85vw, 460px); }
+.about-simple--lg{ align-items: center; }
+.about-simple-photo img{ width: 100%; height: auto; display: block; }
+.about-simple-copy{ display: flex; flex-direction: column; gap: 1.5rem; max-width: 60ch; }
+.about-simple-copy p{ font-size: 1.05rem; line-height: 1.7; }
+.about-simple-copy .highlight{ color: var(--color-terracotta); }
+
+/* small photo carousel — About page only, same minimal polaroid frame
+   but cycling through a few real photos instead of one fixed shot */
+.about-carousel{ position: relative; }
+.about-carousel-frame{
+  position: relative; aspect-ratio: 4/5; background: #fff;
+  border: 1px solid var(--color-eggplant); box-shadow: 4px 8px 18px rgba(102,37,61,.14);
+}
+.about-carousel-frame img{
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity .7s ease;
+}
+.about-carousel-frame img.is-active{ opacity: 1; }
+.about-carousel-tape{ top: -14px; left: 50%; transform: translateX(-50%) rotate(-2deg); z-index: 2; }
+.about-carousel-dots{ display: flex; justify-content: center; gap: .55rem; margin-top: 1.1rem; }
+.about-carousel-dot{
+  width: 8px; height: 8px; border-radius: 50%; padding: 0; border: none;
+  background: color-mix(in srgb, var(--color-eggplant) 28%, transparent);
+  cursor: pointer; transition: background .2s ease, transform .2s ease;
+}
+.about-carousel-dot:hover{ background: color-mix(in srgb, var(--color-eggplant) 55%, transparent); }
+.about-carousel-dot.is-active{ background: var(--color-terracotta); transform: scale(1.3); }
+
+/* room to grow — more text or photos can drop in below the intro
+   without needing a layout change */
+.about-more{ margin-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem; max-width: 70ch; }
+
+/* ==========================================================
+   LANDING-ONLY — the static fanned photo stack + short blurb, used just
+   in the home page's About preview (index.html). The full About page
+   uses the notebook spread above instead.
+   ========================================================== */
+.about-grid{ display: grid; grid-template-columns: 1fr; gap: 3.5rem; align-items: center; }
+.about-collage{ position: relative; justify-self: center; width: min(86vw, 320px); aspect-ratio: 4/5; margin-inline: auto; }
+.about-backing{ position: absolute; inset: -10px -18px -18px 12px; background: var(--color-pink); transform: rotate(-3deg); z-index: 0; }
+.about-collage .script-accent{ position: absolute; top: -20px; left: -10px; z-index: 6; }
+.about-stack-card{
+  position: absolute; top: 50%; left: 50%; width: 76%;
+  background: #fff; padding: .5rem .5rem 2rem; border: 1px solid var(--color-eggplant);
+  box-shadow: 4px 6px 14px rgba(102,37,61,.18);
+}
+.about-stack-card img{ width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+.about-stack-card--0{ transform: translate(-50%,-50%) translate(0,-3%) rotate(2deg) scale(1); z-index: 4; }
+.about-stack-card--1{ transform: translate(-50%,-50%) translate(10%,2%) rotate(9deg) scale(.94); z-index: 3; }
+.about-stack-card--2{ transform: translate(-50%,-50%) translate(-9%,6%) rotate(-10deg) scale(.9); z-index: 2; }
+.about-stack-card--3{ transform: translate(-50%,-50%) translate(4%,9%) rotate(6deg) scale(.87); z-index: 1; }
+.about-nametag{
+  position: absolute; z-index: 7; width: 112px;
+  top: -12%; right: -9%; transform: rotate(9deg);
+  filter: drop-shadow(3px 5px 8px rgba(102,37,61,.28));
+  pointer-events: none;
+}
+.about-tape-2{ top: 34%; left: -13%; transform: rotate(72deg); z-index: 2; }
+.about-flower{ position: absolute; z-index: 8; width: 64px; bottom: 3%; left: 3%; opacity: .9; transform: rotate(-8deg); mix-blend-mode: multiply; pointer-events: none; }
+.about-collage .about-paperclip{
+  position: absolute; z-index: 9; width: 46px; height: 46px;
+  top: 1%; left: 50%; transform: translateX(-50%) rotate(-10deg);
+  color: var(--color-eggplant); pointer-events: none;
+  filter: drop-shadow(1.5px 2.5px 2px rgba(102,37,61,.35));
+}
+@media (min-width: 720px){
+  .about-grid{ grid-template-columns: 320px 1fr; gap: 5.5rem; }
+}
+
+.about-copy{ display: flex; flex-direction: column; gap: 1.5rem; max-width: 52ch; }
+.about-copy p{ font-size: 1.05rem; }
+
+/* ==========================================================
+   ORIGINAL SCRAPBOOK ACCENTS — built in-house (not the stock/Pinterest
+   stickers from the moodboard reference) in Juana's own palette: a
+   ribbon banner tag + a circular "stamp" badge for photo corners.
+   ========================================================== */
+.ribbon-banner{
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: .5rem 1.7rem; background: var(--color-terracotta); color: var(--color-background);
+  font-family: var(--font-mono); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  clip-path: polygon(0% 50%, 6% 0%, 100% 0%, 94% 50%, 100% 100%, 6% 100%);
+  box-shadow: 2px 3px 8px rgba(102,37,61,.25);
+  white-space: nowrap;
+}
+.stamp-badge{ width: 108px; height: 108px; color: var(--color-eggplant); pointer-events: none; animation: star-rotate 50s linear infinite; }
+.stamp-badge circle{ fill: none; }
+/* solid variant — filled disc for sitting on top of a photo, cream text on eggplant */
+.stamp-badge--solid{ color: var(--color-background); }
+.stamp-badge--solid circle:first-of-type{ fill: var(--color-eggplant); }
+
+/* typed "character file" card, per the folder-tab moodboard reference */
+.dossier{ border: 1px solid var(--color-eggplant); padding: 1.35rem 1.5rem; margin-top: .25rem; }
+.dossier-tab{
+  font-family: var(--font-mono); font-size: .66rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--color-text-muted); display: flex; justify-content: space-between; gap: 1rem;
+  margin-bottom: .9rem; padding-bottom: .75rem; border-bottom: 1px dashed color-mix(in srgb, var(--color-eggplant) 35%, transparent);
+}
+.meta-list{ display: flex; flex-direction: column; gap: .55rem; font-family: var(--font-mono); font-size: .82rem; }
+.meta-list li{ display: flex; gap: .6rem; }
+.meta-list li span:first-child{ color: var(--color-text-muted); min-width: 9ch; }
+
+/* ==========================================================
+   SELECTED WORK — grid + b/w-to-color hover
+   ========================================================== */
+.work-grid{ display: grid; grid-template-columns: 1fr; gap: clamp(2.5rem, 6vw, 5rem); margin-bottom: 2.5rem; }
+.work-item{ display: block; cursor: pointer; }
+.work-image{ aspect-ratio: 4/3; overflow: hidden; background: var(--color-pink); }
+.work-image img{ width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: transform .6s ease, filter .6s ease; }
+.work-item:not(.work-item--color) .work-image img{ filter: grayscale(1); }
+.work-item:hover .work-image img{ filter: grayscale(0); transform: scale(1.03); }
+/* plain stacked caption, no rule/italic — zackmillsaps.com reads quieter than a boxed label */
+.work-caption{ display: flex; flex-direction: column; gap: .2rem; margin-top: 1.1rem; }
+.work-title{ font-size: .98rem; font-weight: 600; }
+.work-meta{ font-size: .82rem; color: var(--color-text-muted); }
+
+/* Landing preview only — small, playful square tiles instead of the big
+   rectangular cards used on the full archive (work.html), per the
+   "creative projects" 6-tile moodboard reference. */
+.work-tile-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1.5rem; margin-bottom: 2.5rem; }
+.work-tile{ display: block; cursor: pointer; text-align: center; }
+.work-tile-image{ position: relative; aspect-ratio: 1/1; overflow: hidden; border-radius: 10px; background: var(--color-pink); }
+.work-tile-image img{ width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: transform .5s ease, filter .5s ease; }
+.work-tile:hover .work-tile-image img{ filter: grayscale(0); transform: scale(1.06); }
+.work-tile-image .star{ position: absolute; top: -10px; right: -10px; --size: 34px; z-index: 2; }
+.work-tile-caption{ margin-top: .65rem; }
+.work-tile-title{ display: block; font-size: .88rem; font-weight: 600; }
+.work-tile-meta{ display: block; font-size: .74rem; color: var(--color-text-muted); margin-top: .1rem; }
+
+/* Landing preview — auto-scrolling ribbon/marquee, per the client's
+   reference: the track holds the project set twice and glides on its
+   own, looping seamlessly; hovering (or focusing a tile) pauses it so
+   it stays readable and clickable. */
+.work-carousel{ position: relative; margin-bottom: 1.75rem; overflow: hidden; }
+.work-carousel-track{
+  display: flex; gap: 1.5rem; width: max-content;
+  animation: work-marquee 34s linear infinite;
+}
+.work-carousel:hover .work-carousel-track,
+.work-carousel-track:has(:focus-visible){ animation-play-state: paused; }
+@keyframes work-marquee{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce){ .work-carousel-track{ animation: none; } }
+.work-carousel-item{ flex: 0 0 auto; width: min(74vw, 300px); cursor: pointer; }
+.work-carousel-image{ position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--color-pink); }
+.work-carousel-image img{ width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: transform .5s ease, filter .5s ease; }
+.work-carousel-item:hover .work-carousel-image img{ filter: grayscale(0); transform: scale(1.04); }
+.work-carousel-image .star{ position: absolute; top: -10px; right: -10px; --size: 34px; z-index: 2; }
+.work-carousel-caption{ display: flex; flex-direction: column; gap: .15rem; margin-top: .85rem; }
+.work-carousel-title{ font-size: .92rem; font-weight: 600; }
+.work-carousel-meta{ font-size: .76rem; color: var(--color-text-muted); }
+@media (min-width: 720px){
+  .work-carousel-item{ width: min(30vw, 340px); }
+}
+
+.filter-tags{ display: flex; flex-wrap: wrap; gap: .6rem 1rem; margin-bottom: 3rem; }
+.filter-tag{ font-size: .78rem; letter-spacing: .07em; text-transform: uppercase; padding-block: .35rem; border-bottom: 1.5px solid transparent; }
+.filter-tag[aria-pressed="true"]{ border-color: var(--color-terracotta); color: var(--color-terracotta); }
+.filter-tag:hover{ color: var(--color-terracotta); }
+
+/* Work archive — trial list layout: numbered text rows that reveal the
+   project photo on hover (wipe-in from the right), per the Harriet
+   (Webflow) reference's "art pieces" list. Swap back to .work-grid if
+   this doesn't stick. */
+.work-list{ display: flex; flex-direction: column; margin-bottom: 2.5rem; }
+.work-list-row{
+  position: relative; overflow: hidden; display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: .5rem 1.25rem; padding-block: 1.75rem; border-top: var(--rule); cursor: pointer;
+}
+.work-list-row:last-child{ border-bottom: var(--rule); }
+.work-list-index{ font-family: var(--font-mono); font-size: .8rem; color: var(--color-text-muted); }
+.work-list-title{ font-family: var(--font-serif); font-size: clamp(1.3rem, 3.5vw, 2rem); font-weight: 600; transition: color .3s ease; }
+.work-list-meta{ margin-left: auto; font-size: .82rem; color: var(--color-text-muted); }
+.work-list-row:hover .work-list-title{ color: var(--color-terracotta); }
+.work-list-media{
+  position: absolute; top: 0; right: 0; bottom: 0; width: 0; overflow: hidden; z-index: 0;
+  transition: width .5s cubic-bezier(.65,0,.35,1);
+  background: var(--color-background);
+  display: flex; align-items: center; justify-content: center;
+}
+/* client/collaborator logo, not a project photo yet — contained + centered
+   rather than cropped, so wordmarks don't get cut off */
+.work-list-media img{
+  width: 58%; max-width: 190px; height: auto; object-fit: contain;
+  filter: grayscale(1); opacity: .8;
+  transition: filter .5s ease, opacity .5s ease;
+}
+.work-list-row:hover .work-list-media{ width: min(42%, 320px); }
+.work-list-row:hover .work-list-media img{ filter: grayscale(0); opacity: 1; }
+@media (max-width: 719px){
+  .work-list-media{ display: none; }
+  .work-list-meta{ margin-left: 0; width: 100%; }
+}
+
+/* ==========================================================
+   PROJECT DETAIL (work-detail.html)
+   ========================================================== */
+.project-hero-media{ aspect-ratio: 16/9; overflow: hidden; margin-inline: var(--side-pad); border: 1px solid var(--color-eggplant); }
+.project-hero-media img{ width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+/* quick-facts band — sits directly under the hero photo, pastel full-bleed
+   strip per the "clean case study" reference, mirrors .block-lime/.block-pink */
+.project-facts{ padding-block: clamp(2rem, 5vw, 2.75rem); }
+.project-meta{ display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem 2rem; margin-bottom: 0; }
+.project-meta div span:first-child{ display:block; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: .3rem; }
+.project-meta div span:last-child{ font-size: 1rem; }
+.project-copy{ max-width: 62ch; display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 3rem; }
+.project-copy h3{ font-family: var(--font-serif); font-style: italic; font-size: 1.3rem; }
+.gallery-grid{ display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+.gallery-grid img{ aspect-ratio: 1/1; object-fit: cover; filter: grayscale(1); }
+
+/* ==========================================================
+   SERVICES — numbered rows, no boxed cards
+   ========================================================== */
+.services-list{ display: flex; flex-direction: column; }
+.service-row{ position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start; padding-block: 2rem; border-top: var(--rule); }
+.service-row:last-child{ border-bottom: var(--rule); }
+.service-row .star{ --size: 46px; }
+.service-title{ font-size: 1.05rem; text-transform: uppercase; letter-spacing: .02em; margin-bottom: .5rem; }
+.service-text{ color: var(--color-text-muted); font-size: .95rem; max-width: 60ch; }
+.service-detail{ margin-top: 1rem; display: flex; flex-direction: column; gap: .4rem; }
+.service-detail li{ font-size: .92rem; padding-left: 1.1rem; position: relative; }
+.service-detail li::before{ content: "—"; position: absolute; left: 0; color: var(--color-terracotta); }
+
+/* image wipes in from the right edge on hover — per the Harriet (Webflow)
+   reference's list-row interaction */
+.service-row-media{
+  position: absolute; top: 0; right: 0; bottom: 0; width: 0; overflow: hidden;
+  transition: width .5s cubic-bezier(.65,0,.35,1);
+}
+.service-row-media img{
+  position: absolute; top: 0; right: 0; width: 260px; max-width: 40vw; height: 100%;
+  object-fit: cover; filter: grayscale(1); transform: scale(1.08);
+  transition: filter .5s ease, transform .5s ease;
+}
+.service-row:hover .service-row-media{ width: min(38%, 260px); }
+.service-row:hover .service-row-media img{ filter: grayscale(0); transform: scale(1); }
+@media (max-width: 719px){ .service-row-media{ display: none; } }
+
+/* ==========================================================
+   LATELY
+   ========================================================== */
+.lately-grid{ display: grid; grid-template-columns: 1fr; }
+.lately-item{ padding-block: 1.25rem; border-top: 1px solid color-mix(in srgb, var(--color-eggplant) 25%, transparent); display: flex; gap: 1.25rem; align-items: baseline; }
+.lately-item:last-child{ border-bottom: 1px solid color-mix(in srgb, var(--color-eggplant) 25%, transparent); }
+.lately-date{ font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-terracotta); font-weight: 600; white-space: nowrap; }
+
+/* ==========================================================
+   CONTACT — copy-email / LinkedIn + testimonials
+   (no contact form — the client wants a direct email/LinkedIn only)
+   ========================================================== */
+.contact-methods{ display: grid; grid-template-columns: 1fr; max-width: 46rem; }
+.contact-method{
+  display: flex; flex-direction: column; gap: .4rem;
+  width: 100%; text-align: left; padding-block: 1.75rem;
+  border-top: var(--rule);
+}
+.contact-method:last-child{ border-bottom: var(--rule); }
+.contact-method-label{ font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--color-text-muted); }
+.contact-method-value{ font-family: var(--font-serif); font-weight: 600; font-size: clamp(1.1rem, 5vw, 1.7rem); overflow-wrap: break-word; word-break: break-word; }
+.contact-method-action{ font-size: .85rem; color: var(--color-terracotta); }
+.contact-method:hover .contact-method-value{ color: var(--color-terracotta); }
+.testimonials{ display: grid; grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2rem; }
+.testimonial{ padding-top: 1.75rem; border-top: var(--rule); }
+.testimonial p{ font-family: var(--font-serif); font-style: italic; font-size: 1.15rem; line-height: 1.5; margin-bottom: .85rem; }
+.testimonial cite{ font-style: normal; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+.site-footer{ background: var(--color-eggplant); color: var(--color-background); padding-block: var(--section-pad); position: relative; overflow: hidden; }
+.site-footer .eyebrow{ color: color-mix(in srgb, var(--color-background) 75%, transparent); }
+.footer-top{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3rem; margin-bottom: 3.5rem; }
+.footer-claim{ font-family: var(--font-serif); font-style: italic; font-size: clamp(1.4rem, 3.4vw, 2.2rem); max-width: 20ch; }
+.footer-contact{ display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
+.footer-contact .btn-primary{ background: var(--color-background); color: var(--color-eggplant); border-color: var(--color-background); }
+.footer-contact .btn-primary:hover{ background: var(--color-terracotta); color: var(--color-background); border-color: var(--color-terracotta); }
+.collab-row{ display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; padding-block: 2rem; border-block: 1px solid color-mix(in srgb, var(--color-background) 35%, transparent); margin-bottom: 2rem; }
+.collab-row span{ font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: color-mix(in srgb, var(--color-background) 75%, transparent); }
+/* real logos sit on a small white card so every source file (color, black,
+   or white-only artwork) stays legible on the dark footer */
+.collab-logo{ background: #fff; padding: .6rem 1.1rem; border-radius: 4px; display: flex; align-items: center; box-shadow: 2px 3px 8px rgba(0,0,0,.18); }
+.collab-logo img{ height: 26px; width: auto; max-width: 130px; object-fit: contain; }
+.footer-bottom{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: .85rem; opacity: .85; }
+.footer-bottom nav ul{ display: flex; flex-wrap: wrap; gap: 1.25rem; }
+
+/* ---------- responsive ---------- */
+@media (min-width: 720px){
+  .work-grid{ grid-template-columns: 1fr 1fr; }
+  .work-tile-grid{ grid-template-columns: repeat(4, 1fr); }
+  .gallery-grid{ grid-template-columns: repeat(3,1fr); }
+  .testimonials{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 960px){
+  .hero{ grid-template-columns: .8fr 1.2fr; }
+  .service-row{ grid-template-columns: 90px 1fr; }
+}
+
+/* About: academic credential */
+.credential{ border-top: 1px solid var(--color-eggplant); border-bottom: 1px solid var(--color-eggplant); padding: 1.75rem 0; margin-bottom: 4rem; display: flex; flex-direction: column; gap: .6rem; }
+.credential-degree{ font-family: var(--font-serif, "Fraunces", serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.25; color: var(--color-eggplant); }
+.credential-school{ font-family: "Inter", sans-serif; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--color-eggplant); opacity: .8; }
+
+
+/* Lately: single-column editorial list */
+.lately-grid{ max-width: 900px; }
+.lately-item{ padding-block: 1.5rem; align-items: baseline; gap: 1.5rem; transition: padding-left .3s ease; }
+.lately-item:hover{ padding-left: .5rem; }
+.lately-num{ font-family: 'Space Mono', monospace; font-size: .75rem; color: var(--color-terracotta); min-width: 1.75rem; }
+.lately-item p{ flex: 1; font-family: 'Fraunces', serif; font-size: clamp(1.1rem, 2.2vw, 1.5rem); line-height: 1.3; }
+.lately-status{ font-family: 'Space Mono', monospace; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; opacity: .6; white-space: nowrap; }
+@media (max-width: 560px){ .lately-item{ flex-wrap: wrap; } .lately-status{ width: 100%; padding-left: 3.25rem; } }
+
+/* Services: whole row links to filtered Work */
+.service-row-link{ position: absolute; inset: 0; z-index: 3; }
+.service-cta{ display: inline-block; margin-top: 1.25rem; font-size: .9rem; font-weight: 600; color: var(--color-eggplant); border-bottom: 1px solid currentColor; }
+.work-list-row[hidden]{ display: none; }
+
+.admin-link{ display:inline-flex; vertical-align:middle; margin-left:.25rem; opacity:.55; color:inherit; transition:opacity .2s; }
+.admin-link:hover, .admin-link:focus-visible{ opacity:1; }
+

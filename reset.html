@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Cambiar contraseña | Juana Salonia</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png?v=3">
+<link rel="apple-touch-icon" href="favicon.png?v=3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500&family=Space+Mono:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<main class="login-wrap">
+  <div class="login-card">
+    <p class="mono">Panel de administración</p>
+    <h1>Nueva contraseña</h1>
+
+    <p class="msg" id="checking">Verificando el enlace…</p>
+
+    <form id="resetForm" novalidate hidden>
+      <div class="field">
+        <label for="pw1">Nueva contraseña</label>
+        <input type="password" id="pw1" autocomplete="new-password" minlength="8" required>
+        <p class="hint">Mínimo 8 caracteres.</p>
+      </div>
+      <div class="field">
+        <label for="pw2">Repetila</label>
+        <input type="password" id="pw2" autocomplete="new-password" minlength="8" required>
+      </div>
+      <button class="btn" type="submit" id="saveBtn">Guardar contraseña</button>
+      <p class="msg" id="msg" role="alert"></p>
+    </form>
+
+    <div id="invalid" hidden>
+      <p class="msg err">Este enlace no es válido o ya venció.</p>
+      <p class="hint" style="margin-top:1rem;"><a href="login.html">Volver a ingresar y pedir otro enlace</a></p>
+    </div>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  var cfg = window.SITE_CONFIG;
+  var checking = document.getElementById("checking"), form = document.getElementById("resetForm"),
+      invalid = document.getElementById("invalid"), msg = document.getElementById("msg");
+  if (!cfg || cfg.SUPABASE_URL.indexOf("YOUR_") === 0){ checking.textContent = "Falta configurar Supabase en config.js."; return; }
+  var sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+
+  var shown = false;
+  function showForm(){ if (shown) return; shown = true; checking.hidden = true; invalid.hidden = true; form.hidden = false; document.getElementById("pw1").focus(); }
+  function showInvalid(){ if (shown) return; checking.hidden = true; invalid.hidden = false; }
+
+  /* A recovery link (or an already logged-in Juana coming from the panel) gives us a session. */
+  sb.auth.onAuthStateChange(function(ev, session){
+    if (ev === "PASSWORD_RECOVERY" || (session && ev === "SIGNED_IN")) showForm();
+  });
+  setTimeout(function(){
+    sb.auth.getSession().then(function(r){ if (r.data.session) showForm(); else showInvalid(); });
+  }, 1200);
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var a = document.getElementById("pw1").value, b = document.getElementById("pw2").value;
+    msg.className = "msg err";
+    if (a.length < 8){ msg.textContent = "La contraseña tiene que tener al menos 8 caracteres."; return; }
+    if (a !== b){ msg.textContent = "Las dos contraseñas no coinciden."; return; }
+    var btn = document.getElementById("saveBtn"); btn.disabled = true;
+    sb.auth.updateUser({ password: a }).then(function(r){
+      btn.disabled = false;
+      if (r.error){
+        msg.textContent = /same|different/i.test(r.error.message) ? "Elegí una contraseña distinta de la actual." : "No se pudo guardar: " + r.error.message;
+        return;
+      }
+      msg.className = "msg ok";
+      msg.textContent = "Contraseña actualizada ✓ Te llevamos al panel…";
+      setTimeout(function(){ location.replace("admin.html"); }, 1500);
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -26,7 +26,8 @@
         { k: "year_place_es", l: "Año y lugar (Español)", t: "text" },
         { k: "role", l: "Mi rol (corto)", t: "text" },
         { k: "role_es", l: "Mi rol (Español)", t: "text" },
-        { k: "drive_url", l: "Link a la galería (Drive)", t: "text" },
+        { k: "gallery", l: "Galería de fotos", t: "gallery", hint: "Se muestran en este orden en la página del trabajo. Podés subir varias juntas; se achican solas." },
+        { k: "drive_url", l: "Link a la galería completa (Drive)", t: "text", hint: "Opcional: aparece como enlace \"Gallery\" en los datos del proyecto." },
         { k: "context", l: "Contexto", t: "textarea" },
         { k: "context_es", l: "Contexto (Español)", t: "textarea" },
         { k: "role_text", l: "Qué hice yo", t: "textarea" },
@@ -173,9 +174,14 @@
       function draw(){
         grid.innerHTML = "";
         urls.forEach(function(u, idx){
+          function mv(dir){ var j = idx + dir; if (j < 0 || j >= urls.length) return; var t = urls[idx]; urls[idx] = urls[j]; urls[j] = t; draw(); }
           var fig = h("figure", {}, [
             h("img", { src: u, alt: "" }),
-            h("button", { type: "button", class: "btn btn--sm", text: "✕", "aria-label": "Quitar foto", onclick: function(){ urls.splice(idx, 1); draw(); } })
+            h("button", { type: "button", class: "btn btn--sm", text: "✕", "aria-label": "Quitar foto", onclick: function(){ urls.splice(idx, 1); draw(); } }),
+            h("div", { class: "gallery-move" }, [
+              h("button", { type: "button", class: "btn btn--ghost btn--sm", text: "‹", "aria-label": "Mover antes", disabled: idx === 0 ? "disabled" : false, onclick: function(){ mv(-1); } }),
+              h("button", { type: "button", class: "btn btn--ghost btn--sm", text: "›", "aria-label": "Mover después", disabled: idx === urls.length - 1 ? "disabled" : false, onclick: function(){ mv(1); } })
+            ])
           ]);
           grid.appendChild(fig);
         });

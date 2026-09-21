@@ -59,7 +59,12 @@ textarea{ min-height:7rem; resize:vertical; }
 .gallery{ display:grid; grid-template-columns:repeat(auto-fill,minmax(96px,1fr)); gap:.75rem; margin-bottom:.75rem; }
 .gallery figure{ margin:0; position:relative; }
 .gallery img{ width:100%; aspect-ratio:4/5; object-fit:cover; border:1px solid var(--line); display:block; }
-.gallery button{ position:absolute; top:4px; right:4px; }
+.gallery figure > button{ position:absolute; top:4px; right:4px; }
 .empty{ padding:2rem 0; color:var(--muted); }
 .setting-group{ border-top:1px solid var(--line); padding-top:1.5rem; margin-top:2rem; }
 .setting-group h3{ font-size:1.15rem; margin-bottom:1rem; }
+.gallery-move{ display:flex; justify-content:space-between; margin-top:.3rem; }
+.gallery-move .btn{ padding:.15rem .6rem; }
+.link-btn{ font:inherit; font-size:.8rem; background:none; border:0; padding:0; color:var(--ink); text-decoration:underline; cursor:pointer; }
+.link-btn:hover{ color:var(--accent); }
+

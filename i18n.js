@@ -58,6 +58,9 @@
     "Email": "Correo", "Click to copy →": "Clic para copiar →", "Copied ✓": "Copiado ✓", "Visit profile →": "Ver perfil →",
     "What people say": "Lo que dicen", "Email me": "Escríbeme",
 
+    /* gallery */
+    "Open photo": "Abrir foto", "Close": "Cerrar", "Previous": "Anterior", "Next": "Siguiente",
+
     /* accessibility */
     "Skip to content": "Saltar al contenido", "Pause": "Pausar", "Play": "Reproducir",
     "(opens in a new tab)": "(se abre en una pestaña nueva)",

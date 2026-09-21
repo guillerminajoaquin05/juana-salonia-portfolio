@@ -29,6 +29,7 @@
     </div>
     <button class="btn" type="submit" id="loginBtn">Entrar</button>
     <p class="msg" id="msg" role="alert"></p>
+    <p class="hint" style="margin-top:1.25rem;"><button type="button" class="link-btn" id="forgotBtn">¿Olvidaste tu contraseña?</button></p>
   </form>
 </main>
 
@@ -61,6 +62,29 @@
         return;
       }
       location.replace("admin.html");
+    });
+  });
+
+  /* password recovery: sends a link to reset.html */
+  document.getElementById("forgotBtn").addEventListener("click", function(){
+    var email = document.getElementById("email").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      msg.className = "msg err";
+      msg.textContent = "Escribí tu email arriba y volvé a tocar \"¿Olvidaste tu contraseña?\".";
+      document.getElementById("email").focus();
+      return;
+    }
+    var btn = this; btn.disabled = true;
+    sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname.replace(/[^/]*$/, "") + "reset.html" }).then(function(r){
+      btn.disabled = false;
+      if (r.error && r.error.status === 429){
+        msg.className = "msg err";
+        msg.textContent = "Ya pediste un enlace hace poco. Esperá unos minutos y probá de nuevo.";
+        return;
+      }
+      /* same message whether or not the email exists, so nobody can probe which emails have access */
+      msg.className = "msg ok";
+      msg.textContent = "Si ese email tiene acceso, te enviamos un enlace para cambiar la contraseña. Revisá también spam.";
     });
   });
 })();

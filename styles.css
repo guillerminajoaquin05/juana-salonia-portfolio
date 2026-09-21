@@ -595,3 +595,8 @@ p{ margin: 0; }
 .lightbox-prev{ left: .5rem; } .lightbox-next{ right: .5rem; }
 .lightbox-close:hover, .lightbox-nav:hover{ color: var(--color-lime); }
 .lightbox-count{ position: absolute; bottom: 1rem; left: 0; right: 0; text-align: center; color: var(--color-background); font-size: .8rem; letter-spacing: .12em; }
+
+/* white logos (e.g. Fist Bump) sit on the dark footer as an outlined tile instead of a white pill */
+.collab-logo--light{ background: transparent; box-shadow: none; border: 1px solid color-mix(in srgb, var(--color-background) 35%, transparent); padding: .5rem .9rem; }
+.collab-logo--light img{ height: 44px; max-width: 70px; }
+

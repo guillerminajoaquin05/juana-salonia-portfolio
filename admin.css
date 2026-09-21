@@ -68,3 +68,8 @@ textarea{ min-height:7rem; resize:vertical; }
 .link-btn{ font:inherit; font-size:.8rem; background:none; border:0; padding:0; color:var(--ink); text-decoration:underline; cursor:pointer; }
 .link-btn:hover{ color:var(--accent); }
 
+.toast{ position:fixed; left:50%; bottom:1.5rem; transform:translate(-50%, 200%); background:var(--ink); color:var(--bg); padding:.8rem 1.2rem; font-size:.9rem; display:flex; gap:1rem; align-items:center; z-index:50; transition:transform .3s ease; max-width:calc(100vw - 2rem); }
+.toast.is-on{ transform:translate(-50%, 0); }
+.toast a{ color:var(--bg); text-decoration:underline; white-space:nowrap; }
+@media (prefers-reduced-motion: reduce){ .toast{ transition:none; } }
+

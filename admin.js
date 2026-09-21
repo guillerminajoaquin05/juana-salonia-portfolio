@@ -11,7 +11,7 @@
 
   /* ---------- what can be edited ---------- */
   var LISTS = {
-    works: { label: "Trabajos", table: "works", noun: "trabajo", title: "title", sub: function(r){ return (r.categories || []).join(", "); },
+    works: { label: "Trabajos", table: "works", noun: "trabajo", title: "title", view: function(r){ return r ? "work-detail.html?id=" + r.id : "work.html"; }, sub: function(r){ return (r.categories || []).join(", "); },
       fields: [
         { k: "title", l: "Título", t: "text", req: true },
         { k: "title_es", l: "Título (Español)", t: "text", hint: "Opcional. Si lo dejás vacío se usa el título en inglés." },
@@ -35,7 +35,7 @@
         { k: "highlights", l: "Highlights", t: "textarea" },
         { k: "highlights_es", l: "Highlights (Español)", t: "textarea" }
       ] },
-    services: { label: "Servicios", table: "services", noun: "servicio", title: "title", sub: function(r){ return r.category ? "Filtro: " + r.category : ""; },
+    services: { label: "Servicios", table: "services", noun: "servicio", title: "title", view: function(){ return "services.html"; }, sub: function(r){ return r.category ? "Filtro: " + r.category : ""; },
       fields: [
         { k: "title", l: "Título", t: "text", req: true },
         { k: "title_es", l: "Título (Español)", t: "text" },
@@ -46,7 +46,7 @@
         { k: "category", l: "Categoría de Work a la que enlaza", t: "text", hint: "Tiene que coincidir con una categoría de los trabajos (ej: Podcast)." },
         { k: "image_url", l: "Foto (aparece al pasar el mouse)", t: "image" }
       ] },
-    lately: { label: "Lately", table: "lately_items", noun: "ítem", title: "text", sub: function(r){ return r.status; },
+    lately: { label: "Lately", table: "lately_items", noun: "ítem", title: "text", view: function(){ return "index.html#lately"; }, sub: function(r){ return r.status; },
       fields: [
         { k: "text", l: "Texto", t: "text", req: true },
         { k: "text_es", l: "Texto (Español)", t: "text" },
@@ -231,6 +231,7 @@
           h("div", { class: "row-actions" }, [
             h("button", { class: "btn btn--ghost btn--sm", type: "button", text: "↑", "aria-label": "Subir", disabled: i === 0 ? "disabled" : false, onclick: function(){ move(i, -1); } }),
             h("button", { class: "btn btn--ghost btn--sm", type: "button", text: "↓", "aria-label": "Bajar", disabled: i === records.length - 1 ? "disabled" : false, onclick: function(){ move(i, 1); } }),
+            h("a", { class: "btn btn--ghost btn--sm", href: def.view(rec), target: "_blank", rel: "noopener", text: "Ver ↗", "aria-label": "Ver en el sitio (se abre en otra pestaña)" }),
             h("button", { class: "btn btn--ghost btn--sm", type: "button", text: "Editar", onclick: function(){ openEditor(rec); } }),
             h("button", { class: "btn btn--danger btn--sm", type: "button", text: "Borrar", onclick: function(){ remove(rec); } })
           ])
@@ -280,6 +281,7 @@
           save.disabled = false;
           if (r.error){ say(m, "Error: " + r.error.message); return; }
           editorSlot.innerHTML = ""; load();
+          toast("Guardado ✓ Ya está publicado.", def.view(rec));
         });
       });
       editorSlot.appendChild(form);
@@ -310,11 +312,44 @@
         var rows = built.map(function(x){ return { key: x.f.k, value: x.b.get() }; });
         sb.from("site_settings").upsert(rows, { onConflict: "key" }).then(function(r){
           save.disabled = false;
-          if (r.error) say(m, "Error: " + r.error.message); else say(m, "Guardado ✓", true);
+          if (r.error) say(m, "Error: " + r.error.message); else { say(m, "Guardado ✓", true); toast("Guardado ✓ Ya está publicado.", "index.html"); }
         });
       });
       panel.appendChild(form);
     });
+  }
+
+  /* ---------- toast ---------- */
+  var toastTimer;
+  function toast(text, viewHref){
+    var el = document.getElementById("toast");
+    if (!el){ el = h("div", { id: "toast", class: "toast", role: "status" }); document.body.appendChild(el); }
+    el.innerHTML = "";
+    el.appendChild(document.createTextNode(text));
+    if (viewHref) el.appendChild(h("a", { href: viewHref, target: "_blank", rel: "noopener", text: "Ver en el sitio ↗" }));
+    el.classList.add("is-on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ el.classList.remove("is-on"); }, 7000);
+  }
+
+  /* ---------- backup: download everything as one JSON file ---------- */
+  function backup(btn){
+    var tables = ["works", "services", "lately_items", "site_settings"];
+    btn.disabled = true; var old = btn.textContent; btn.textContent = "Preparando…";
+    Promise.all(tables.map(function(t){ return sb.from(t).select("*"); })).then(function(res){
+      for (var i = 0; i < res.length; i++) if (res[i].error) throw res[i].error;
+      var out = { app: "juanasalonia-portfolio", exported_at: new Date().toISOString(),
+        note: "Las fotos no van dentro de este archivo: solo sus direcciones (URLs). Las imágenes quedan en Supabase Storage (bucket media).", tables: {} };
+      tables.forEach(function(t, i){ out.tables[t] = res[i].data; });
+      var blob = new Blob([JSON.stringify(out, null, 2)], { type: "application/json" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "juanasalonia-copia-" + new Date().toISOString().slice(0, 10) + ".json";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+      toast("Copia descargada ✓ Guardala en un lugar seguro.");
+    }).catch(function(e){ toast("No se pudo descargar la copia: " + (e.message || e)); })
+      .then(function(){ btn.disabled = false; btn.textContent = old; });
   }
 
   /* ---------- shell ---------- */
@@ -327,6 +362,7 @@
     var b = h("button", { class: "tab", type: "button", role: "tab", text: t[1], onclick: function(){ show(t[0]); } });
     b.dataset.key = t[0]; tabsEl.appendChild(b);
   });
+  document.getElementById("backupBtn").addEventListener("click", function(){ backup(this); });
   document.getElementById("logoutBtn").addEventListener("click", function(){
     sb.auth.signOut().then(function(){ location.replace("login.html"); });
   });

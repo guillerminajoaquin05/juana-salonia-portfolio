@@ -24,7 +24,7 @@
     <a href="contact.html">Contact</a>
   </nav>
   <div class="header-right">
-    <span class="lang-toggle" title="Spanish version coming soon">EN&nbsp;/&nbsp;ES</span>
+    <div class="lang-toggle" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="true">EN</button><span aria-hidden="true">/</span><button type="button" data-lang="es" aria-pressed="false">ES</button></div>
     <a href="login.html" class="admin-link" aria-label="Admin login" title="Admin"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></a>
     <button class="hamburger" id="hamburgerBtn" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -147,6 +147,7 @@
 
 <script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="i18n.js"></script>
 <script src="script.js"></script>
 <script src="content.js"></script>
 </body>

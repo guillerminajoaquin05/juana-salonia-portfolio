@@ -136,9 +136,12 @@ p{ margin: 0; }
 
 .header-right{ display: flex; align-items: center; gap: 1.5rem; }
 .lang-toggle{
+  display: inline-flex; align-items: center; gap: .3rem;
   font-size: .75rem; letter-spacing: .1em; color: var(--color-text-muted);
-  cursor: not-allowed;
 }
+.lang-toggle button{ font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; padding: .2rem .1rem; cursor: pointer; border-bottom: 1px solid transparent; }
+.lang-toggle button:hover{ color: var(--color-eggplant); }
+.lang-toggle button[aria-pressed="true"]{ color: var(--color-eggplant); font-weight: 700; border-bottom-color: var(--color-terracotta); }
 .hamburger{ width: 34px; height: 26px; display:flex; flex-direction:column; justify-content:space-between; }
 .hamburger span{ display:block; height: 1.5px; width: 100%; background: var(--color-eggplant); transition: transform .3s ease, opacity .3s ease; }
 .hamburger[aria-expanded="true"] span:nth-child(1){ transform: translateY(11.5px) rotate(45deg); }

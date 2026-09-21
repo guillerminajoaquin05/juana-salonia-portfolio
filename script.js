@@ -78,13 +78,14 @@
   window.initAboutCarousel();
 
   /* ---- work filter tags (Selected Work page); supports ?filter=Podcast ---- */
-  window.initWorkFilter = function(){
+  function catOf(t){ return t.getAttribute("data-cat") || t.textContent.trim(); }
+  window.initWorkFilter = function(initial){
     var filterTags = document.querySelectorAll(".filter-tag");
     if (!filterTags.length) return;
     var workRows = document.querySelectorAll(".work-list-row[data-cats]");
     function applyFilter(name){
       filterTags.forEach(function(t){
-        t.setAttribute("aria-pressed", t.textContent.trim() === name ? "true" : "false");
+        t.setAttribute("aria-pressed", catOf(t) === name ? "true" : "false");
       });
       workRows.forEach(function(row){
         var show = name === "All" || row.getAttribute("data-cats").split(",").map(function(c){ return c.trim(); }).indexOf(name) !== -1;
@@ -92,10 +93,10 @@
       });
     }
     filterTags.forEach(function(tag){
-      tag.onclick = function(){ applyFilter(tag.textContent.trim()); };
+      tag.onclick = function(){ applyFilter(catOf(tag)); };
     });
-    var wanted = new URLSearchParams(window.location.search).get("filter");
-    var known = Array.prototype.map.call(filterTags, function(t){ return t.textContent.trim(); });
+    var wanted = initial || new URLSearchParams(window.location.search).get("filter");
+    var known = Array.prototype.map.call(filterTags, catOf);
     if (wanted && known.indexOf(wanted) !== -1) applyFilter(wanted);
   };
   window.initWorkFilter();
@@ -104,12 +105,12 @@
   var copyEmailBtn = document.getElementById("copyEmailBtn");
   if (copyEmailBtn){
     var copyEmailAction = document.getElementById("copyEmailAction");
-    var defaultLabel = copyEmailAction.textContent;
+    var defaultLabel = "Click to copy →";
     copyEmailBtn.addEventListener("click", function(){
       var email = copyEmailBtn.getAttribute("data-email");
       function showCopied(){
-        copyEmailAction.textContent = "Copied ✓";
-        setTimeout(function(){ copyEmailAction.textContent = defaultLabel; }, 2000);
+        copyEmailAction.textContent = window.I18N ? window.I18N.t("Copied ✓") : "Copied ✓";
+        setTimeout(function(){ copyEmailAction.textContent = window.I18N ? window.I18N.t(defaultLabel) : defaultLabel; }, 2000);
       }
       if (navigator.clipboard && navigator.clipboard.writeText){
         navigator.clipboard.writeText(email).then(showCopied, function(){

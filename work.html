@@ -24,7 +24,7 @@
     <a href="contact.html">Contact</a>
   </nav>
   <div class="header-right">
-    <span class="lang-toggle" title="Spanish version coming soon">EN&nbsp;/&nbsp;ES</span>
+    <div class="lang-toggle" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="true">EN</button><span aria-hidden="true">/</span><button type="button" data-lang="es" aria-pressed="false">ES</button></div>
     <a href="login.html" class="admin-link" aria-label="Admin login" title="Admin"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></a>
     <button class="hamburger" id="hamburgerBtn" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -53,12 +53,12 @@
 
   <section class="mini-section" data-reveal style="padding-top:0;">
     <div class="filter-tags" role="group" aria-label="Filter projects by category">
-      <button type="button" class="filter-tag" aria-pressed="true">All</button>
-      <button type="button" class="filter-tag" aria-pressed="false">Podcast</button>
-      <button type="button" class="filter-tag" aria-pressed="false">Events</button>
-      <button type="button" class="filter-tag" aria-pressed="false">Travel</button>
-      <button type="button" class="filter-tag" aria-pressed="false">Content</button>
-      <button type="button" class="filter-tag" aria-pressed="false">Speaking</button>
+      <button type="button" class="filter-tag" aria-pressed="true" data-cat="All">All</button>
+      <button type="button" class="filter-tag" aria-pressed="false" data-cat="Podcast">Podcast</button>
+      <button type="button" class="filter-tag" aria-pressed="false" data-cat="Events">Events</button>
+      <button type="button" class="filter-tag" aria-pressed="false" data-cat="Travel">Travel</button>
+      <button type="button" class="filter-tag" aria-pressed="false" data-cat="Content">Content</button>
+      <button type="button" class="filter-tag" aria-pressed="false" data-cat="Speaking">Speaking</button>
     </div>
     <!-- NOTE: filters are structural only for now — wiring them to real
          project data happens once the admin panel / CMS (Módulo 4) is built. -->
@@ -156,6 +156,7 @@
 
 <script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="i18n.js"></script>
 <script src="script.js"></script>
 <script src="content.js"></script>
 </body>

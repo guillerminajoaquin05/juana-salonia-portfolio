@@ -14,43 +14,63 @@
     works: { label: "Trabajos", table: "works", noun: "trabajo", title: "title", sub: function(r){ return (r.categories || []).join(", "); },
       fields: [
         { k: "title", l: "Título", t: "text", req: true },
+        { k: "title_es", l: "Título (Español)", t: "text", hint: "Opcional. Si lo dejás vacío se usa el título en inglés." },
         { k: "categories", l: "Categorías", t: "tags", hint: "Separadas por coma. Son las que aparecen como filtros en Work (ej: Podcast, Events, Travel, Content, Speaking)." },
         { k: "meta", l: "Línea corta (lista de Work)", t: "text", hint: "Ej: Podcast Production · USA · 2025–Present" },
+        { k: "meta_es", l: "Línea corta (Español)", t: "text" },
         { k: "logo_url", l: "Logo (PNG con fondo transparente)", t: "image", hint: "Aparece al pasar el mouse por la fila en Work." },
         { k: "cover_url", l: "Foto de portada", t: "image", hint: "Se usa en la cinta de la home y arriba del caso de estudio." },
         { k: "summary", l: "Resumen (una frase)", t: "textarea", rows: 2 },
+        { k: "summary_es", l: "Resumen (Español)", t: "textarea", rows: 2 },
         { k: "year_place", l: "Año y lugar", t: "text" },
+        { k: "year_place_es", l: "Año y lugar (Español)", t: "text" },
         { k: "role", l: "Mi rol (corto)", t: "text" },
+        { k: "role_es", l: "Mi rol (Español)", t: "text" },
         { k: "drive_url", l: "Link a la galería (Drive)", t: "text" },
         { k: "context", l: "Contexto", t: "textarea" },
+        { k: "context_es", l: "Contexto (Español)", t: "textarea" },
         { k: "role_text", l: "Qué hice yo", t: "textarea" },
-        { k: "highlights", l: "Highlights", t: "textarea" }
+        { k: "role_text_es", l: "Qué hice yo (Español)", t: "textarea" },
+        { k: "highlights", l: "Highlights", t: "textarea" },
+        { k: "highlights_es", l: "Highlights (Español)", t: "textarea" }
       ] },
     services: { label: "Servicios", table: "services", noun: "servicio", title: "title", sub: function(r){ return r.category ? "Filtro: " + r.category : ""; },
       fields: [
         { k: "title", l: "Título", t: "text", req: true },
+        { k: "title_es", l: "Título (Español)", t: "text" },
         { k: "text", l: "Descripción", t: "textarea", rows: 3 },
+        { k: "text_es", l: "Descripción (Español)", t: "textarea", rows: 3 },
         { k: "details", l: "Detalle (uno por línea)", t: "lines" },
+        { k: "details_es", l: "Detalle (Español, uno por línea)", t: "lines" },
         { k: "category", l: "Categoría de Work a la que enlaza", t: "text", hint: "Tiene que coincidir con una categoría de los trabajos (ej: Podcast)." },
         { k: "image_url", l: "Foto (aparece al pasar el mouse)", t: "image" }
       ] },
     lately: { label: "Lately", table: "lately_items", noun: "ítem", title: "text", sub: function(r){ return r.status; },
       fields: [
         { k: "text", l: "Texto", t: "text", req: true },
-        { k: "status", l: "Estado", t: "text", hint: "Ej: In progress, Coming up, Done" }
+        { k: "text_es", l: "Texto (Español)", t: "text" },
+        { k: "status", l: "Estado", t: "text", hint: "Ej: In progress, Coming up, Done" },
+        { k: "status_es", l: "Estado (Español)", t: "text", hint: "Ej: En curso, Próximamente, Listo" }
       ] }
   };
 
   var SETTINGS = [
     { group: "Sobre mí (home)", fields: [
-      { k: "home_about", l: "Texto corto de la home", t: "textarea", rows: 4, hint: "Para resaltar en naranja, poné *asteriscos* alrededor del texto." } ] },
+      { k: "home_about", l: "Texto corto de la home", t: "textarea", rows: 4, hint: "Para resaltar en naranja, poné *asteriscos* alrededor del texto." },
+      { k: "home_about_es", l: "Texto corto de la home (Español)", t: "textarea", rows: 4 } ] },
     { group: "Sobre mí (página About)", fields: [
       { k: "about_p1", l: "Párrafo 1", t: "textarea" },
+      { k: "about_p1_es", l: "Párrafo 1 (Español)", t: "textarea" },
       { k: "about_p2", l: "Párrafo 2", t: "textarea", hint: "Podés resaltar con *asteriscos*." },
+      { k: "about_p2_es", l: "Párrafo 2 (Español)", t: "textarea" },
       { k: "about_p3", l: "Párrafo 3", t: "textarea" },
+      { k: "about_p3_es", l: "Párrafo 3 (Español)", t: "textarea" },
       { k: "about_pd", l: "P.D.", t: "textarea", rows: 2 },
+      { k: "about_pd_es", l: "P.D. (Español)", t: "textarea", rows: 2 },
       { k: "degree", l: "Título académico", t: "text" },
+      { k: "degree_es", l: "Título académico (Español)", t: "text" },
       { k: "school", l: "Universidad", t: "text" },
+      { k: "school_es", l: "Universidad (Español)", t: "text" },
       { k: "about_photos", l: "Fotos del carrusel", t: "gallery", hint: "Se muestran en este orden. Mejor fotos verticales." } ] },
     { group: "Contacto", fields: [
       { k: "email", l: "Email", t: "text" },

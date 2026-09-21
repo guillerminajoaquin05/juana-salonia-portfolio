@@ -630,3 +630,21 @@ p{ margin: 0; }
   .about-carousel-dot::after{ content: ''; position: absolute; inset: -14px; }
   .filter-tag{ min-height: 44px; }
 }
+
+/* Contact form (Netlify Forms) */
+.contact-form{ max-width: 46rem; display: flex; flex-direction: column; gap: 1.5rem; }
+.cf-field label{ display: block; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: .35rem; }
+.cf-field input, .cf-field select, .cf-field textarea{
+  width: 100%; font: inherit; font-size: 1rem; color: var(--color-eggplant);
+  background: transparent; border: 0; border-bottom: 1px solid var(--color-eggplant); border-radius: 0; padding: .6rem 0;
+}
+.cf-field textarea{ resize: vertical; min-height: 8rem; border: 1px solid var(--color-eggplant); padding: .75rem; }
+.cf-field input:focus, .cf-field select:focus, .cf-field textarea:focus{ outline: 2px solid var(--color-terracotta); outline-offset: 2px; }
+.cf-field [aria-invalid="true"]{ border-color: var(--color-terracotta); }
+.contact-form .btn{ align-self: flex-start; }
+.contact-form .btn[disabled]{ opacity: .6; cursor: wait; }
+.cf-hp{ position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.cf-status{ min-height: 1.4em; font-size: .95rem; }
+.cf-status.is-ok{ color: var(--color-eggplant); font-weight: 600; }
+.cf-status.is-err{ color: var(--color-terracotta); }
+

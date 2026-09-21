@@ -80,6 +80,40 @@
     </div>
   </section>
 
+  <section class="mini-section" id="message" data-reveal>
+    <div class="section-head">
+      <span class="section-number">→</span>
+      <h2 class="section-title">Send a message</h2>
+    </div>
+    <form class="contact-form" name="contact" method="POST" action="/contact.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="contact">
+      <input type="hidden" name="language" value="en">
+      <p class="cf-hp" aria-hidden="true"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="cf-field">
+        <label for="cf-name">Name</label>
+        <input id="cf-name" name="name" type="text" autocomplete="name" required>
+      </div>
+      <div class="cf-field">
+        <label for="cf-email">Email</label>
+        <input id="cf-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="cf-field">
+        <label for="cf-looking">What are you looking for?</label>
+        <select id="cf-looking" name="looking-for">
+          <option value="Podcast">Podcast</option>
+          <option value="LinkedIn &amp; content">LinkedIn &amp; content</option>
+          <option value="A project or event">A project or event</option>
+          <option value="Something else">Something else</option>
+        </select>
+      </div>
+      <div class="cf-field">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" rows="6" required></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit" id="cfSubmit">Send message</button>
+      <p class="cf-status" id="cfStatus" role="status" aria-live="polite"></p>
+    </form>
+  </section>
   <div class="divider" aria-hidden="true">
     <span class="star divider-walker" data-cell="cream-terracotta"></span>
   </div>

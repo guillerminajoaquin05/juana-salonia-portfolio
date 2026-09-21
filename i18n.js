@@ -58,6 +58,14 @@
     "Email": "Correo", "Click to copy →": "Clic para copiar →", "Copied ✓": "Copiado ✓", "Visit profile →": "Ver perfil →",
     "What people say": "Lo que dicen", "Email me": "Escríbeme",
 
+    /* contact form */
+    "Send a message": "Envía un mensaje", "Name": "Nombre", "What are you looking for?": "¿Qué buscas?", "Message": "Mensaje",
+    "LinkedIn & content": "LinkedIn y contenido", "A project or event": "Un proyecto o evento", "Something else": "Otra cosa",
+    "Send message": "Enviar mensaje", "Sending…": "Enviando…",
+    "Message sent — thank you! Juana will get back to you soon.": "Mensaje enviado, ¡gracias! Juana te responderá pronto.",
+    "Please fill in your name, a valid email and a message.": "Completa tu nombre, un email válido y un mensaje.",
+    "Something went wrong. Please try again or email directly.": "Algo salió mal. Inténtalo de nuevo o escribe directamente por email.",
+
     /* 404 */
     "404": "404", "This page took": "Esta página se perdió", "a wrong turn.": "en el camino.",
     "The link may be broken, or the page may have moved.": "Puede que el enlace esté roto o que la página se haya movido.",

@@ -122,6 +122,42 @@
     });
   }
 
+  /* ---- contact form (Netlify Forms, sent with fetch so the page doesn't reload) ---- */
+  var contactForm = document.querySelector(".contact-form");
+  if (contactForm){
+    var cfStatus = document.getElementById("cfStatus");
+    var cfSubmit = document.getElementById("cfSubmit");
+    var tr = function(s){ return window.I18N ? window.I18N.t(s) : s; };
+    var say = function(msg, ok){ cfStatus.textContent = tr(msg); cfStatus.className = "cf-status " + (ok ? "is-ok" : "is-err"); };
+
+    contactForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      var name = contactForm.elements["name"], email = contactForm.elements["email"], msg = contactForm.elements["message"];
+      var valid = true;
+      [[name, name.value.trim()], [email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())], [msg, msg.value.trim()]].forEach(function(p){
+        p[0].setAttribute("aria-invalid", p[1] ? "false" : "true");
+        if (!p[1]) valid = false;
+      });
+      if (!valid){ say("Please fill in your name, a valid email and a message.", false); return; }
+
+      contactForm.elements["language"].value = window.I18N ? window.I18N.lang : "en";
+      cfSubmit.disabled = true;
+      cfStatus.className = "cf-status"; cfStatus.textContent = tr("Sending…");
+
+      fetch(contactForm.getAttribute("action") || "/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(contactForm)).toString()
+      }).then(function(res){
+        if (!res.ok) throw new Error("bad status");
+        contactForm.reset();
+        say("Message sent — thank you! Juana will get back to you soon.", true);
+      }).catch(function(){
+        say("Something went wrong. Please try again or email directly.", false);
+      }).then(function(){ cfSubmit.disabled = false; });
+    });
+  }
+
   /* ---- footer year ---- */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();

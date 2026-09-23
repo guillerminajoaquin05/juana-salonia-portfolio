@@ -112,16 +112,59 @@
     }).join("");
   }
 
+  /* short preview of a long quote: the first one or two paragraphs, or (for a
+     single long paragraph) a word-safe character cut. Only truncates when the
+     quote is actually longer than that. */
+  function previewOf(s){
+    var paras = s.split(/\n[ \t]*\n+/).map(function(p){ return p.trim(); }).filter(Boolean);
+    if (paras.length > 1) return { preview: paras.slice(0, 2).join("\n\n"), truncated: paras.length > 2 };
+    var LIMIT = 220;
+    if (s.length <= LIMIT) return { preview: s, truncated: false };
+    var cut = s.slice(0, LIMIT), lastSpace = cut.lastIndexOf(" ");
+    if (lastSpace > 100) cut = cut.slice(0, lastSpace);
+    return { preview: cut, truncated: true };
+  }
+
   function renderTestimonials(items){
     var wrap = $(".testimonials");
     if (!wrap) return;
     var section = wrap.closest("section");
     if (!items.length){ if (section) section.style.display = "none"; return; }
     if (section) section.style.display = "";
-    wrap.innerHTML = items.map(function(it){
+    wrap.innerHTML = items.map(function(it, i){
       var role = pick(it, "role");
-      return '<div class="testimonial"><p>&ldquo;' + rich(pick(it, "quote")) + "&rdquo;</p><cite>" + esc(it.name) + (role ? ", " + esc(role) : "") + "</cite></div>";
+      var quote = pick(it, "quote");
+      var p = previewOf(quote);
+      var more = p.truncated
+        ? '<button type="button" class="testimonial-more" data-i="' + i + '">' + esc(t("Read more →")) + "</button>" : "";
+      return '<div class="testimonial"><p>&ldquo;' + rich(p.preview) + (p.truncated ? "…" : "") + "&rdquo;</p>" + more +
+        "<cite>" + esc(it.name) + (role ? ", " + esc(role) : "") + "</cite></div>";
     }).join("");
+    Array.prototype.forEach.call(wrap.querySelectorAll(".testimonial-more"), function(btn){
+      btn.addEventListener("click", function(){
+        var it = items[parseInt(btn.getAttribute("data-i"), 10)];
+        if (it) openTestimonialModal(pick(it, "quote"), it.name, pick(it, "role"));
+      });
+    });
+  }
+
+  /* full-quote modal (native <dialog>: Esc closes, focus returns to the "Read more" button) */
+  var tm;
+  function openTestimonialModal(quote, name, role){
+    if (!tm){
+      tm = document.createElement("dialog");
+      tm.className = "testimonial-modal";
+      tm.innerHTML = '<button type="button" class="testimonial-modal-close" data-act="close">✕</button>' +
+        "<blockquote></blockquote><cite></cite>";
+      document.body.appendChild(tm);
+      tm.addEventListener("click", function(e){
+        if (e.target === tm || e.target.getAttribute("data-act") === "close") tm.close();
+      });
+    }
+    tm.querySelector(".testimonial-modal-close").setAttribute("aria-label", t("Close"));
+    tm.querySelector("blockquote").innerHTML = "&ldquo;" + rich(quote) + "&rdquo;";
+    tm.querySelector("cite").textContent = name + (role ? ", " + role : "");
+    if (!tm.open) tm.showModal();
   }
 
   function renderSettings(s){

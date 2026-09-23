@@ -52,6 +52,14 @@
         { k: "text_es", l: "Texto (Español)", t: "text" },
         { k: "status", l: "Estado", t: "text", hint: "Ej: In progress, Coming up, Done" },
         { k: "status_es", l: "Estado (Español)", t: "text", hint: "Ej: En curso, Próximamente, Listo" }
+      ] },
+    testimonials: { label: "Testimonios", table: "testimonials", noun: "testimonio", title: "name", view: function(){ return "contact.html"; }, sub: function(r){ return (r.quote || "").slice(0, 50); },
+      fields: [
+        { k: "quote", l: "Testimonio", t: "textarea", rows: 3, req: true, hint: "Sin comillas: se agregan solas al mostrarlo." },
+        { k: "quote_es", l: "Testimonio (Español)", t: "textarea", rows: 3 },
+        { k: "name", l: "Nombre de quien lo dice", t: "text", req: true },
+        { k: "role", l: "Cargo / empresa", t: "text" },
+        { k: "role_es", l: "Cargo / empresa (Español)", t: "text" }
       ] }
   };
 
@@ -353,7 +361,7 @@
   }
 
   /* ---------- shell ---------- */
-  var TABS = [["works", "Trabajos"], ["services", "Servicios"], ["lately", "Lately"], ["settings", "Textos y contacto"]];
+  var TABS = [["works", "Trabajos"], ["services", "Servicios"], ["lately", "Lately"], ["testimonials", "Testimonios"], ["settings", "Textos y contacto"]];
   function show(key){
     Array.prototype.forEach.call(tabsEl.children, function(b){ b.setAttribute("aria-selected", b.dataset.key === key); });
     if (key === "settings") renderSettings(); else renderList(key);

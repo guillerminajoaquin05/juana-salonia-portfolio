@@ -32,7 +32,7 @@
   function q(table){ return sb.from(table).select("*").order("position", { ascending: true }); }
 
   var STAR = '<span class="star" aria-hidden="true"></span>';
-  var data = { works: [], services: [], lately: [], settings: {} };
+  var data = { works: [], services: [], lately: [], testimonials: [], settings: {} };
   var photosDone = false;
 
   /* ---------- renderers ---------- */
@@ -102,6 +102,18 @@
     grid.innerHTML = items.map(function(it, i){
       return '<div class="lately-item"><span class="lately-num">' + pad(i + 1) + "</span><p>" + esc(pick(it, "text")) +
         '</p><span class="lately-status">' + esc(pick(it, "status")) + "</span></div>";
+    }).join("");
+  }
+
+  function renderTestimonials(items){
+    var wrap = $(".testimonials");
+    if (!wrap) return;
+    var section = wrap.closest("section");
+    if (!items.length){ if (section) section.style.display = "none"; return; }
+    if (section) section.style.display = "";
+    wrap.innerHTML = items.map(function(it){
+      var role = pick(it, "role");
+      return '<div class="testimonial"><p>&ldquo;' + esc(pick(it, "quote")) + "&rdquo;</p><cite>" + esc(it.name) + (role ? ", " + esc(role) : "") + "</cite></div>";
     }).join("");
   }
 
@@ -242,6 +254,7 @@
     renderMarquee(data.works);
     renderServices(data.services);
     renderLately(data.lately);
+    renderTestimonials(data.testimonials);
     renderSettings(data.settings);
     renderWorkDetail(data.works);
     if (window.I18N) window.I18N.apply(document.body);
@@ -253,10 +266,12 @@
     needsWorks ? q("works") : { data: [] },
     $(".services-list") ? q("services") : { data: [] },
     $(".lately-grid") ? q("lately_items") : { data: [] },
+    $(".testimonials") ? q("testimonials") : { data: [] },
     sb.from("site_settings").select("*")
   ]).then(function(r){
     data.works = r[0].data || []; data.services = r[1].data || []; data.lately = r[2].data || [];
-    (r[3].data || []).forEach(function(row){ data.settings[row.key] = row.value; });
+    data.testimonials = r[3].data || [];
+    (r[4].data || []).forEach(function(row){ data.settings[row.key] = row.value; });
     renderAll();
     document.addEventListener("langchange", renderAll);
   }).catch(function(){ /* keep static fallback */ });

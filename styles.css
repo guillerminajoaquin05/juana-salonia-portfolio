@@ -485,28 +485,23 @@ p{ margin: 0; }
 .testimonial-more{ display: inline-block; font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--color-accent-text); background: none; border: 0; padding: 0; margin-bottom: .85rem; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .testimonial-more:hover{ color: var(--color-eggplant); }
 
-/* Full-quote "bubble": a small rounded popover anchored to the card that was
-   clicked (see content.js openTestimonialBubble), not a centered dialog. */
-.testimonial-scrim{ position: fixed; inset: 0; z-index: 998; background: transparent; opacity: 0; pointer-events: none; }
-.testimonial-scrim.is-open{ pointer-events: auto; opacity: 1; }
-.testimonial-bubble{
-  position: fixed; z-index: 999; width: min(380px, calc(100vw - 32px));
-  background: var(--color-background); border: 1px solid var(--color-eggplant); border-radius: 26px;
-  padding: 1.75rem 1.75rem 1.5rem; box-shadow: 0 16px 36px rgba(40,14,24,.2);
-  opacity: 0; transform: translateY(6px) scale(.97); pointer-events: none;
-  transition: opacity .18s ease, transform .18s ease;
+/* Full-quote pop-up: a centered, rounded card over a dimmed backdrop, with a
+   springy open animation (see content.js openTestimonialPopup). */
+.testimonial-scrim{ position: fixed; inset: 0; z-index: 998; background: rgba(40,14,24,0); pointer-events: none; transition: background .28s ease; }
+.testimonial-scrim.is-open{ background: rgba(40,14,24,.55); pointer-events: auto; }
+.testimonial-popup{
+  position: fixed; z-index: 999; top: 50%; left: 50%; width: min(440px, calc(100vw - 32px));
+  background: var(--color-background); border: 1px solid var(--color-eggplant); border-radius: 24px;
+  padding: 2.25rem 2rem 2rem; box-shadow: 0 20px 48px rgba(40,14,24,.28);
+  opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(.88);
+  transition: opacity .22s ease, transform .38s cubic-bezier(.34, 1.4, .64, 1);
 }
-.testimonial-bubble.is-open{ opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
-.testimonial-bubble.is-above{ transform-origin: bottom center; }
-.testimonial-bubble.is-below{ transform-origin: top center; }
-.testimonial-bubble blockquote{ margin: 0 0 .85rem; font-family: var(--font-sans); font-style: normal; font-size: 1rem; line-height: 1.7; color: var(--color-eggplant); }
-.testimonial-bubble cite{ font-style: normal; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
-.testimonial-bubble-close{ position: absolute; top: .5rem; right: .5rem; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 50%; color: var(--color-eggplant); }
-.testimonial-bubble-close:hover{ background: color-mix(in srgb, var(--color-eggplant) 10%, transparent); color: var(--color-accent-text); }
-.testimonial-bubble-tail{ position: absolute; left: 50%; width: 18px; height: 18px; background: var(--color-background); transform: translateX(-50%) rotate(45deg); border-radius: 4px; }
-.testimonial-bubble.is-below .testimonial-bubble-tail{ top: -9px; border-left: 1px solid var(--color-eggplant); border-top: 1px solid var(--color-eggplant); }
-.testimonial-bubble.is-above .testimonial-bubble-tail{ bottom: -9px; border-right: 1px solid var(--color-eggplant); border-bottom: 1px solid var(--color-eggplant); }
-@media (prefers-reduced-motion: reduce){ .testimonial-bubble{ transition: none; } }
+.testimonial-popup.is-open{ opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+.testimonial-popup blockquote{ margin: 0 0 1rem; font-family: var(--font-sans); font-style: normal; font-size: 1.05rem; line-height: 1.7; color: var(--color-eggplant); }
+.testimonial-popup cite{ font-style: normal; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
+.testimonial-popup-close{ position: absolute; top: .6rem; right: .6rem; width: 2.1rem; height: 2.1rem; display: grid; place-items: center; border-radius: 50%; color: var(--color-eggplant); }
+.testimonial-popup-close:hover{ background: color-mix(in srgb, var(--color-eggplant) 10%, transparent); color: var(--color-accent-text); }
+@media (prefers-reduced-motion: reduce){ .testimonial-popup, .testimonial-scrim{ transition: none; } }
 
 /* ==========================================================
    FOOTER

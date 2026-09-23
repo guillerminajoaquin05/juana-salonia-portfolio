@@ -1,5 +1,5 @@
 :root{
-  --bg:#FAF4EB; --ink:#66253D; --accent:#ED5C30; --line:rgba(102,37,61,.25); --muted:rgba(102,37,61,.65);
+  --bg:#FDFAF5; --ink:#66253D; --accent:#ED5C30; --line:rgba(102,37,61,.25); --muted:rgba(102,37,61,.65);
 }
 *{ box-sizing:border-box; }
 body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }

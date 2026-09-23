@@ -28,7 +28,7 @@
         { k: "role_es", l: "Mi rol (Español)", t: "text" },
         { k: "gallery", l: "Galería de fotos", t: "gallery", hint: "Se muestran en este orden en la página del trabajo. Podés subir varias juntas; se achican solas." },
         { k: "drive_url", l: "Link a la galería completa (Drive)", t: "text", hint: "Opcional: aparece como enlace \"Gallery\" en los datos del proyecto." },
-        { k: "context", l: "Contexto", t: "textarea" },
+        { k: "context", l: "Contexto", t: "textarea", hint: "Para separar en párrafos, dejá una línea en blanco entre uno y otro." },
         { k: "context_es", l: "Contexto (Español)", t: "textarea" },
         { k: "role_text", l: "Qué hice yo", t: "textarea" },
         { k: "role_text_es", l: "Qué hice yo (Español)", t: "textarea" },
@@ -68,7 +68,7 @@
       { k: "home_about", l: "Texto corto de la home", t: "textarea", rows: 4, hint: "Para resaltar en naranja, poné *asteriscos* alrededor del texto." },
       { k: "home_about_es", l: "Texto corto de la home (Español)", t: "textarea", rows: 4 } ] },
     { group: "Sobre mí (página About)", fields: [
-      { k: "about_p1", l: "Párrafo 1", t: "textarea" },
+      { k: "about_p1", l: "Párrafo 1", t: "textarea", hint: "Para separar en párrafos dentro de este mismo campo, dejá una línea en blanco entre uno y otro." },
       { k: "about_p1_es", l: "Párrafo 1 (Español)", t: "textarea" },
       { k: "about_p2", l: "Párrafo 2", t: "textarea", hint: "Podés resaltar con *asteriscos*." },
       { k: "about_p2_es", l: "Párrafo 2 (Español)", t: "textarea" },

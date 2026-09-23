@@ -25,8 +25,15 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
-  /* *text* -> highlighted span */
-  function rich(s){ return esc(s).replace(/\*([^*]+)\*/g, '<span class="highlight">$1</span>'); }
+  /* *text* -> highlighted span, and line breaks preserved: a blank line between
+     paragraphs becomes a paragraph gap, a single line break becomes <br>.
+     Handles text pasted from the admin panel that has real newlines. */
+  function rich(s){
+    return esc(s)
+      .replace(/\*([^*]+)\*/g, '<span class="highlight">$1</span>')
+      .replace(/\n[ \t]*\n+/g, "<br><br>")
+      .replace(/\n/g, "<br>");
+  }
   function $(sel){ return document.querySelector(sel); }
   function pad(n){ return (n < 10 ? "0" : "") + n; }
   function q(table){ return sb.from(table).select("*").order("position", { ascending: true }); }
@@ -90,7 +97,7 @@
       var Tag = full ? "h2" : "h3";
       return '<div class="service-row">' + STAR + "<div>" +
         "<" + Tag + ' class="service-title">' + (full ? pad(i + 1) + " — " : "") + esc(pick(s, "title")) + "</" + Tag + ">" +
-        '<p class="service-text">' + esc(text) + "</p>" + details + cta + "</div>" +
+        '<p class="service-text">' + rich(text) + "</p>" + details + cta + "</div>" +
         (s.image_url ? '<div class="service-row-media" aria-hidden="true"><img src="' + esc(s.image_url) + '" alt="" decoding="async"></div>' : "") +
         "</div>";
     }).join("");
@@ -113,7 +120,7 @@
     if (section) section.style.display = "";
     wrap.innerHTML = items.map(function(it){
       var role = pick(it, "role");
-      return '<div class="testimonial"><p>&ldquo;' + esc(pick(it, "quote")) + "&rdquo;</p><cite>" + esc(it.name) + (role ? ", " + esc(role) : "") + "</cite></div>";
+      return '<div class="testimonial"><p>&ldquo;' + rich(pick(it, "quote")) + "&rdquo;</p><cite>" + esc(it.name) + (role ? ", " + esc(role) : "") + "</cite></div>";
     }).join("");
   }
 
@@ -187,7 +194,7 @@
     for (var i = 0; i < blocks.length && i < 3; i++){
       var p = blocks[i].querySelector("p");
       blocks[i].style.display = vals[i] ? "" : "none";
-      if (vals[i] && p) p.innerHTML = esc(vals[i]).replace(/\n+/g, "<br><br>");
+      if (vals[i] && p) p.innerHTML = rich(vals[i]);
     }
     /* photo gallery (masonry grid + lightbox) */
     var gal = $(".gallery-grid");

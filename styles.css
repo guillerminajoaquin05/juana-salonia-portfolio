@@ -432,8 +432,9 @@ p{ margin: 0; }
    SERVICES — numbered rows, no boxed cards
    ========================================================== */
 .services-list{ display: flex; flex-direction: column; }
-.service-row{ position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start; padding-block: 2rem; border-top: var(--rule); }
+.service-row{ position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start; padding-block: 2rem; border-top: var(--rule); transition: background-color .3s ease; }
 .service-row:last-child{ border-bottom: var(--rule); }
+.service-row:hover, .service-row:focus-within{ background-color: color-mix(in srgb, var(--color-terracotta) 8%, transparent); }
 .service-row .star{ --size: 46px; opacity: 0; transform: scale(.6) rotate(-10deg); transition: opacity .3s ease, transform .3s cubic-bezier(.34,1.4,.64,1); }
 .service-row:hover .star, .service-row:focus-within .star{ opacity: 1; transform: scale(1) rotate(0deg); }
 .service-title{ font-size: 1.05rem; text-transform: uppercase; letter-spacing: .02em; margin-bottom: .5rem; }

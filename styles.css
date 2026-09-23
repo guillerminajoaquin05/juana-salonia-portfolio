@@ -249,7 +249,7 @@ p{ margin: 0; }
 /* phones: zoom in and crop the bottom so her feet stay out of frame */
 @media (max-width: 719px){
   .hero-photo-full{ overflow: hidden; }
-  .hero-photo-full img{ height: 210%; transform: translateY(-16%); object-position: 66% top; }
+  .hero-photo-full img{ height: 240%; transform: translateY(-22%); object-position: 66% top; }
 }
 
 .hero-overlay{

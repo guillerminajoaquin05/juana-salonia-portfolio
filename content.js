@@ -200,6 +200,8 @@
       if (!photosDone && frame && dots && photos.length){
         photosDone = true;
         frame.innerHTML = photos.map(function(p, i){
+          /* photos kept in the repo get a version tag so edited files aren't served stale from cache */
+          if (!/^https?:/.test(p)) p += "?v=2";
           return '<img src="' + esc(p) + '" alt="Juana Salonia"' + (i === 0 ? ' class="is-active"' : ' loading="lazy"') + ">";
         }).join("");
         dots.setAttribute("role", "group");

@@ -479,29 +479,16 @@ p{ margin: 0; }
 .contact-method-action{ font-size: .85rem; color: var(--color-accent-text); }
 .contact-method:hover .contact-method-value{ color: var(--color-accent-text); }
 .testimonials{ display: grid; grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2rem; }
-.testimonial{ padding-top: 1.75rem; border-top: var(--rule); }
-.testimonial p{ font-family: var(--font-sans); font-style: normal; font-size: 1.05rem; line-height: 1.7; margin-bottom: .85rem; }
-.testimonial cite{ font-style: normal; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
-.testimonial-more{ display: inline-block; font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--color-accent-text); background: none; border: 0; padding: 0; margin-bottom: .85rem; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+/* card lifts and gains a soft shadow on hover/expand — same lift + reveal
+   feel as a folder-card that opens on touch, timed with its easing curve */
+.testimonial{ padding: 1.75rem 0 .25rem; border-top: var(--rule); border-radius: 14px; transition: transform .3s cubic-bezier(.25,.46,.45,.94), box-shadow .35s cubic-bezier(.25,.46,.45,.94); }
+.testimonial:hover, .testimonial.is-expanded{ transform: translateY(-6px); box-shadow: 0 20px 40px rgba(102,37,61,.16); }
+.testimonial-clip{ max-height: 5.1em; overflow: hidden; transition: max-height .5s cubic-bezier(.25,.46,.45,.94); }
+.testimonial-quote{ margin: 0; font-family: var(--font-sans); font-style: normal; font-size: 1.05rem; line-height: 1.7; }
+.testimonial cite{ display: block; margin-top: .85rem; font-style: normal; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
+.testimonial-more{ display: inline-block; margin-top: .6rem; font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--color-accent-text); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .testimonial-more:hover{ color: var(--color-eggplant); }
-
-/* Full-quote pop-up: a centered, rounded card over a dimmed backdrop, with a
-   springy open animation (see content.js openTestimonialPopup). */
-.testimonial-scrim{ position: fixed; inset: 0; z-index: 998; background: rgba(40,14,24,0); pointer-events: none; transition: background .28s ease; }
-.testimonial-scrim.is-open{ background: rgba(40,14,24,.55); pointer-events: auto; }
-.testimonial-popup{
-  position: fixed; z-index: 999; top: 50%; left: 50%; width: min(440px, calc(100vw - 32px));
-  background: var(--color-background); border: 1px solid var(--color-eggplant); border-radius: 24px;
-  padding: 2.25rem 2rem 2rem; box-shadow: 0 20px 48px rgba(40,14,24,.28);
-  opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(.88);
-  transition: opacity .22s ease, transform .38s cubic-bezier(.34, 1.4, .64, 1);
-}
-.testimonial-popup.is-open{ opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
-.testimonial-popup blockquote{ margin: 0 0 1rem; font-family: var(--font-sans); font-style: normal; font-size: 1.05rem; line-height: 1.7; color: var(--color-eggplant); }
-.testimonial-popup cite{ font-style: normal; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
-.testimonial-popup-close{ position: absolute; top: .6rem; right: .6rem; width: 2.1rem; height: 2.1rem; display: grid; place-items: center; border-radius: 50%; color: var(--color-eggplant); }
-.testimonial-popup-close:hover{ background: color-mix(in srgb, var(--color-eggplant) 10%, transparent); color: var(--color-accent-text); }
-@media (prefers-reduced-motion: reduce){ .testimonial-popup, .testimonial-scrim{ transition: none; } }
+@media (prefers-reduced-motion: reduce){ .testimonial, .testimonial-clip{ transition: none; } }
 
 /* ==========================================================
    FOOTER

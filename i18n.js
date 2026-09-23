@@ -60,7 +60,7 @@
 
     /* gallery */
     "Open photo": "Abrir foto", "Close": "Cerrar", "Previous": "Anterior", "Next": "Siguiente",
-    "Read more →": "Leer más →",
+    "Read more →": "Leer más →", "Read less": "Leer menos",
 
     /* accessibility */
     "Skip to content": "Saltar al contenido", "Pause": "Pausar", "Play": "Reproducir",

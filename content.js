@@ -115,76 +115,42 @@
   /* short preview of a long quote: the first one or two paragraphs, or (for a
      single long paragraph) a word-safe character cut. Only truncates when the
      quote is actually longer than that. */
-  function previewOf(s){
-    var paras = s.split(/\n[ \t]*\n+/).map(function(p){ return p.trim(); }).filter(Boolean);
-    if (paras.length > 1) return { preview: paras.slice(0, 2).join("\n\n"), truncated: paras.length > 2 };
-    var LIMIT = 220;
-    if (s.length <= LIMIT) return { preview: s, truncated: false };
-    var cut = s.slice(0, LIMIT), lastSpace = cut.lastIndexOf(" ");
-    if (lastSpace > 100) cut = cut.slice(0, lastSpace);
-    return { preview: cut, truncated: true };
-  }
-
   function renderTestimonials(items){
     var wrap = $(".testimonials");
     if (!wrap) return;
     var section = wrap.closest("section");
     if (!items.length){ if (section) section.style.display = "none"; return; }
     if (section) section.style.display = "";
-    wrap.innerHTML = items.map(function(it, i){
+    wrap.innerHTML = items.map(function(it){
       var role = pick(it, "role");
-      var quote = pick(it, "quote");
-      var p = previewOf(quote);
-      var more = p.truncated
-        ? '<button type="button" class="testimonial-more" data-i="' + i + '">' + esc(t("Read more →")) + "</button>" : "";
-      return '<div class="testimonial"><p>&ldquo;' + rich(p.preview) + (p.truncated ? "…" : "") + "&rdquo;</p>" + more +
+      return '<div class="testimonial">' +
+        '<div class="testimonial-clip"><p class="testimonial-quote">&ldquo;' + rich(pick(it, "quote")) + "&rdquo;</p></div>" +
+        '<button type="button" class="testimonial-more" hidden>' + esc(t("Read more →")) + "</button>" +
         "<cite>" + esc(it.name) + (role ? ", " + esc(role) : "") + "</cite></div>";
     }).join("");
-    Array.prototype.forEach.call(wrap.querySelectorAll(".testimonial-more"), function(btn){
-      btn.addEventListener("click", function(){
-        var it = items[parseInt(btn.getAttribute("data-i"), 10)];
-        if (it) openTestimonialPopup(pick(it, "quote"), it.name, pick(it, "role"), btn);
-      });
+    Array.prototype.forEach.call(wrap.querySelectorAll(".testimonial"), setupTestimonialExpand);
+  }
+
+  /* card lifts + its clipped quote expands in place (no popup) — same lift +
+     reveal mechanic as the folder-card reference: measure the real rendered
+     height so the reveal animates smoothly regardless of quote length, and
+     only offer "Read more" when the quote is actually being clipped. */
+  function setupTestimonialExpand(card){
+    var clip = card.querySelector(".testimonial-clip");
+    var btn = card.querySelector(".testimonial-more");
+    var collapsedH = clip.clientHeight;
+    if (clip.scrollHeight - collapsedH < 8) return;
+    btn.hidden = false;
+    var open = false;
+    btn.addEventListener("click", function(){
+      open = !open;
+      card.classList.toggle("is-expanded", open);
+      clip.style.maxHeight = open ? clip.scrollHeight + "px" : "";
+      btn.textContent = t(open ? "Read less" : "Read more →");
     });
-  }
-
-  /* full-quote pop-up: a centered card with a springy open animation, over a
-     dimmed backdrop. Closes on Esc, on click outside, or the ✕ — and
-     returns focus to the "Read more" button that opened it. */
-  var popup, popupScrim, popupReturnFocus;
-  function closeTestimonialPopup(){
-    if (!popup || !popup.classList.contains("is-open")) return;
-    popup.classList.remove("is-open");
-    popupScrim.classList.remove("is-open");
-    document.removeEventListener("keydown", onPopupKeydown);
-    if (popupReturnFocus) popupReturnFocus.focus();
-  }
-  function onPopupKeydown(e){ if (e.key === "Escape") closeTestimonialPopup(); }
-
-  function openTestimonialPopup(quote, name, role, anchorEl){
-    if (!popup){
-      popupScrim = document.createElement("div");
-      popupScrim.className = "testimonial-scrim";
-      popupScrim.addEventListener("click", closeTestimonialPopup);
-      popup = document.createElement("div");
-      popup.className = "testimonial-popup";
-      popup.setAttribute("role", "dialog");
-      popup.setAttribute("aria-modal", "true");
-      popup.innerHTML = '<button type="button" class="testimonial-popup-close"></button><blockquote></blockquote><cite></cite>';
-      popup.querySelector(".testimonial-popup-close").addEventListener("click", closeTestimonialPopup);
-      document.body.appendChild(popupScrim);
-      document.body.appendChild(popup);
-    }
-    popup.querySelector(".testimonial-popup-close").textContent = "✕";
-    popup.querySelector(".testimonial-popup-close").setAttribute("aria-label", t("Close"));
-    popup.querySelector("blockquote").innerHTML = "&ldquo;" + rich(quote) + "&rdquo;";
-    popup.querySelector("cite").textContent = name + (role ? ", " + role : "");
-
-    popupReturnFocus = anchorEl;
-    popupScrim.classList.add("is-open");
-    popup.classList.add("is-open");
-    document.addEventListener("keydown", onPopupKeydown);
-    popup.querySelector(".testimonial-popup-close").focus();
+    document.addEventListener("langchange", function(){
+      btn.textContent = t(open ? "Read less" : "Read more →");
+    });
   }
 
   function renderSettings(s){

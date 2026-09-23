@@ -111,8 +111,8 @@ p{ margin: 0; }
    The source PNG has a lot of transparent padding around the actual
    letterforms, so we oversize the image and clip it in a fixed-size
    box to make the visible logo read at a proper size. */
-.logo-mark{ display: flex; align-items: center; justify-content: center; flex-shrink: 0; height: 36px; width: 76px; overflow: hidden; }
-.logo-mark img{ height: 152px; width: auto; max-width: none; }
+.logo-mark{ display: flex; align-items: center; flex-shrink: 0; height: 40px; }
+.logo-mark img{ height: 100%; width: auto; }
 .footer-wordmark{ display: block; width: min(70%, 220px); margin-inline: auto; margin-bottom: 2.5rem; filter: invert(1); opacity: .92; }
 
 /* nav links live directly in the header on tablet/desktop; the hamburger

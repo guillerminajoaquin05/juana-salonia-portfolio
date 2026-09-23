@@ -49,6 +49,7 @@
     /* work detail */
     "← Back to archive": "← Volver al archivo", "← Back to home": "← Volver al inicio",
     "Category": "Categoría", "Year & Place": "Año y lugar", "My Role": "Mi rol", "Gallery": "Galería",
+    "View site →": "Ver sitio →", "View podcast →": "Ver podcast →", "See more →": "Ver más →",
     "Gallery →": "Galería →", "Drive link →": "Enlace a Drive →", "Context": "Contexto", "Highlights": "Destacados",
     "More work": "Más trabajos", "Back to full archive →": "Volver al archivo completo →",
     "Start a project like this →": "Empezar un proyecto como este →",

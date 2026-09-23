@@ -28,6 +28,8 @@
         { k: "role_es", l: "Mi rol (Español)", t: "text" },
         { k: "gallery", l: "Galería de fotos", t: "gallery", hint: "Se muestran en este orden en la página del trabajo. Podés subir varias juntas; se achican solas." },
         { k: "drive_url", l: "Link a la galería completa (Drive)", t: "text", hint: "Opcional: aparece como enlace \"Gallery\" en los datos del proyecto." },
+        { k: "link_url", l: "Enlace del botón (sitio, podcast, etc.)", t: "text", hint: "Opcional: pegá la URL completa (https://...). Si lo dejás vacío, el botón no aparece." },
+        { k: "link_label", l: "Texto del botón", t: "select", options: [["site", "Ver sitio"], ["podcast", "Ver podcast"], ["more", "Ver más"]] },
         { k: "context", l: "Contexto", t: "textarea", hint: "Para separar en párrafos, dejá una línea en blanco entre uno y otro." },
         { k: "context_es", l: "Contexto (Español)", t: "textarea" },
         { k: "role_text", l: "Qué hice yo", t: "textarea" },
@@ -149,6 +151,11 @@
     } else if (f.t === "textarea"){
       var ta = h("textarea", { id: id, rows: f.rows || 5 }); ta.value = value || "";
       wrap.appendChild(ta); get = function(){ return ta.value.trim(); };
+    } else if (f.t === "select"){
+      var sel = h("select", { id: id });
+      f.options.forEach(function(o){ sel.appendChild(h("option", { value: o[0], text: o[1] })); });
+      sel.value = value || f.options[f.options.length - 1][0];
+      wrap.appendChild(sel); get = function(){ return sel.value; };
     } else if (f.t === "tags"){
       var ti = h("input", { type: "text", id: id }); ti.value = (value || []).join(", ");
       wrap.appendChild(ti);

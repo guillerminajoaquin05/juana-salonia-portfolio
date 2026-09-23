@@ -421,6 +421,7 @@ p{ margin: 0; }
 .project-meta div span:first-child{ display:block; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: .3rem; }
 .project-meta div span:last-child{ font-size: 1rem; }
 .project-copy{ max-width: 62ch; display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 3rem; }
+.project-link{ margin-top: 1.75rem; }
 .project-copy h2{ font-family: var(--font-serif); font-style: italic; font-size: 1.3rem; }
 .gallery-grid{ columns: 2; column-gap: 1rem; }
 .gallery-grid img{ width: 100%; height: auto; filter: grayscale(1); transition: filter .35s ease; }

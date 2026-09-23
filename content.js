@@ -235,6 +235,12 @@
     set(".page-header .eyebrow", esc(cats.join(" / ")));
     set(".page-header .page-title", esc(pick(w, "title")));
     set(".page-header .page-lede", esc(pick(w, "summary")));
+    var linkBox = $(".project-link");
+    if (linkBox){
+      var labels = { site: "View site →", podcast: "View podcast →", more: "See more →" };
+      linkBox.hidden = !w.link_url;
+      linkBox.innerHTML = w.link_url ? '<a href="' + esc(w.link_url) + '" target="_blank" rel="noopener" class="btn btn-primary">' + esc(t(labels[w.link_label] || labels.more)) + '<span class="visually-hidden"> ' + esc(t("(opens in a new tab)")) + "</span></a>" : "";
+    }
     var hero = $(".project-hero-media");
     if (hero) hero.innerHTML = w.cover_url ? '<img src="' + esc(w.cover_url) + '" alt="' + esc(pick(w, "title")) + '">' : "";
     var facts = document.querySelectorAll(".project-meta > div");

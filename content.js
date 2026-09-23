@@ -38,7 +38,6 @@
   function pad(n){ return (n < 10 ? "0" : "") + n; }
   function q(table){ return sb.from(table).select("*").order("position", { ascending: true }); }
 
-  var STAR = '<span class="star" aria-hidden="true"></span>';
   var data = { works: [], services: [], lately: [], testimonials: [], settings: {} };
   var photosDone = false;
 
@@ -95,7 +94,7 @@
         ? '<a href="work.html?filter=' + encodeURIComponent(s.category) + '" class="service-cta">' + esc(t("See related work →")) + "</a>" : "";
       var text = full ? pick(s, "text") : (pick(s, "text") || det.join(", "));
       var Tag = full ? "h2" : "h3";
-      return '<div class="service-row">' + STAR + "<div>" +
+      return '<div class="service-row"><div>' +
         "<" + Tag + ' class="service-title">' + (full ? pad(i + 1) + " — " : "") + esc(pick(s, "title")) + "</" + Tag + ">" +
         '<p class="service-text">' + rich(text) + "</p>" + details + cta + "</div>" +
         (s.image_url ? '<div class="service-row-media" aria-hidden="true"><img src="' + esc(s.image_url) + '" alt="" decoding="async"></div>' : "") +

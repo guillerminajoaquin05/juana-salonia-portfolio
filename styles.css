@@ -237,8 +237,8 @@ p{ margin: 0; }
 .hero{
   position: relative; overflow: hidden;
   min-height: min(92vh, 820px);
-  display: flex; align-items: center; justify-content: center;
-  text-align: center; padding: clamp(2rem,6vw,4rem) var(--side-pad);
+  display: flex; align-items: center; justify-content: flex-start;
+  text-align: left; padding: clamp(2rem,6vw,4rem) var(--side-pad);
 }
 .hero-photo-full{ position: absolute; inset: 0; z-index: 0; }
 .hero-photo-full img{ width: 100%; height: 100%; object-fit: cover; object-position: center 46%; filter: grayscale(1); }
@@ -255,13 +255,14 @@ p{ margin: 0; }
 }
 
 .hero-overlay{
-  position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 1.1rem;
+  position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: 1.1rem;
   max-width: 720px; color: var(--color-background);
 }
-.hero-wordmark{ width: min(88vw, 560px); filter: invert(1); }
+.hero-wordmark{ width: min(78vw, 480px); filter: invert(1); }
 .hero-tagline{ font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; }
 .hero-overlay .hero-sub{ color: color-mix(in srgb, var(--color-background) 90%, transparent); font-size: 1.05rem; max-width: 42ch; }
 .hero-ctas{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.5rem; margin-top: .5rem; }
+.hero-overlay .hero-ctas{ justify-content: flex-start; }
 .hero-overlay .link-arrow:hover{ color: var(--color-lime); }
 
 /* ==========================================================
@@ -445,11 +446,9 @@ p{ margin: 0; }
    SERVICES — numbered rows, no boxed cards
    ========================================================== */
 .services-list{ display: flex; flex-direction: column; }
-.service-row{ position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start; padding-block: 2rem; border-top: var(--rule); transition: background-color .3s ease; }
+.service-row{ position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; padding-block: 2rem; border-top: var(--rule); transition: background-color .3s ease; }
 .service-row:last-child{ border-bottom: var(--rule); }
 .service-row:hover, .service-row:focus-within{ background-color: color-mix(in srgb, var(--color-terracotta) 8%, transparent); }
-.service-row .star{ --size: 46px; opacity: 0; transform: scale(.6) rotate(-10deg); transition: opacity .3s ease, transform .3s cubic-bezier(.34,1.4,.64,1); }
-.service-row:hover .star, .service-row:focus-within .star{ opacity: 1; transform: scale(1) rotate(0deg); }
 .service-title{ font-size: 1.05rem; text-transform: uppercase; letter-spacing: .01em; margin-bottom: .5rem; }
 .service-text{ color: var(--color-text-muted); font-size: .95rem; max-width: 60ch; }
 .service-detail{ margin-top: 1rem; display: flex; flex-direction: column; gap: .4rem; }
@@ -552,7 +551,6 @@ p{ margin: 0; }
 }
 @media (min-width: 960px){
   .hero{ grid-template-columns: .8fr 1.2fr; }
-  .service-row{ grid-template-columns: 90px 1fr; }
 }
 
 /* About: academic credential */

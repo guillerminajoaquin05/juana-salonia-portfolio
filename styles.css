@@ -225,7 +225,7 @@ p{ margin: 0; }
 /* A mini-section can opt into an edge-to-edge flat color background
    instead of a bordered card — bolder punctuation between the quiet
    cream sections. */
-.block-lime{ background: var(--color-lime); }
+.block-lime{ background: #E7E3DD; } /* warm neutral gray (was lime) */
 
 .block-cyan{ background: var(--color-cyan); }
 

@@ -27,7 +27,7 @@
       high-contrast display (hero, page titles) from one family — closer
       to the zackmillsaps.com / iarasnei.com references than a single
       static italic serif. */
-  --font-serif: 'Fraunces', 'Georgia', serif;
+  --font-serif: 'Playfair Display', 'Georgia', serif;
   --font-sans: 'Inter', -apple-system, sans-serif;
   --font-mono: 'Space Mono', 'Courier New', monospace;
 
@@ -485,13 +485,28 @@ p{ margin: 0; }
 .testimonial-more{ display: inline-block; font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--color-accent-text); background: none; border: 0; padding: 0; margin-bottom: .85rem; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .testimonial-more:hover{ color: var(--color-eggplant); }
 
-/* Full-quote modal (long testimonials) */
-.testimonial-modal{ border: 1px solid var(--color-eggplant); padding: 2.5rem 2rem 2rem; max-width: min(640px, 92vw); max-height: 80vh; width: 100%; overflow: auto; background: var(--color-background); position: relative; }
-.testimonial-modal::backdrop{ background: rgba(40,14,24,.6); }
-.testimonial-modal-close{ position: absolute; top: .6rem; right: .6rem; padding: .6rem; font-size: 1rem; color: var(--color-eggplant); }
-.testimonial-modal-close:hover{ color: var(--color-accent-text); }
-.testimonial-modal blockquote{ margin: 0 0 1rem; font-family: var(--font-serif); font-style: italic; font-size: clamp(1.1rem, 2.5vw, 1.3rem); line-height: 1.55; color: var(--color-eggplant); }
-.testimonial-modal cite{ font-style: normal; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
+/* Full-quote "bubble": a small rounded popover anchored to the card that was
+   clicked (see content.js openTestimonialBubble), not a centered dialog. */
+.testimonial-scrim{ position: fixed; inset: 0; z-index: 998; background: transparent; opacity: 0; pointer-events: none; }
+.testimonial-scrim.is-open{ pointer-events: auto; opacity: 1; }
+.testimonial-bubble{
+  position: fixed; z-index: 999; width: min(380px, calc(100vw - 32px));
+  background: var(--color-background); border: 1px solid var(--color-eggplant); border-radius: 26px;
+  padding: 1.75rem 1.75rem 1.5rem; box-shadow: 0 16px 36px rgba(40,14,24,.2);
+  opacity: 0; transform: translateY(6px) scale(.97); pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.testimonial-bubble.is-open{ opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.testimonial-bubble.is-above{ transform-origin: bottom center; }
+.testimonial-bubble.is-below{ transform-origin: top center; }
+.testimonial-bubble blockquote{ margin: 0 0 .85rem; font-family: var(--font-serif); font-style: italic; font-size: 1.05rem; line-height: 1.5; color: var(--color-eggplant); }
+.testimonial-bubble cite{ font-style: normal; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
+.testimonial-bubble-close{ position: absolute; top: .5rem; right: .5rem; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 50%; color: var(--color-eggplant); }
+.testimonial-bubble-close:hover{ background: color-mix(in srgb, var(--color-eggplant) 10%, transparent); color: var(--color-accent-text); }
+.testimonial-bubble-tail{ position: absolute; left: 50%; width: 18px; height: 18px; background: var(--color-background); transform: translateX(-50%) rotate(45deg); border-radius: 4px; }
+.testimonial-bubble.is-below .testimonial-bubble-tail{ top: -9px; border-left: 1px solid var(--color-eggplant); border-top: 1px solid var(--color-eggplant); }
+.testimonial-bubble.is-above .testimonial-bubble-tail{ bottom: -9px; border-right: 1px solid var(--color-eggplant); border-bottom: 1px solid var(--color-eggplant); }
+@media (prefers-reduced-motion: reduce){ .testimonial-bubble{ transition: none; } }
 
 /* ==========================================================
    FOOTER
@@ -526,7 +541,7 @@ p{ margin: 0; }
 
 /* About: academic credential */
 .credential{ border-top: 1px solid var(--color-eggplant); border-bottom: 1px solid var(--color-eggplant); padding: 1.75rem 0; margin-bottom: 4rem; display: flex; flex-direction: column; gap: .6rem; }
-.credential-degree{ font-family: var(--font-serif, "Fraunces", serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.25; color: var(--color-eggplant); }
+.credential-degree{ font-family: var(--font-serif, "Playfair Display", serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.25; color: var(--color-eggplant); }
 .credential-school{ font-family: "Inter", sans-serif; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--color-eggplant); opacity: .8; }
 
 /* Lately: single-column editorial list */
@@ -534,7 +549,7 @@ p{ margin: 0; }
 .lately-item{ padding-block: 1.5rem; align-items: baseline; gap: 1.5rem; transition: padding-left .3s ease; }
 .lately-item:hover{ padding-left: .5rem; }
 .lately-num{ font-family: 'Space Mono', monospace; font-size: .75rem; color: var(--color-accent-text); min-width: 1.75rem; }
-.lately-item p{ flex: 1; font-family: 'Fraunces', serif; font-size: clamp(1.1rem, 2.2vw, 1.5rem); line-height: 1.3; }
+.lately-item p{ flex: 1; font-family: var(--font-serif); font-size: clamp(1.1rem, 2.2vw, 1.5rem); line-height: 1.3; }
 .lately-status{ font-family: 'Space Mono', monospace; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; opacity: .8; white-space: nowrap; }
 @media (max-width: 560px){ .lately-item{ flex-wrap: wrap; } .lately-status{ width: 100%; padding-left: 3.25rem; } }
 

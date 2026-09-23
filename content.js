@@ -143,28 +143,65 @@
     Array.prototype.forEach.call(wrap.querySelectorAll(".testimonial-more"), function(btn){
       btn.addEventListener("click", function(){
         var it = items[parseInt(btn.getAttribute("data-i"), 10)];
-        if (it) openTestimonialModal(pick(it, "quote"), it.name, pick(it, "role"));
+        if (it) openTestimonialBubble(pick(it, "quote"), it.name, pick(it, "role"), btn);
       });
     });
   }
 
-  /* full-quote modal (native <dialog>: Esc closes, focus returns to the "Read more" button) */
-  var tm;
-  function openTestimonialModal(quote, name, role){
-    if (!tm){
-      tm = document.createElement("dialog");
-      tm.className = "testimonial-modal";
-      tm.innerHTML = '<button type="button" class="testimonial-modal-close" data-act="close">✕</button>' +
-        "<blockquote></blockquote><cite></cite>";
-      document.body.appendChild(tm);
-      tm.addEventListener("click", function(e){
-        if (e.target === tm || e.target.getAttribute("data-act") === "close") tm.close();
-      });
+  /* full-quote "bubble": a small rounded popover anchored right over the card
+     that was clicked, not a full-screen centered dialog. Closes on Esc, on
+     click outside, on scroll/resize, or the ✕ — and returns focus to the
+     "Read more" button that opened it. */
+  var bubble, scrim, bubbleReturnFocus;
+  function closeTestimonialBubble(){
+    if (!bubble || !bubble.classList.contains("is-open")) return;
+    bubble.classList.remove("is-open");
+    scrim.classList.remove("is-open");
+    document.removeEventListener("keydown", onBubbleKeydown);
+    window.removeEventListener("scroll", closeTestimonialBubble, true);
+    window.removeEventListener("resize", closeTestimonialBubble);
+    if (bubbleReturnFocus) bubbleReturnFocus.focus();
+  }
+  function onBubbleKeydown(e){ if (e.key === "Escape") closeTestimonialBubble(); }
+
+  function openTestimonialBubble(quote, name, role, anchorEl){
+    if (!bubble){
+      scrim = document.createElement("div");
+      scrim.className = "testimonial-scrim";
+      scrim.addEventListener("click", closeTestimonialBubble);
+      bubble = document.createElement("div");
+      bubble.className = "testimonial-bubble";
+      bubble.setAttribute("role", "dialog");
+      bubble.setAttribute("aria-modal", "true");
+      bubble.innerHTML = '<button type="button" class="testimonial-bubble-close"></button><blockquote></blockquote><cite></cite><span class="testimonial-bubble-tail" aria-hidden="true"></span>';
+      bubble.querySelector(".testimonial-bubble-close").addEventListener("click", closeTestimonialBubble);
+      document.body.appendChild(scrim);
+      document.body.appendChild(bubble);
     }
-    tm.querySelector(".testimonial-modal-close").setAttribute("aria-label", t("Close"));
-    tm.querySelector("blockquote").innerHTML = "&ldquo;" + rich(quote) + "&rdquo;";
-    tm.querySelector("cite").textContent = name + (role ? ", " + role : "");
-    if (!tm.open) tm.showModal();
+    bubble.querySelector(".testimonial-bubble-close").textContent = "✕";
+    bubble.querySelector(".testimonial-bubble-close").setAttribute("aria-label", t("Close"));
+    bubble.querySelector("blockquote").innerHTML = "&ldquo;" + rich(quote) + "&rdquo;";
+    bubble.querySelector("cite").textContent = name + (role ? ", " + role : "");
+
+    bubbleReturnFocus = anchorEl;
+    scrim.classList.add("is-open");
+    bubble.classList.add("is-open");
+    bubble.style.visibility = "hidden";
+    var bw = bubble.offsetWidth, r = anchorEl.getBoundingClientRect();
+    var left = Math.max(16, Math.min(r.left + r.width / 2 - bw / 2, window.innerWidth - bw - 16));
+    var spaceBelow = window.innerHeight - r.bottom, spaceAbove = r.top;
+    var below = spaceBelow >= 200 || spaceBelow >= spaceAbove;
+    bubble.classList.toggle("is-below", below);
+    bubble.classList.toggle("is-above", !below);
+    bubble.style.left = left + "px";
+    if (below){ bubble.style.top = (r.bottom + 14) + "px"; bubble.style.bottom = "auto"; }
+    else { bubble.style.bottom = (window.innerHeight - r.top + 14) + "px"; bubble.style.top = "auto"; }
+    bubble.style.visibility = "";
+
+    document.addEventListener("keydown", onBubbleKeydown);
+    window.addEventListener("scroll", closeTestimonialBubble, true);
+    window.addEventListener("resize", closeTestimonialBubble);
+    bubble.querySelector(".testimonial-bubble-close").focus();
   }
 
   function renderSettings(s){

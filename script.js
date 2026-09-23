@@ -159,7 +159,8 @@
     });
   }
 
-  /* ---- contact form (Netlify Forms, sent with fetch so the page doesn't reload) ---- */
+  /* ---- contact form (Web3Forms — a free backend for static sites; sent with
+     fetch so the page doesn't reload) ---- */
   var contactForm = document.querySelector(".contact-form");
   if (contactForm){
     var cfStatus = document.getElementById("cfStatus");
@@ -181,17 +182,18 @@
       cfSubmit.disabled = true;
       cfStatus.className = "cf-status"; cfStatus.textContent = tr("Sending…");
 
-      fetch(contactForm.getAttribute("action") || "/", {
+      fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(new FormData(contactForm)).toString()
-      }).then(function(res){
-        if (!res.ok) throw new Error("bad status");
-        contactForm.reset();
-        say("Message sent — thank you! Juana will get back to you soon.", true);
-      }).catch(function(){
-        say("Something went wrong. Please try again or email directly.", false);
-      }).then(function(){ cfSubmit.disabled = false; });
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(contactForm)))
+      }).then(function(res){ return res.json().then(function(data){ return { ok: res.ok && data.success, data: data }; }); })
+        .then(function(r){
+          if (!r.ok) throw new Error(r.data && r.data.message);
+          contactForm.reset();
+          say("Message sent — thank you! Juana will get back to you soon.", true);
+        }).catch(function(){
+          say("Something went wrong. Please try again or email directly.", false);
+        }).then(function(){ cfSubmit.disabled = false; });
     });
   }
 

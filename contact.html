@@ -10,12 +10,12 @@
 <meta property="og:site_name" content="Juana Salonia">
 <meta property="og:title" content="Contact | Juana Salonia">
 <meta property="og:description" content="Get in touch with Juana Salonia — email or LinkedIn.">
-<meta property="og:url" content="https://juanasalonia-portfolio.netlify.app/contact.html">
-<meta property="og:image" content="https://juanasalonia-portfolio.netlify.app/og-image.jpg">
+<meta property="og:url" content="https://guillerminajoaquin05.github.io/juana-salonia-portfolio/contact.html">
+<meta property="og:image" content="https://guillerminajoaquin05.github.io/juana-salonia-portfolio/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://juanasalonia-portfolio.netlify.app/contact.html">
+<link rel="canonical" href="https://guillerminajoaquin05.github.io/juana-salonia-portfolio/contact.html">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3">
 <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png?v=3">
 <link rel="icon" type="image/png" sizes="256x256" href="favicon.png?v=3">
@@ -114,10 +114,15 @@
       <span class="section-number">→</span>
       <h2 class="section-title">Send a message</h2>
     </div>
-    <form class="contact-form" name="contact" method="POST" action="/contact.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
-      <input type="hidden" name="form-name" value="contact">
+    <!-- Sent via Web3Forms (see script.js): a free form backend for static
+         sites with no server of their own. Replace the access_key below with
+         the one generated at web3forms.com for Juana's email. -->
+    <form class="contact-form" name="contact" novalidate>
+      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+      <input type="hidden" name="subject" value="New message from the portfolio site">
+      <input type="hidden" name="from_name" value="Juana Salonia — Portfolio">
       <input type="hidden" name="language" value="en">
-      <p class="cf-hp" aria-hidden="true"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <p class="cf-hp" aria-hidden="true"><label>Don't fill this out: <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"></label></p>
       <div class="cf-field">
         <label for="cf-name">Name</label>
         <input id="cf-name" name="name" type="text" autocomplete="name" required>

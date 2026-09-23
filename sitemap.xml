@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://juanasalonia-portfolio.netlify.app/</loc><priority>1.0</priority></url>
-  <url><loc>https://juanasalonia-portfolio.netlify.app/about.html</loc><priority>0.8</priority></url>
-  <url><loc>https://juanasalonia-portfolio.netlify.app/services.html</loc><priority>0.8</priority></url>
-  <url><loc>https://juanasalonia-portfolio.netlify.app/work.html</loc><priority>0.8</priority></url>
-  <url><loc>https://juanasalonia-portfolio.netlify.app/contact.html</loc><priority>0.8</priority></url>
+  <url><loc>https://guillerminajoaquin05.github.io/juana-salonia-portfolio/</loc><priority>1.0</priority></url>
+  <url><loc>https://guillerminajoaquin05.github.io/juana-salonia-portfolio/about.html</loc><priority>0.8</priority></url>
+  <url><loc>https://guillerminajoaquin05.github.io/juana-salonia-portfolio/services.html</loc><priority>0.8</priority></url>
+  <url><loc>https://guillerminajoaquin05.github.io/juana-salonia-portfolio/work.html</loc><priority>0.8</priority></url>
+  <url><loc>https://guillerminajoaquin05.github.io/juana-salonia-portfolio/contact.html</loc><priority>0.8</priority></url>
 </urlset>

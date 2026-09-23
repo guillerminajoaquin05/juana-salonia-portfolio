@@ -4,4 +4,4 @@ Disallow: /login.html
 Disallow: /admin.html
 Disallow: /reset.html
 
-Sitemap: https://juanasalonia-portfolio.netlify.app/sitemap.xml
+Sitemap: https://guillerminajoaquin05.github.io/juana-salonia-portfolio/sitemap.xml

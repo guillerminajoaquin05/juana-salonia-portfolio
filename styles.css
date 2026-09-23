@@ -27,7 +27,7 @@
       high-contrast display (hero, page titles) from one family — closer
       to the zackmillsaps.com / iarasnei.com references than a single
       static italic serif. */
-  --font-serif: 'Playfair Display', 'Georgia', serif;
+  --font-serif: 'Bodoni Moda', 'Georgia', serif;
   --font-sans: 'Inter', -apple-system, sans-serif;
   --font-mono: 'Space Mono', 'Courier New', monospace;
 
@@ -541,7 +541,7 @@ p{ margin: 0; }
 
 /* About: academic credential */
 .credential{ border-top: 1px solid var(--color-eggplant); border-bottom: 1px solid var(--color-eggplant); padding: 1.75rem 0; margin-bottom: 4rem; display: flex; flex-direction: column; gap: .6rem; }
-.credential-degree{ font-family: var(--font-serif, "Playfair Display", serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.25; color: var(--color-eggplant); }
+.credential-degree{ font-family: var(--font-serif, "Bodoni Moda", serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.25; color: var(--color-eggplant); }
 .credential-school{ font-family: "Inter", sans-serif; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--color-eggplant); opacity: .8; }
 
 /* Lately: single-column editorial list */

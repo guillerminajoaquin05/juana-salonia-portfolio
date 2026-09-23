@@ -246,10 +246,12 @@ p{ margin: 0; }
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(180deg, rgba(20,20,20,.55) 0%, rgba(20,20,20,.38) 38%, rgba(20,20,20,.65) 100%);
 }
-/* phones: zoom in and crop the bottom so her feet stay out of frame */
+/* phones: zoom in so her face sits in the upper part (feet out of frame)
+   and the name + buttons drop to the lower part, clear of her face */
 @media (max-width: 719px){
+  .hero{ align-items: flex-end; padding-bottom: 3.5rem; }
   .hero-photo-full{ overflow: hidden; }
-  .hero-photo-full img{ height: 240%; transform: translateY(-22%); object-position: 66% top; }
+  .hero-photo-full img{ height: 240%; transform: translateY(-29%); object-position: 66% top; }
 }
 
 .hero-overlay{

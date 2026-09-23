@@ -480,7 +480,7 @@ p{ margin: 0; }
 .contact-method:hover .contact-method-value{ color: var(--color-accent-text); }
 .testimonials{ display: grid; grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2rem; }
 .testimonial{ padding-top: 1.75rem; border-top: var(--rule); }
-.testimonial p{ font-family: var(--font-serif); font-style: italic; font-size: 1.15rem; line-height: 1.5; margin-bottom: .85rem; }
+.testimonial p{ font-family: var(--font-sans); font-style: normal; font-size: 1.05rem; line-height: 1.7; margin-bottom: .85rem; }
 .testimonial cite{ font-style: normal; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
 .testimonial-more{ display: inline-block; font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--color-accent-text); background: none; border: 0; padding: 0; margin-bottom: .85rem; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .testimonial-more:hover{ color: var(--color-eggplant); }
@@ -499,7 +499,7 @@ p{ margin: 0; }
 .testimonial-bubble.is-open{ opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
 .testimonial-bubble.is-above{ transform-origin: bottom center; }
 .testimonial-bubble.is-below{ transform-origin: top center; }
-.testimonial-bubble blockquote{ margin: 0 0 .85rem; font-family: var(--font-serif); font-style: italic; font-size: 1.05rem; line-height: 1.5; color: var(--color-eggplant); }
+.testimonial-bubble blockquote{ margin: 0 0 .85rem; font-family: var(--font-sans); font-style: normal; font-size: 1rem; line-height: 1.7; color: var(--color-eggplant); }
 .testimonial-bubble cite{ font-style: normal; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
 .testimonial-bubble-close{ position: absolute; top: .5rem; right: .5rem; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 50%; color: var(--color-eggplant); }
 .testimonial-bubble-close:hover{ background: color-mix(in srgb, var(--color-eggplant) 10%, transparent); color: var(--color-accent-text); }

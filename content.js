@@ -174,6 +174,10 @@
     tModal.querySelector("cite").textContent = name + (role ? ", " + role : "");
 
     tReturnFocus = document.activeElement;
+    tModal.scrollTop = 0;
+    /* flush the closed state first so the blur/fade-in plays on every open,
+       including the very first one (when the overlay was just created) */
+    void getComputedStyle(tOverlay).opacity;
     tOverlay.classList.add("is-open");
     document.addEventListener("keydown", onTestimonialModalKeydown);
     tModal.querySelector(".testimonial-modal-close").focus();

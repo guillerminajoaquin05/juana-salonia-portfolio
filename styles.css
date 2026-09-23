@@ -515,7 +515,11 @@ p{ margin: 0; }
   box-shadow: 0 30px 70px rgba(102,37,61,.35);
 }
 .testimonial-modal-overlay.is-open .testimonial-modal-box{ transform: translateY(0) scale(1); }
-.testimonial-modal-accent{ height: 14px; border-radius: 6px 22px 0 0; }
+/* soft gray diagonal stripes, same idea as the washi tape but neutral */
+.testimonial-modal-accent{
+  height: 14px; border-radius: 6px 22px 0 0;
+  background: repeating-linear-gradient(45deg, #DCD8D2 0 6px, #C7C2BB 6px 12px);
+}
 .testimonial-modal-body{ padding: 2.6rem 2.4rem 2.4rem; }
 .testimonial-modal-body blockquote{ margin: 0; font-family: var(--font-sans); font-size: 1.15rem; line-height: 1.75; color: var(--color-eggplant); }
 .testimonial-modal-body cite{ display: block; margin-top: 1.25rem; font-style: normal; font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; color: var(--color-text-muted); }

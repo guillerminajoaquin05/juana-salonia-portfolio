@@ -111,8 +111,6 @@
     }).join("");
   }
 
-  var TESTIMONIAL_ACCENTS = ["terracotta", "cyan", "lime", "pink"];
-
   function renderTestimonials(items){
     var wrap = $(".testimonials");
     if (!wrap) return;
@@ -133,13 +131,13 @@
       btn.hidden = false;
       btn.addEventListener("click", function(){
         var it = items[i];
-        openTestimonialModal(pick(it, "quote"), it.name, pick(it, "role"), TESTIMONIAL_ACCENTS[i % TESTIMONIAL_ACCENTS.length]);
+        openTestimonialModal(pick(it, "quote"), it.name, pick(it, "role"));
       });
     });
   }
 
   /* full-quote modal: blurred/dimmed backdrop, a card with one square corner
-     and the rest rounded, a thin color accent bar on top, sliding up into
+     and the rest rounded, a thin gray striped bar on top, sliding up into
      place — same recipe as the reference's case-study modal, adapted for a
      testimonial (no photo). Esc / backdrop click / ✕ close it. */
   var tModal, tOverlay, tReturnFocus;
@@ -151,7 +149,7 @@
   }
   function onTestimonialModalKeydown(e){ if (e.key === "Escape") closeTestimonialModal(); }
 
-  function openTestimonialModal(quote, name, role, accent){
+  function openTestimonialModal(quote, name, role){
     if (!tOverlay){
       tOverlay = document.createElement("div");
       tOverlay.className = "testimonial-modal-overlay";
@@ -167,7 +165,6 @@
       tOverlay.appendChild(tModal);
       document.body.appendChild(tOverlay);
     }
-    tModal.querySelector(".testimonial-modal-accent").style.background = "var(--color-" + accent + ")";
     tModal.querySelector(".testimonial-modal-close").textContent = "✕";
     tModal.querySelector(".testimonial-modal-close").setAttribute("aria-label", t("Close"));
     tModal.querySelector("blockquote").innerHTML = "&ldquo;" + rich(quote) + "&rdquo;";

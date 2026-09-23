@@ -479,16 +479,35 @@ p{ margin: 0; }
 .contact-method-action{ font-size: .85rem; color: var(--color-accent-text); }
 .contact-method:hover .contact-method-value{ color: var(--color-accent-text); }
 .testimonials{ display: grid; grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2rem; }
-/* card lifts and gains a soft shadow on hover/expand — same lift + reveal
-   feel as a folder-card that opens on touch, timed with its easing curve */
-.testimonial{ padding: 1.75rem 0 .25rem; border-top: var(--rule); border-radius: 14px; transition: transform .3s cubic-bezier(.25,.46,.45,.94), box-shadow .35s cubic-bezier(.25,.46,.45,.94); }
-.testimonial:hover, .testimonial.is-expanded{ transform: translateY(-6px); box-shadow: 0 20px 40px rgba(102,37,61,.16); }
-.testimonial-clip{ max-height: 5.1em; overflow: hidden; transition: max-height .5s cubic-bezier(.25,.46,.45,.94); }
-.testimonial-quote{ margin: 0; font-family: var(--font-sans); font-style: normal; font-size: 1.05rem; line-height: 1.7; }
+.testimonial{ padding-top: 1.75rem; border-top: var(--rule); }
+.testimonial-quote{ margin: 0; font-family: var(--font-sans); font-style: normal; font-size: 1.05rem; line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .testimonial cite{ display: block; margin-top: .85rem; font-style: normal; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
 .testimonial-more{ display: inline-block; margin-top: .6rem; font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--color-accent-text); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .testimonial-more:hover{ color: var(--color-eggplant); }
-@media (prefers-reduced-motion: reduce){ .testimonial, .testimonial-clip{ transition: none; } }
+
+/* Full-quote modal: blurred/dimmed backdrop, a card with a squared-off top
+   corner and rounded everywhere else, a color accent bar on top, sliding up
+   into place. Adapted from the reference site's case-study modal. */
+.testimonial-modal-overlay{
+  position: fixed; inset: 0; z-index: 998; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+  background: rgba(102,37,61,0); backdrop-filter: blur(0px); opacity: 0; pointer-events: none;
+  transition: opacity .4s cubic-bezier(.25,.46,.45,.94), background .4s, backdrop-filter .4s;
+}
+.testimonial-modal-overlay.is-open{ opacity: 1; pointer-events: auto; background: rgba(102,37,61,.55); backdrop-filter: blur(6px); }
+.testimonial-modal-box{
+  width: 90vw; max-width: 620px; max-height: 88vh; overflow-y: auto; position: relative;
+  background: var(--color-background); border-radius: 6px 22px 22px 22px;
+  transform: translateY(28px) scale(.97); transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+  box-shadow: 0 30px 70px rgba(102,37,61,.35);
+}
+.testimonial-modal-overlay.is-open .testimonial-modal-box{ transform: translateY(0) scale(1); }
+.testimonial-modal-accent{ height: 14px; border-radius: 6px 22px 0 0; }
+.testimonial-modal-body{ padding: 2.6rem 2.4rem 2.4rem; }
+.testimonial-modal-body blockquote{ margin: 0; font-family: var(--font-sans); font-size: 1.15rem; line-height: 1.75; color: var(--color-eggplant); }
+.testimonial-modal-body cite{ display: block; margin-top: 1.25rem; font-style: normal; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted); }
+.testimonial-modal-close{ position: absolute; top: 1.1rem; right: 1.1rem; width: 36px; height: 36px; border-radius: 50%; background: var(--color-background); box-shadow: 0 4px 10px rgba(102,37,61,.18); display: flex; align-items: center; justify-content: center; color: var(--color-eggplant); z-index: 5; transition: background .2s, color .2s; }
+.testimonial-modal-close:hover{ background: var(--color-terracotta); color: var(--color-background); }
+@media (prefers-reduced-motion: reduce){ .testimonial-modal-overlay, .testimonial-modal-box{ transition: none; } }
 
 /* ==========================================================
    FOOTER

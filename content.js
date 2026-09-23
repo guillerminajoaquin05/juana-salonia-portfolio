@@ -112,9 +112,8 @@
     }).join("");
   }
 
-  /* short preview of a long quote: the first one or two paragraphs, or (for a
-     single long paragraph) a word-safe character cut. Only truncates when the
-     quote is actually longer than that. */
+  var TESTIMONIAL_ACCENTS = ["terracotta", "cyan", "lime", "pink"];
+
   function renderTestimonials(items){
     var wrap = $(".testimonials");
     if (!wrap) return;
@@ -124,33 +123,61 @@
     wrap.innerHTML = items.map(function(it){
       var role = pick(it, "role");
       return '<div class="testimonial">' +
-        '<div class="testimonial-clip"><p class="testimonial-quote">&ldquo;' + rich(pick(it, "quote")) + "&rdquo;</p></div>" +
+        '<p class="testimonial-quote">&ldquo;' + rich(pick(it, "quote")) + "&rdquo;</p>" +
         '<button type="button" class="testimonial-more" hidden>' + esc(t("Read more →")) + "</button>" +
         "<cite>" + esc(it.name) + (role ? ", " + esc(role) : "") + "</cite></div>";
     }).join("");
-    Array.prototype.forEach.call(wrap.querySelectorAll(".testimonial"), setupTestimonialExpand);
+    Array.prototype.forEach.call(wrap.querySelectorAll(".testimonial"), function(card, i){
+      var quoteEl = card.querySelector(".testimonial-quote");
+      var btn = card.querySelector(".testimonial-more");
+      if (quoteEl.scrollHeight - quoteEl.clientHeight < 4) return;
+      btn.hidden = false;
+      btn.addEventListener("click", function(){
+        var it = items[i];
+        openTestimonialModal(pick(it, "quote"), it.name, pick(it, "role"), TESTIMONIAL_ACCENTS[i % TESTIMONIAL_ACCENTS.length]);
+      });
+    });
   }
 
-  /* card lifts + its clipped quote expands in place (no popup) — same lift +
-     reveal mechanic as the folder-card reference: measure the real rendered
-     height so the reveal animates smoothly regardless of quote length, and
-     only offer "Read more" when the quote is actually being clipped. */
-  function setupTestimonialExpand(card){
-    var clip = card.querySelector(".testimonial-clip");
-    var btn = card.querySelector(".testimonial-more");
-    var collapsedH = clip.clientHeight;
-    if (clip.scrollHeight - collapsedH < 8) return;
-    btn.hidden = false;
-    var open = false;
-    btn.addEventListener("click", function(){
-      open = !open;
-      card.classList.toggle("is-expanded", open);
-      clip.style.maxHeight = open ? clip.scrollHeight + "px" : "";
-      btn.textContent = t(open ? "Read less" : "Read more →");
-    });
-    document.addEventListener("langchange", function(){
-      btn.textContent = t(open ? "Read less" : "Read more →");
-    });
+  /* full-quote modal: blurred/dimmed backdrop, a card with one square corner
+     and the rest rounded, a thin color accent bar on top, sliding up into
+     place — same recipe as the reference's case-study modal, adapted for a
+     testimonial (no photo). Esc / backdrop click / ✕ close it. */
+  var tModal, tOverlay, tReturnFocus;
+  function closeTestimonialModal(){
+    if (!tModal || !tOverlay.classList.contains("is-open")) return;
+    tOverlay.classList.remove("is-open");
+    document.removeEventListener("keydown", onTestimonialModalKeydown);
+    if (tReturnFocus) tReturnFocus.focus();
+  }
+  function onTestimonialModalKeydown(e){ if (e.key === "Escape") closeTestimonialModal(); }
+
+  function openTestimonialModal(quote, name, role, accent){
+    if (!tOverlay){
+      tOverlay = document.createElement("div");
+      tOverlay.className = "testimonial-modal-overlay";
+      tOverlay.addEventListener("click", function(e){ if (e.target === tOverlay) closeTestimonialModal(); });
+      tModal = document.createElement("div");
+      tModal.className = "testimonial-modal-box";
+      tModal.setAttribute("role", "dialog");
+      tModal.setAttribute("aria-modal", "true");
+      tModal.innerHTML = '<div class="testimonial-modal-accent"></div>' +
+        '<button type="button" class="testimonial-modal-close"></button>' +
+        '<div class="testimonial-modal-body"><blockquote></blockquote><cite></cite></div>';
+      tModal.querySelector(".testimonial-modal-close").addEventListener("click", closeTestimonialModal);
+      tOverlay.appendChild(tModal);
+      document.body.appendChild(tOverlay);
+    }
+    tModal.querySelector(".testimonial-modal-accent").style.background = "var(--color-" + accent + ")";
+    tModal.querySelector(".testimonial-modal-close").textContent = "✕";
+    tModal.querySelector(".testimonial-modal-close").setAttribute("aria-label", t("Close"));
+    tModal.querySelector("blockquote").innerHTML = "&ldquo;" + rich(quote) + "&rdquo;";
+    tModal.querySelector("cite").textContent = name + (role ? ", " + role : "");
+
+    tReturnFocus = document.activeElement;
+    tOverlay.classList.add("is-open");
+    document.addEventListener("keydown", onTestimonialModalKeydown);
+    tModal.querySelector(".testimonial-modal-close").focus();
   }
 
   function renderSettings(s){

@@ -249,7 +249,7 @@ p{ margin: 0; }
 }
 /* phones: center the crop on her and put the name + buttons up in the empty sky */
 @media (max-width: 719px){
-  .hero{ align-items: flex-start; padding-top: 3.5rem; }
+  .hero{ align-items: flex-start; padding-top: 7rem; }
   .hero-photo-full img{ object-position: 65% bottom; }
 }
 

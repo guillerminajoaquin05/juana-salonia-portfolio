@@ -66,9 +66,12 @@
   };
 
   var SETTINGS = [
+    { group: "Portada (home)", fields: [
+      { k: "hero_image", l: "Foto de portada", t: "image", hint: "Foto horizontal. El recorte toma la parte de abajo, así que conviene que la persona esté abajo y el cielo o fondo liso arriba (ahí va el texto). Si la dejás vacía, se usa la de los globos." } ] },
     { group: "Sobre mí (home)", fields: [
       { k: "home_about", l: "Texto corto de la home", t: "textarea", rows: 4, hint: "Para resaltar en naranja, poné *asteriscos* alrededor del texto." },
-      { k: "home_about_es", l: "Texto corto de la home (Español)", t: "textarea", rows: 4 } ] },
+      { k: "home_about_es", l: "Texto corto de la home (Español)", t: "textarea", rows: 4 },
+      { k: "home_about_image", l: "Foto de la sección Sobre mí", t: "image", hint: "La polaroid ya armada (PNG con fondo transparente). Si la dejás vacía, se usa la actual." } ] },
     { group: "Sobre mí (página About)", fields: [
       { k: "about_p1", l: "Párrafo 1", t: "textarea", hint: "Para separar en párrafos dentro de este mismo campo, dejá una línea en blanco entre uno y otro." },
       { k: "about_p1_es", l: "Párrafo 1 (Español)", t: "textarea" },
@@ -368,7 +371,7 @@
   }
 
   /* ---------- shell ---------- */
-  var TABS = [["works", "Trabajos"], ["services", "Servicios"], ["lately", "Lately"], ["testimonials", "Testimonios"], ["settings", "Textos y contacto"]];
+  var TABS = [["works", "Trabajos"], ["services", "Servicios"], ["lately", "Lately"], ["testimonials", "Testimonios"], ["settings", "Textos, fotos y contacto"]];
   function show(key){
     Array.prototype.forEach.call(tabsEl.children, function(b){ b.setAttribute("aria-selected", b.dataset.key === key); });
     if (key === "settings") renderSettings(); else renderList(key);

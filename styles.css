@@ -162,7 +162,6 @@ p{ margin: 0; }
 /* ---------- thick framing bar (Anna Koyn moodboard reference) ---------- */
 /* a bold structural bar instead of a hairline, used to frame a key
    section edge-to-edge (e.g. under the header, or closing the hero) */
-.thick-bar{ height: 6px; background: var(--color-eggplant); }
 
 /* ---------- confetti dots ---------- */
 /* small flat-color circle stickers — a lighter-weight alternative to the

@@ -181,6 +181,12 @@
 
   function renderSettings(s){
     var S = function(k){ return pick(s, k); };
+    /* landing photos chosen in the admin (empty = keep the ones in the HTML) */
+    var heroImg = $("#hero .hero-photo-full img");
+    if (heroImg && s.hero_image) heroImg.src = s.hero_image;
+    var homePhoto = $("#about .about-simple-photo img");
+    if (homePhoto && s.home_about_image) homePhoto.src = s.home_about_image;
+
     /* landing About blurb */
     var home = document.querySelector("#about .about-simple-copy p");
     if (home && S("home_about")) home.innerHTML = rich(S("home_about"));

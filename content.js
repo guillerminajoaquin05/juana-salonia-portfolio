@@ -137,7 +137,7 @@
   }
 
   /* full-quote modal: blurred/dimmed backdrop, a card with one square corner
-     and the rest rounded, a thin gray striped bar on top, sliding up into
+     and the rest rounded, sliding up into
      place — same recipe as the reference's case-study modal, adapted for a
      testimonial (no photo). Esc / backdrop click / ✕ close it. */
   var tModal, tOverlay, tReturnFocus;
@@ -158,8 +158,7 @@
       tModal.className = "testimonial-modal-box";
       tModal.setAttribute("role", "dialog");
       tModal.setAttribute("aria-modal", "true");
-      tModal.innerHTML = '<div class="testimonial-modal-accent"></div>' +
-        '<button type="button" class="testimonial-modal-close"></button>' +
+      tModal.innerHTML = '<button type="button" class="testimonial-modal-close"></button>' +
         '<div class="testimonial-modal-body"><blockquote></blockquote><cite></cite></div>';
       tModal.querySelector(".testimonial-modal-close").addEventListener("click", closeTestimonialModal);
       tOverlay.appendChild(tModal);

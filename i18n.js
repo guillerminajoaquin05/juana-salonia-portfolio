@@ -65,6 +65,7 @@
 
     /* accessibility */
     "Skip to content": "Saltar al contenido", "Pause": "Pausar", "Play": "Reproducir",
+    "Previous photo": "Foto anterior", "Next photo": "Foto siguiente",
     "(opens in a new tab)": "(se abre en una pestaña nueva)",
     "Juana Salonia — Digital Production & Creative Assistance": "Juana Salonia — Producción digital y asistencia creativa",
 
@@ -72,7 +73,7 @@
     "Send a message": "Envía un mensaje", "Name": "Nombre", "What are you looking for?": "¿Qué buscas?", "Message": "Mensaje",
     "LinkedIn & content": "LinkedIn y contenido", "A project or event": "Un proyecto o evento", "Something else": "Otra cosa",
     "Send message": "Enviar mensaje", "Sending…": "Enviando…",
-    "Message sent — thank you! Juana will get back to you soon.": "Mensaje enviado, ¡gracias! Juana te responderá pronto.",
+    "Message sent — thank you! I'll get back to you soon.": "Mensaje enviado, ¡gracias! Te voy a responder pronto.",
     "Please fill in your name, a valid email and a message.": "Completa tu nombre, un email válido y un mensaje.",
     "Something went wrong. Please try again or email directly.": "Algo salió mal. Inténtalo de nuevo o escribe directamente por email.",
 

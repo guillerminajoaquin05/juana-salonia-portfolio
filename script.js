@@ -74,9 +74,27 @@
     }
     function acStart(){
       clearInterval(acTimer);
-      if (!reduce && !window.__acPaused && acImages.length > 1) acTimer = setInterval(function(){ acShow(acIndex + 1); }, 4500);
+      if (!reduce && !window.__acPaused && acImages.length > 1) acTimer = setInterval(function(){ acShow(acIndex + 1); }, 3000);
     }
     function acStop(){ clearInterval(acTimer); }
+
+    /* prev / next arrows over the photo (added here because content.js
+       rebuilds the frame's images from the admin) */
+    var frame = aboutCarousel.querySelector(".about-carousel-frame");
+    if (frame && acImages.length > 1){
+      [["prev", "‹", "Previous photo", -1], ["next", "›", "Next photo", 1]].forEach(function(a){
+        var btn = frame.querySelector(".about-carousel-arrow--" + a[0]);
+        if (!btn){
+          btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "about-carousel-arrow about-carousel-arrow--" + a[0];
+          btn.textContent = a[1];
+          frame.appendChild(btn);
+        }
+        btn.setAttribute("aria-label", window.I18N ? window.I18N.t(a[2]) : a[2]);
+        btn.onclick = function(){ acStop(); acShow(acIndex + a[3]); acStart(); };
+      });
+    }
 
     acDots.forEach(function(dot, i){
       dot.onclick = function(){ acStop(); acShow(i); acStart(); };
@@ -190,7 +208,7 @@
         .then(function(r){
           if (!r.ok) throw new Error(r.data && r.data.message);
           contactForm.reset();
-          say("Message sent — thank you! Juana will get back to you soon.", true);
+          say("Message sent — thank you! I'll get back to you soon.", true);
         }).catch(function(){
           say("Something went wrong. Please try again or email directly.", false);
         }).then(function(){ cfSubmit.disabled = false; });

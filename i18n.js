@@ -12,7 +12,7 @@
     "Language": "Idioma", "Primary": "Principal", "Open menu": "Abrir menú", "Admin login": "Acceso admin",
     "Juana Salonia — home": "Juana Salonia — inicio",
     "Juana Salonia. All rights reserved.": "Juana Salonia. Todos los derechos reservados.",
-    "Worked & collaborated with": "Trabajó y colaboró con", "Collaborators": "Colaboradores",
+    "Worked & collaborated with": "Trabajé y colaboré con", "Collaborators": "Colaboradores",
     "Have something in mind? Let's talk.": "¿Tienes algo en mente? Hablemos.",
     "Get in touch": "Contáctame", "Get in touch →": "Contáctame →",
 
@@ -67,7 +67,7 @@
     "Skip to content": "Saltar al contenido", "Pause": "Pausar", "Play": "Reproducir",
     "Previous photo": "Foto anterior", "Next photo": "Foto siguiente",
     "Can't find what you're looking for? Let's talk, find the right solution together and make your idea happen.":
-      "¿No encontrás lo que estás buscando? Charlemos, encontremos juntos la solución y hagamos realidad tu idea.",
+      "¿No encuentras lo que estás buscando? Charlemos, encontremos juntos la solución y hagamos realidad tu idea.",
     "Let's talk →": "Hablemos →",
     "(opens in a new tab)": "(se abre en una pestaña nueva)",
     "Juana Salonia — Digital Production & Creative Assistance": "Juana Salonia — Producción digital y asistencia creativa",

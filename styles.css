@@ -252,6 +252,20 @@ p{ margin: 0; }
   .hero{ align-items: flex-start; padding-top: 3.5rem; }
   .hero-photo-full img{ object-position: 65% bottom; }
 }
+/* alternate sofa photo (?hero=sofa): text up on the wall, her face below it */
+.hero--sofa{ align-items: flex-start; padding-top: clamp(3rem, 7vw, 5rem); }
+.hero--sofa .hero-photo-full img{ object-position: center 36%; }
+/* phones: the wall above her is short, so keep the text block compact
+   (no sub line, buttons side by side) to keep it clear of her head */
+@media (max-width: 719px){
+  .hero--sofa{ padding-top: 2.5rem; }
+  .hero--sofa .hero-photo-full img{ object-position: 60% center; }
+  .hero--sofa .hero-overlay{ gap: .8rem; }
+  .hero--sofa .hero-sub{ display: none; }
+  .hero--sofa .hero-ctas{ flex-wrap: nowrap; gap: 1.1rem; margin-top: .25rem; }
+  .hero--sofa .hero-ctas .btn{ padding-inline: 1.1rem; white-space: nowrap; }
+  .hero--sofa .hero-ctas .link-arrow{ white-space: nowrap; }
+}
 
 .hero-overlay{
   position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: 1.1rem;
@@ -305,7 +319,7 @@ p{ margin: 0; }
 }
 .about-carousel-frame img{
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  opacity: 0; transition: opacity .7s ease;
+  opacity: 0; transition: opacity .5s ease;
 }
 .about-carousel-frame img.is-active{ opacity: 1; }
 /* phones: squarer frame anchored near the top so the full-length portraits lose the feet */

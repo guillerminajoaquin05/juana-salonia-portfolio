@@ -32,6 +32,14 @@
     });
   }
 
+  /* ---- alternate hero photo for review: index.html?hero=sofa ---- */
+  var heroBox = document.getElementById("hero");
+  if (heroBox && new URLSearchParams(location.search).get("hero") === "sofa"){
+    heroBox.classList.add("hero--sofa");
+    var heroImg = heroBox.querySelector(".hero-photo-full img");
+    if (heroImg) heroImg.src = "Fotos/web/hero-sofa.jpg";
+  }
+
   /* ---- scroll reveal ---- */
   var revealEls = document.querySelectorAll("[data-reveal]");
   if ("IntersectionObserver" in window && revealEls.length){
@@ -74,7 +82,7 @@
     }
     function acStart(){
       clearInterval(acTimer);
-      if (!reduce && !window.__acPaused && acImages.length > 1) acTimer = setInterval(function(){ acShow(acIndex + 1); }, 3000);
+      if (!reduce && !window.__acPaused && acImages.length > 1) acTimer = setInterval(function(){ acShow(acIndex + 1); }, 2000);
     }
     function acStop(){ clearInterval(acTimer); }
 

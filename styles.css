@@ -597,7 +597,6 @@ p{ margin: 0; }
 
 /* closing line under the services list, between the last rule and the divider */
 .services-note{ margin: clamp(2rem, 4vw, 3rem) auto 0; max-width: 72ch; text-align: center; font-family: var(--font-serif); font-style: italic; font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.5; }
-.services-note .link-arrow{ display: inline-block; margin-left: .4rem; font-family: var(--font-sans); font-style: normal; font-size: .9rem; font-weight: 600; color: var(--color-accent-text); }
 .service-cta{ display: inline-block; margin-top: 1.25rem; font-size: .9rem; font-weight: 600; color: var(--color-eggplant); border-bottom: 1px solid currentColor; }
 .work-list-row[hidden]{ display: none; }
 

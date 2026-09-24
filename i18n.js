@@ -68,7 +68,6 @@
     "Previous photo": "Foto anterior", "Next photo": "Foto siguiente",
     "Can't find what you're looking for? Let's talk, find the right solution together and make your idea happen.":
       "¿No encontrás lo que estás buscando? Charlemos, pensemos juntos la solución y hagamos tu idea realidad.",
-    "Let's talk →": "Hablemos →",
     "(opens in a new tab)": "(se abre en una pestaña nueva)",
     "Juana Salonia — Digital Production & Creative Assistance": "Juana Salonia — Producción digital y asistencia creativa",
 

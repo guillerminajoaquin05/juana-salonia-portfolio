@@ -32,12 +32,12 @@
     });
   }
 
-  /* ---- alternate hero photo for review: index.html?hero=sofa ---- */
+  /* ---- alternate hero photo for review: index.html?hero=globos ---- */
   var heroBox = document.getElementById("hero");
-  if (heroBox && new URLSearchParams(location.search).get("hero") === "sofa"){
-    heroBox.classList.add("hero--sofa");
+  if (heroBox && new URLSearchParams(location.search).get("hero") === "globos"){
+    heroBox.classList.remove("hero--sofa");
     var heroImg = heroBox.querySelector(".hero-photo-full img");
-    if (heroImg) heroImg.src = "Fotos/web/hero-sofa.jpg";
+    if (heroImg) heroImg.src = "Fotos/web/hero-balloons.jpg";
   }
 
   /* ---- scroll reveal ---- */

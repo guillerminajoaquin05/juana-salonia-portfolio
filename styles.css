@@ -257,7 +257,10 @@ p{ margin: 0; }
   max-width: 720px; color: var(--color-background);
 }
 .hero-wordmark{ width: min(78vw, 480px); filter: invert(1); }
-.hero-tagline{ font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; }
+/* tagline + button match the "Let's work together →" link: normal case, bold,
+   no tracking — fewer type treatments stacked on the photo */
+.hero-tagline{ font-size: 1.1rem; font-weight: 600; }
+.hero-overlay .btn{ text-transform: none; letter-spacing: 0; font-size: 1rem; }
 .hero-overlay .hero-sub{ color: color-mix(in srgb, var(--color-background) 90%, transparent); font-size: 1.05rem; max-width: 42ch; }
 .hero-ctas{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.5rem; margin-top: .5rem; }
 .hero-overlay .hero-ctas{ justify-content: flex-start; }

@@ -32,14 +32,6 @@
     });
   }
 
-  /* ---- alternate hero photo for review: index.html?hero=globos ---- */
-  var heroBox = document.getElementById("hero");
-  if (heroBox && new URLSearchParams(location.search).get("hero") === "globos"){
-    heroBox.classList.remove("hero--sofa");
-    var heroImg = heroBox.querySelector(".hero-photo-full img");
-    if (heroImg) heroImg.src = "Fotos/web/hero-balloons.jpg";
-  }
-
   /* ---- scroll reveal ---- */
   var revealEls = document.querySelectorAll("[data-reveal]");
   if ("IntersectionObserver" in window && revealEls.length){

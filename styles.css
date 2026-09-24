@@ -242,29 +242,15 @@ p{ margin: 0; }
 }
 .hero-photo-full{ position: absolute; inset: 0; z-index: 0; }
 /* she stands at the bottom of the frame, so anchor the crop to the bottom */
-.hero-photo-full img{ width: 100%; height: 100%; object-fit: cover; object-position: center bottom; filter: grayscale(1); }
+.hero-photo-full img{ width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
 .hero-scrim{
   position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(180deg, rgba(20,20,20,.55) 0%, rgba(20,20,20,.38) 45%, rgba(20,20,20,.3) 100%);
+  background: linear-gradient(180deg, rgba(20,30,45,.42) 0%, rgba(20,30,45,.22) 50%, rgba(20,30,45,.08) 100%);
 }
 /* phones: center the crop on her and put the name + buttons up in the empty sky */
 @media (max-width: 719px){
   .hero{ align-items: flex-start; padding-top: 3.5rem; }
   .hero-photo-full img{ object-position: 65% bottom; }
-}
-/* alternate sofa photo (?hero=sofa): text up on the wall, her face below it */
-.hero--sofa{ align-items: flex-start; padding-top: clamp(3rem, 7vw, 5rem); }
-.hero--sofa .hero-photo-full img{ object-position: center 46%; }
-/* phones: the wall above her is short, so keep the text block compact
-   (no sub line, buttons side by side) to keep it clear of her head */
-@media (max-width: 719px){
-  .hero--sofa{ padding-top: 2.5rem; }
-  .hero--sofa .hero-photo-full img{ object-position: 60% center; }
-  .hero--sofa .hero-overlay{ gap: .8rem; }
-  .hero--sofa .hero-sub{ display: none; }
-  .hero--sofa .hero-ctas{ flex-wrap: nowrap; gap: 1.1rem; margin-top: .25rem; }
-  .hero--sofa .hero-ctas .btn{ padding-inline: 1.1rem; white-space: nowrap; }
-  .hero--sofa .hero-ctas .link-arrow{ white-space: nowrap; }
 }
 
 .hero-overlay{

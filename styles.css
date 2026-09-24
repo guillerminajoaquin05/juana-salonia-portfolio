@@ -254,7 +254,7 @@ p{ margin: 0; }
 }
 /* alternate sofa photo (?hero=sofa): text up on the wall, her face below it */
 .hero--sofa{ align-items: flex-start; padding-top: clamp(3rem, 7vw, 5rem); }
-.hero--sofa .hero-photo-full img{ object-position: center 36%; }
+.hero--sofa .hero-photo-full img{ object-position: center 46%; }
 /* phones: the wall above her is short, so keep the text block compact
    (no sub line, buttons side by side) to keep it clear of her head */
 @media (max-width: 719px){
@@ -549,8 +549,7 @@ p{ margin: 0; }
 /* ==========================================================
    FOOTER
    ========================================================== */
-/* lighter, dusty burgundy so the darker collaborator logos stay legible */
-.site-footer{ background: #93506A; color: var(--color-background); padding-block: var(--section-pad); position: relative; overflow: hidden; }
+.site-footer{ background: var(--color-eggplant); color: var(--color-background); padding-block: var(--section-pad); position: relative; overflow: hidden; }
 .site-footer .eyebrow{ color: color-mix(in srgb, var(--color-background) 75%, transparent); }
 .footer-top{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3rem; margin-bottom: 3.5rem; }
 .footer-claim{ font-family: var(--font-serif); font-style: italic; font-size: clamp(1.4rem, 3.4vw, 2.2rem); max-width: 20ch; }
@@ -562,7 +561,7 @@ p{ margin: 0; }
 /* real logos sit on a small white card so every source file (color, black,
    or white-only artwork) stays legible on the dark footer */
 /* transparent PNGs, pre-trimmed; width/height attrs give each the same visual weight */
-.collab-logo{ flex: none; object-fit: contain; }
+.collab-logo{ flex: none; object-fit: contain; box-sizing: content-box; background: #fff; padding: .55rem .9rem; border-radius: 999px; box-shadow: 0 2px 6px rgba(0,0,0,.15); }
 .footer-bottom{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: .85rem; opacity: .85; }
 .footer-bottom nav ul{ display: flex; flex-wrap: wrap; gap: 1.25rem; }
 

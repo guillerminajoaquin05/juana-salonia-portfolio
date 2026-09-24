@@ -596,7 +596,10 @@ p{ margin: 0; }
 /* Services: whole row links to filtered Work */
 
 /* closing line under the services list, between the last rule and the divider */
-.services-note{ margin: clamp(2rem, 4vw, 3rem) auto 0; max-width: 72ch; text-align: center; font-family: var(--font-serif); font-style: italic; font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.5; }
+/* the note sits in its own band: the last service row's rule above, a
+   matching rule below, compact padding, one line on desktop */
+.services-section{ padding-bottom: 0; }
+.services-note{ padding-block: clamp(1.5rem, 3vw, 2.25rem); border-bottom: var(--rule); text-align: center; text-wrap: balance; font-family: var(--font-serif); font-style: italic; font-size: clamp(1.1rem, 1.7vw, 1.5rem); line-height: 1.4; }
 .service-cta{ display: inline-block; margin-top: 1.25rem; font-size: .9rem; font-weight: 600; color: var(--color-eggplant); border-bottom: 1px solid currentColor; }
 .work-list-row[hidden]{ display: none; }
 

@@ -69,13 +69,13 @@
     { group: "Portada (home)", fields: [
       { k: "hero_image", l: "Foto de portada", t: "image", hint: "Foto horizontal. El recorte toma la parte de abajo, así que conviene que la persona esté abajo y el cielo o fondo liso arriba (ahí va el texto). Si la dejás vacía, se usa la de los globos." } ] },
     { group: "Sobre mí (home)", fields: [
-      { k: "home_about", l: "Texto corto de la home", t: "textarea", rows: 4, hint: "Para resaltar en naranja, poné *asteriscos* alrededor del texto." },
+      { k: "home_about", l: "Texto corto de la home", t: "textarea", rows: 4, hint: "Para resaltar en negrita, poné *asteriscos* alrededor del texto." },
       { k: "home_about_es", l: "Texto corto de la home (Español)", t: "textarea", rows: 4 },
       { k: "home_about_image", l: "Foto de la sección Sobre mí", t: "image", hint: "La polaroid ya armada (PNG con fondo transparente). Si la dejás vacía, se usa la actual." } ] },
     { group: "Sobre mí (página About)", fields: [
       { k: "about_p1", l: "Párrafo 1", t: "textarea", hint: "Para separar en párrafos dentro de este mismo campo, dejá una línea en blanco entre uno y otro." },
       { k: "about_p1_es", l: "Párrafo 1 (Español)", t: "textarea" },
-      { k: "about_p2", l: "Párrafo 2", t: "textarea", hint: "Podés resaltar con *asteriscos*." },
+      { k: "about_p2", l: "Párrafo 2", t: "textarea", hint: "Podés resaltar en negrita con *asteriscos*." },
       { k: "about_p2_es", l: "Párrafo 2 (Español)", t: "textarea" },
       { k: "about_p3", l: "Párrafo 3", t: "textarea" },
       { k: "about_p3_es", l: "Párrafo 3 (Español)", t: "textarea" },

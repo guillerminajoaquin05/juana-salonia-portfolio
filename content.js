@@ -72,9 +72,11 @@
     function cats(w){ return (w.categories || []).map(t).join(" · "); }
     function item(w, hidden){
       var title = pick(w, "title");
-      var img = w.cover_url || ("https://placehold.co/480x360/e7e2d6/66253D?text=" + encodeURIComponent(w.title));
+      var media = w.cover_url
+        ? '<div class="work-carousel-image"><img src="' + esc(w.cover_url) + '" alt="" decoding="async"></div>'
+        : '<div class="work-carousel-image work-carousel-image--empty"><span>' + esc(title) + "</span></div>";
       return '<a href="work-detail.html?id=' + esc(w.id) + '" class="work-carousel-item"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : "") + ">" +
-        '<div class="work-carousel-image"><img src="' + esc(img) + '" alt="" decoding="async"></div>' +
+        media +
         '<div class="work-carousel-caption"><span class="work-carousel-title">' + esc(title) + "</span>" +
         '<span class="work-carousel-meta">' + esc(cats(w)) + "</span></div></a>";
     }

@@ -34,9 +34,9 @@
     "producer, coordinator and strategist": "productora, coordinadora y estratega",
 
     /* services */
-    "02 / Services": "02 / Servicios", "Three worlds,": "Tres mundos,", "one way of working.": "una forma de trabajar.",
-    "Not sure exactly what you need? That's fine — these three worlds tend to overlap. Here's what each one covers.":
-      "¿No estás seguro de lo que necesitas? No pasa nada: estos tres mundos suelen superponerse. Esto es lo que cubre cada uno.",
+    "02 / Services": "02 / Servicios", "Different worlds,": "Distintos mundos,", "one way of working.": "una forma de trabajar.",
+    "Not sure exactly what you need? That's fine — these worlds tend to overlap. Here's what each one covers.":
+      "¿No estás seguro de lo que necesitas? No pasa nada: estos mundos suelen superponerse. Esto es lo que cubre cada uno.",
     "See related work →": "Ver trabajos relacionados →", "Ready to start?": "¿Listo para empezar?", "See it in action →": "Míralo en acción →",
 
     /* work */

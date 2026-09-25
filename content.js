@@ -92,8 +92,11 @@
       var det = pick(s, "details") || [];
       var details = det.length && full
         ? '<ul class="service-detail">' + det.map(function(d){ return "<li>" + esc(d) + "</li>"; }).join("") + "</ul>" : "";
-      var cta = full && s.category
-        ? '<a href="work.html?filter=' + encodeURIComponent(s.category) + '" class="service-cta">' + esc(t("See related work →")) + "</a>" : "";
+      /* category "Contact" = personalised service with no portfolio: link to Contact instead */
+      var cta = !full || !s.category ? ""
+        : s.category.toLowerCase() === "contact"
+          ? '<a href="contact.html" class="service-cta">' + esc(t("Get in touch →")) + "</a>"
+          : '<a href="work.html?filter=' + encodeURIComponent(s.category) + '" class="service-cta">' + esc(t("See related work →")) + "</a>";
       var text = full ? pick(s, "text") : (pick(s, "text") || det.join(", "));
       var Tag = full ? "h2" : "h3";
       return '<div class="service-row"><div>' +

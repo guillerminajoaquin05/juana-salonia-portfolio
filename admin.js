@@ -45,7 +45,7 @@
         { k: "text_es", l: "Descripción (Español)", t: "textarea", rows: 3 },
         { k: "details", l: "Detalle (uno por línea)", t: "lines" },
         { k: "details_es", l: "Detalle (Español, uno por línea)", t: "lines" },
-        { k: "category", l: "Categoría de Work a la que enlaza", t: "text", hint: "Tiene que coincidir con una categoría de los trabajos (ej: Podcast)." },
+        { k: "category", l: "Categoría de Work a la que enlaza", t: "text", hint: "Tiene que coincidir con una categoría de los trabajos (ej: Podcast). Si ponés Contact, el botón dice \"Get in touch\" y lleva a la página de contacto (para servicios personalizados sin trabajos para mostrar)." },
         { k: "image_url", l: "Foto (aparece al pasar el mouse)", t: "image" }
       ] },
     lately: { label: "Lately", table: "lately_items", noun: "ítem", title: "text", view: function(){ return "index.html#lately"; }, sub: function(r){ return r.status; },

@@ -502,6 +502,7 @@ p{ margin: 0; }
 .contact-method:last-child{ border-bottom: var(--rule); }
 .contact-method-label{ font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted); }
 .contact-method-value{ font-family: var(--font-serif); font-weight: 600; font-size: clamp(1.1rem, 5vw, 1.7rem); overflow-wrap: break-word; word-break: break-word; }
+.contact-method-desc{ font-size: .95rem; color: var(--color-text-muted); }
 .contact-method-action{ font-size: .85rem; color: var(--color-accent-text); }
 .contact-method:hover .contact-method-value{ color: var(--color-accent-text); }
 .testimonials{ display: grid; grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2rem; }

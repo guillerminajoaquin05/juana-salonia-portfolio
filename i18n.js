@@ -58,6 +58,9 @@
     "05 / Contact": "05 / Contacto", "Have something in mind?": "¿Tienes algo en mente?", "Let's talk.": "Hablemos.",
     "Email": "Correo", "Click to copy →": "Clic para copiar →", "Copied ✓": "Copiado ✓", "Visit profile →": "Ver perfil →",
     "What people say": "Lo que dicen", "Email me": "Escríbeme",
+    "WhatsApp channel": "Canal de WhatsApp", "WhatsApp channel →": "Canal de WhatsApp →",
+    "Job opportunities": "Búsquedas laborales", "I share the job openings I come across.": "Comparto las ofertas de trabajo que voy encontrando.",
+    "Join the channel →": "Unirme al canal →",
 
     /* gallery */
     "Open photo": "Abrir foto", "Close": "Cerrar", "Previous": "Anterior", "Next": "Siguiente",

@@ -219,6 +219,7 @@
 
     /* contact points, all pages */
     if (s.linkedin) document.querySelectorAll('a[href*="linkedin.com/in/"]').forEach(function(a){ a.href = s.linkedin; });
+    if (s.whatsapp_channel) document.querySelectorAll('a[href*="whatsapp.com/channel/"]').forEach(function(a){ a.href = s.whatsapp_channel; });
     if (s.email){
       document.querySelectorAll('a[href^="mailto:"]').forEach(function(a){ a.href = "mailto:" + s.email; });
       var btn = document.getElementById("copyEmailBtn");

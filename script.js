@@ -197,6 +197,8 @@
       if (!valid){ say("Please fill in your name, a valid email and a message.", false); return; }
 
       contactForm.elements["language"].value = window.I18N ? window.I18N.lang : "en";
+      /* a subject with the sender's name reads like a real enquiry to Gmail and is easy to filter */
+      contactForm.elements["subject"].value = "Nueva consulta de " + name.value.trim() + " (web)";
       cfSubmit.disabled = true;
       cfStatus.className = "cf-status"; cfStatus.textContent = tr("Sending…");
 
@@ -208,7 +210,7 @@
         .then(function(r){
           if (!r.ok) throw new Error(r.data && r.data.message);
           contactForm.reset();
-          say("Message sent — thank you! I'll get back to you soon.", true);
+          say("Thanks for reaching out! Juana or her team will get back to you soon.", true);
         }).catch(function(){
           say("Something went wrong. Please try again or email directly.", false);
         }).then(function(){ cfSubmit.disabled = false; });

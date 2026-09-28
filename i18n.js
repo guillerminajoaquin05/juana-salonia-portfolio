@@ -78,7 +78,7 @@
     "Send a message": "Envía un mensaje", "Name": "Nombre", "What are you looking for?": "¿Qué buscas?", "Message": "Mensaje",
     "LinkedIn & content": "LinkedIn y contenido", "A project or event": "Un proyecto o evento", "Something else": "Otra cosa",
     "Send message": "Enviar mensaje", "Sending…": "Enviando…",
-    "Message sent — thank you! I'll get back to you soon.": "Mensaje enviado, ¡gracias! Te voy a responder pronto.",
+    "Thanks for reaching out! Juana or her team will get back to you soon.": "¡Gracias por escribir! Juana o su equipo se van a comunicar con vos a la brevedad.",
     "Please fill in your name, a valid email and a message.": "Completa tu nombre, un email válido y un mensaje.",
     "Something went wrong. Please try again or email directly.": "Algo salió mal. Inténtalo de nuevo o escribe directamente por email.",
 

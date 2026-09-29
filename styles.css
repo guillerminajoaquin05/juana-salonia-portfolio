@@ -621,6 +621,7 @@ p{ margin: 0; }
 .contact-form .btn{ align-self: flex-start; }
 .contact-form .btn[disabled]{ opacity: .6; cursor: wait; }
 .cf-hp{ position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.cf-privacy{ margin-top: -.75rem; font-size: .8rem; color: var(--color-text-muted); }
 .cf-status{ min-height: 1.4em; font-size: .95rem; }
 .cf-status.is-ok{ color: var(--color-eggplant); font-weight: 600; }
 .cf-status.is-err{ color: var(--color-accent-text); }

@@ -78,6 +78,7 @@
     "Send a message": "Envía un mensaje", "Name": "Nombre", "What are you looking for?": "¿Qué buscas?", "Message": "Mensaje",
     "LinkedIn & content": "LinkedIn y contenido", "A project or event": "Un proyecto o evento", "Something else": "Otra cosa",
     "Send message": "Enviar mensaje", "Sending…": "Enviando…",
+    "Your details are only used to reply to your message.": "Tus datos solo se usan para responder tu consulta.",
     "Thanks for reaching out!": "¡Gracias por escribir!",
     "Your message has been received.": "Tu mensaje fue recibido.",
     "Juana or her team will get back to you soon.": "Juana o su equipo se van a comunicar con vos a la brevedad.",

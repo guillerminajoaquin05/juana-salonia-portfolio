@@ -2,8 +2,7 @@
    Juana Salonia — shared design system
    Archetype: "Structured Playfulness" — editorial grid order
    (Zack Millsaps / DesignThinkers-style hairlines, numbered
-   sections) + scrapbook collage warmth (tilted photos, tape,
-   handwritten annotations, brand star stickers).
+   sections) + scrapbook collage warmth (polaroids, washi tape).
    ========================================================== */
 
 :root{
@@ -62,28 +61,6 @@ h1,h2,h3,h4{ margin: 0; font-weight: 600; }
 p{ margin: 0; }
 .container{ max-width: var(--container); margin-inline: auto; padding-inline: var(--side-pad); }
 
-/* ---------- brand star stickers (real sprite sheet) ---------- */
-/* Elementos gráficos/estrellita.jpg is a fixed 2x3 grid (540px cells) of
-   the finalized brand doodle across Palette 1 colors. We show one cell via
-   background-position instead of six separate cropped files. */
-.star{
-  --size: 56px;
-  display: block;
-  width: var(--size);
-  height: var(--size);
-  background: #F5C518;
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  pointer-events: none;
-}
-/* legacy data-cell / sticker variants all render as the same plain yellow star */
-.star--sticker{ filter: none; box-shadow: none; border-radius: 0; }
-
-.star--bob{ animation: star-bob 4.5s ease-in-out infinite; }
-
-@keyframes star-bob{ 0%,100%{ transform: translateY(0) rotate(-5deg);} 50%{ transform: translateY(-9px) rotate(5deg);} }
-
-/* hand-drawn line doodle (flor.jpg) — multiply blend hides its near-white backing */
-
 /* washi-tape strip, pure CSS */
 .tape{
   position: absolute;
@@ -107,10 +84,7 @@ p{ margin: 0; }
   backdrop-filter: blur(6px);
   border-bottom: var(--rule);
 }
-/* flat wordmark logo — no circle badge, per the client's real logo files.
-   The source PNG has a lot of transparent padding around the actual
-   letterforms, so we oversize the image and clip it in a fixed-size
-   box to make the visible logo read at a proper size. */
+/* flat wordmark logo (pre-trimmed PNG), sized by height */
 .logo-mark{ display: flex; align-items: center; flex-shrink: 0; height: 40px; }
 .logo-mark img{ height: 100%; width: auto; }
 .footer-wordmark{ display: block; width: min(70%, 220px); margin-inline: auto; margin-bottom: 2.5rem; filter: invert(1); opacity: .92; }
@@ -164,17 +138,8 @@ p{ margin: 0; }
    section edge-to-edge (e.g. under the header, or closing the hero) */
 
 /* ---------- confetti dots ---------- */
-/* small flat-color circle stickers — a lighter-weight alternative to the
-   star doodle for scattering across photo collages */
-
 /* ---------- dividers ---------- */
 .divider{ position: relative; border-top: var(--rule); margin-inline: var(--side-pad); height: 2px; }
-.divider-walker{ position: absolute; top: 50%; left: 0; --size: 38px; transform: translateY(-50%); animation: walk 10s ease-in-out infinite alternate; }
-@keyframes walk{
-  0%{ left: 0%; transform: translateY(-50%) rotate(-6deg); }
-  50%{ transform: translateY(-64%) rotate(6deg); }
-  100%{ left: calc(100% - 38px); transform: translateY(-50%) rotate(-6deg); }
-}
 
 /* ---------- section scaffolding ---------- */
 .mini-section{ padding-block: var(--section-pad); padding-inline: var(--side-pad); position: relative; }

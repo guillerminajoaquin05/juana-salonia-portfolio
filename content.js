@@ -342,6 +342,33 @@
     if (window.I18N) window.I18N.apply(document.body);
   }
 
+  /* ---------- link hygiene ----------
+     Everything that ends up in an href/src comes from the admin. Only let
+     through https/http links and plain relative paths (e.g. Fotos/web/x.jpg),
+     so a pasted "javascript:" or "data:" link can never run on the site. */
+  function safeUrl(u){
+    u = String(u == null ? "" : u).trim();
+    if (!u) return "";
+    if (/^https?:\/\//i.test(u)) return u;
+    return /^[a-z][a-z0-9+.-]*:/i.test(u) || u.indexOf("//") === 0 ? "" : u;
+  }
+  function safeList(json){
+    var list = [];
+    try { list = JSON.parse(json || "[]"); } catch (e) {}
+    return JSON.stringify((Array.isArray(list) ? list : []).map(safeUrl).filter(Boolean));
+  }
+  function cleanData(){
+    data.works.forEach(function(w){
+      ["logo_url", "cover_url", "link_url", "drive_url"].forEach(function(k){ w[k] = safeUrl(w[k]); });
+      w.gallery = safeList(w.gallery);
+    });
+    data.services.forEach(function(s){ s.image_url = safeUrl(s.image_url); });
+    var st = data.settings;
+    ["hero_image", "home_about_image", "linkedin", "whatsapp_channel"].forEach(function(k){ if (k in st) st[k] = safeUrl(st[k]); });
+    if ("about_photos" in st) st.about_photos = safeList(st.about_photos);
+    if (st.email && !/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(st.email)) st.email = "";
+  }
+
   /* ---------- load ---------- */
   var needsWorks = $(".work-list") || $(".work-carousel-track") || $(".project-copy");
   Promise.all([
@@ -354,6 +381,7 @@
     data.works = r[0].data || []; data.services = r[1].data || []; data.lately = r[2].data || [];
     data.testimonials = r[3].data || [];
     (r[4].data || []).forEach(function(row){ data.settings[row.key] = row.value; });
+    cleanData();
     renderAll();
     document.addEventListener("langchange", renderAll);
   }).catch(function(){ /* keep static fallback */ });

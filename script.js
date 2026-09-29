@@ -210,10 +210,23 @@
         .then(function(r){
           if (!r.ok) throw new Error(r.data && r.data.message);
           contactForm.reset();
-          say("Thanks for reaching out! Juana or her team will get back to you soon.", true);
+          cfStatus.textContent = ""; cfStatus.className = "cf-status";
+          /* swap the form for the big thank-you block */
+          var thanks = document.getElementById("cfThanks");
+          contactForm.hidden = true;
+          thanks.hidden = false;
+          thanks.scrollIntoView({ behavior: "smooth", block: "center" });
+          thanks.focus({ preventScroll: true });
         }).catch(function(){
           say("Something went wrong. Please try again or email directly.", false);
         }).then(function(){ cfSubmit.disabled = false; });
+    });
+
+    var cfAgain = document.getElementById("cfAgain");
+    if (cfAgain) cfAgain.addEventListener("click", function(){
+      document.getElementById("cfThanks").hidden = true;
+      contactForm.hidden = false;
+      contactForm.elements["name"].focus();
     });
   }
 

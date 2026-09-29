@@ -624,6 +624,14 @@ p{ margin: 0; }
 .cf-status{ min-height: 1.4em; font-size: .95rem; }
 .cf-status.is-ok{ color: var(--color-eggplant); font-weight: 600; }
 .cf-status.is-err{ color: var(--color-accent-text); }
+/* thank-you block that replaces the form after sending */
+.cf-thanks{ max-width: 46rem; padding-block: clamp(2rem, 5vw, 3.5rem); border-block: var(--rule); }
+.cf-thanks:focus{ outline: none; }
+.contact-form[hidden], .cf-thanks[hidden]{ display: none; }
+.cf-thanks-eyebrow{ font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: .75rem; }
+.cf-thanks-title{ font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin-bottom: 1rem; }
+.cf-thanks-text{ font-size: 1.15rem; margin-bottom: 1.75rem; }
+.cf-thanks-ctas{ justify-content: flex-start; margin-top: 0; }
 
 
 /* ---------- accessibility ---------- */

@@ -3,7 +3,7 @@
 }
 *{ box-sizing:border-box; }
 body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }
-h1,h2,h3{ font-family:'Fraunces',serif; font-weight:500; margin:0; }
+h1,h2,h3{ font-family:'Bodoni Moda',Georgia,serif; font-weight:500; margin:0; }
 a{ color:inherit; }
 .mono{ font-family:'Space Mono',monospace; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; }
 
@@ -46,7 +46,7 @@ textarea{ min-height:7rem; resize:vertical; }
 .rows{ border-top:1px solid var(--line); }
 .row{ display:flex; align-items:center; gap:1rem; padding:.9rem 0; border-bottom:1px solid var(--line); }
 .row-num{ font-family:'Space Mono',monospace; font-size:.75rem; color:var(--accent); width:1.6rem; }
-.row-title{ flex:1; font-family:'Fraunces',serif; font-size:1.1rem; }
+.row-title{ flex:1; font-family:'Bodoni Moda',Georgia,serif; font-size:1.1rem; }
 .row-sub{ display:block; font-family:'Inter',sans-serif; font-size:.75rem; color:var(--muted); }
 .row-actions{ display:flex; gap:.4rem; }
 

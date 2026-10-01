@@ -465,10 +465,11 @@ p{ margin: 0; }
 .contact-methods{ display: grid; grid-template-columns: 1fr; max-width: 46rem; }
 .contact-method{
   display: flex; flex-direction: column; gap: .4rem;
-  width: 100%; text-align: left; padding-block: 1.75rem;
+  width: 100%; text-align: left; padding: 1.75rem 0;
   border-top: var(--rule);
 }
-.contact-method:last-child{ border-bottom: var(--rule); }
+.contact-method:first-child{ border-top: 0; padding-top: 0; }
+.contact-method:last-child{ padding-bottom: 0; }
 .contact-method-label{ font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted); }
 .contact-method-value{ font-family: var(--font-serif); font-weight: 600; font-size: clamp(1.1rem, 5vw, 1.7rem); overflow-wrap: break-word; word-break: break-word; }
 .contact-method-desc{ font-size: .95rem; color: var(--color-text-muted); }

@@ -515,8 +515,8 @@ p{ margin: 0; }
 .footer-contact .btn-primary{ background: var(--color-background); color: var(--color-eggplant); border-color: var(--color-background); }
 .footer-contact .btn-primary:hover{ background: var(--color-accent-text); color: var(--color-background); border-color: var(--color-accent-text); }
 /* loose, centered logo cloud (ref: iarasnei.com/collabs): no rules, no slots, varied sizes */
-.site-footer .container > .eyebrow{ text-align: center; }
-.collab-row{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(1.75rem, 4vw, 3rem) clamp(2rem, 5vw, 4rem); max-width: 60rem; margin: 0 auto; padding-block: 1.5rem clamp(3rem, 6vw, 4.5rem); }
+.site-footer .container > .eyebrow{ text-align: center; margin-top: -1rem; }
+.collab-row{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(1.75rem, 4vw, 3rem) clamp(2rem, 5vw, 4rem); max-width: 60rem; margin: 0 auto; padding-block: 2.5rem clamp(3rem, 6vw, 4.5rem); }
 .collab-row span{ font-size: .8rem; letter-spacing: .03em; text-transform: uppercase; color: var(--color-background); }
 /* every logo is pre-recolored to the same cream (Logos/footer/mono) and sits
    centered in an identical slot; width/height attrs give each the same visual weight */

@@ -87,7 +87,6 @@ p{ margin: 0; }
 /* flat wordmark logo (pre-trimmed PNG), sized by height */
 .logo-mark{ display: flex; align-items: center; flex-shrink: 0; height: 40px; }
 .logo-mark img{ height: 100%; width: auto; }
-.footer-wordmark{ display: block; width: min(70%, 220px); margin-inline: auto; margin-bottom: 2.5rem; }
 
 /* nav links live directly in the header on tablet/desktop; the hamburger
    + full-screen drawer only take over once they no longer fit (mobile) */

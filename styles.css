@@ -84,6 +84,7 @@ p{ margin: 0; }
   backdrop-filter: blur(6px);
   border-bottom: var(--rule);
 }
+.site-header.over-hero{ border-bottom-color: transparent; }
 /* flat wordmark logo (pre-trimmed PNG), sized by height */
 .logo-mark{ display: flex; align-items: center; flex-shrink: 0; height: 40px; }
 .logo-mark img{ height: 100%; width: auto; }

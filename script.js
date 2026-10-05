@@ -32,6 +32,18 @@
     });
   }
 
+  /* ---- home: no rule under the header while it sits over the hero photo ---- */
+  var siteHeader = document.querySelector(".site-header");
+  var hero = document.getElementById("hero");
+  if (siteHeader && hero){
+    var overHero = function(){
+      siteHeader.classList.toggle("over-hero", hero.getBoundingClientRect().bottom > siteHeader.offsetHeight);
+    };
+    overHero();
+    window.addEventListener("scroll", overHero, { passive: true });
+    window.addEventListener("resize", overHero);
+  }
+
   /* ---- scroll reveal ---- */
   var revealEls = document.querySelectorAll("[data-reveal]");
   if ("IntersectionObserver" in window && revealEls.length){

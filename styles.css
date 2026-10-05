@@ -391,7 +391,7 @@ p{ margin: 0; }
 /* client/collaborator logo, not a project photo yet — contained + centered
    rather than cropped, so wordmarks don't get cut off */
 .work-list-media img{
-  width: 58%; max-width: 190px; height: auto; object-fit: contain;
+  width: auto; height: auto; max-width: 150px; max-height: 60px; object-fit: contain;
 }
 .work-list-row:hover .work-list-media{ width: min(42%, 320px); }
 @media (max-width: 719px){

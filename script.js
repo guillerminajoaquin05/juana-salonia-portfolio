@@ -141,6 +141,40 @@
     marqueeToggle.addEventListener("click", function(){ marqueeBox.classList.toggle("is-paused"); paintMarquee(); });
     document.addEventListener("langchange", paintMarquee);
     paintMarquee();
+
+    /* arrows: glide the ribbon one tile back/forward by easing the CSS
+       animation's clock (the loop is seamless, so time wraps freely) */
+    var mTrack = marqueeBox.querySelector(".work-carousel-track");
+    var nudge = function(dir){
+      var anim = mTrack && mTrack.getAnimations ? mTrack.getAnimations()[0] : null;
+      var item = mTrack && mTrack.querySelector(".work-carousel-item");
+      if (!anim || !item) return;
+      var dur = anim.effect.getComputedTiming().duration;
+      var gap = parseFloat(getComputedStyle(mTrack).columnGap) || 0;
+      var step = (item.offsetWidth + gap) / (mTrack.offsetWidth / 2) * dur;
+      var from = anim.currentTime || 0;
+      if (dir < 0 && from < step) from += dur;
+      var to = from + dir * step, t0 = performance.now();
+      (function tick(now){
+        var k = Math.min(1, (now - t0) / 450), e = 1 - Math.pow(1 - k, 3);
+        anim.currentTime = from + (to - from) * e;
+        if (k < 1) requestAnimationFrame(tick);
+      })(t0);
+    };
+    var arrows = [["prev", "‹", "Previous project", -1], ["next", "›", "Next project", 1]].map(function(a){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "about-carousel-arrow work-carousel-arrow about-carousel-arrow--" + a[0];
+      b.textContent = a[1];
+      b.addEventListener("click", function(){ nudge(a[3]); });
+      marqueeBox.appendChild(b);
+      return [b, a[2]];
+    });
+    var paintArrows = function(){
+      arrows.forEach(function(x){ x[0].setAttribute("aria-label", window.I18N ? window.I18N.t(x[1]) : x[1]); });
+    };
+    document.addEventListener("langchange", paintArrows);
+    paintArrows();
   }
   window.initAboutCarousel();
 

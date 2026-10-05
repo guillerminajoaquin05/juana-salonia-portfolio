@@ -69,6 +69,7 @@
     /* accessibility */
     "Skip to content": "Saltar al contenido", "Pause": "Pausar", "Play": "Reproducir",
     "Previous photo": "Foto anterior", "Next photo": "Foto siguiente",
+    "Previous project": "Trabajo anterior", "Next project": "Trabajo siguiente",
     "Can't find what you're looking for? Let's talk, find the right solution together and make your idea happen.":
       "¿No encontrás lo que estás buscando? Charlemos, pensemos juntos la solución y hagamos tu idea realidad.",
     "(opens in a new tab)": "(se abre en una pestaña nueva)",

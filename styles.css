@@ -517,7 +517,8 @@ p{ margin: 0; }
 .collab-row span{ font-size: .8rem; letter-spacing: .03em; text-transform: uppercase; color: var(--color-background); }
 /* every logo is pre-recolored to the same cream (Logos/footer/mono) and sits
    centered in an identical slot; width/height attrs give each the same visual weight */
-.collab-chip{ flex: none; display: flex; align-items: center; justify-content: center; }
+.collab-chip{ flex: none; display: flex; align-items: center; justify-content: center; transition: opacity .3s ease; }
+a.collab-chip:hover{ opacity: .7; }
 .collab-logo{ flex: none; object-fit: contain; }
 @media (max-width: 719px){ .collab-logo{ zoom: .65; } }
 .footer-bottom{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: .85rem; }

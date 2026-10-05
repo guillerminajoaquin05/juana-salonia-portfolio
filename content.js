@@ -38,7 +38,7 @@
   function pad(n){ return (n < 10 ? "0" : "") + n; }
   function q(table){ return sb.from(table).select("*").order("position", { ascending: true }); }
 
-  var data = { works: [], services: [], lately: [], testimonials: [], settings: {} };
+  var data = { works: [], services: [], lately: [], testimonials: [], collaborators: [], settings: {} };
   var photosDone = false;
 
   /* ---------- renderers ---------- */
@@ -331,6 +331,35 @@
     if (!lb.open) lb.showModal();
   }
 
+  /* footer logos: every logo gets about the same visual weight from its own
+     proportions (wide wordmarks come out lower, square marks taller), times the
+     admin's optional size tweak. Rendered once; nothing in it is translated. */
+  var collabsDone = false;
+  function collabSize(img){
+    var r = img.naturalWidth / img.naturalHeight;
+    if (!r || !isFinite(r)) return;
+    var k = parseFloat(img.getAttribute("data-size")) || 1;
+    var hh = Math.min(Math.sqrt(6000 / r), 68) * k, ww = hh * r;
+    if (ww > 180 * k){ ww = 180 * k; hh = ww / r; }
+    img.width = Math.round(ww); img.height = Math.round(hh);
+  }
+  function renderCollabs(list){
+    var row = $(".collab-row");
+    list = list.filter(function(c){ return c.logo_url; });
+    if (!row || !list.length || collabsDone) return;
+    collabsDone = true;
+    row.innerHTML = list.map(function(c){
+      var img = '<img class="collab-logo" src="' + esc(c.logo_url) + '" alt="' + esc(c.name) + '" data-size="' + esc(c.size || "1") + '" decoding="async">';
+      return c.link_url
+        ? '<a class="collab-chip" href="' + esc(c.link_url) + '" target="_blank" rel="noopener">' + img + '<span class="visually-hidden"> (opens in a new tab)</span></a>'
+        : '<span class="collab-chip">' + img + "</span>";
+    }).join("");
+    Array.prototype.forEach.call(row.querySelectorAll("img"), function(img){
+      if (img.complete && img.naturalWidth) collabSize(img);
+      else img.addEventListener("load", function(){ collabSize(img); });
+    });
+  }
+
   function renderAll(){
     renderWorkList(data.works);
     renderMarquee(data.works);
@@ -339,6 +368,7 @@
     renderTestimonials(data.testimonials);
     renderSettings(data.settings);
     renderWorkDetail(data.works);
+    renderCollabs(data.collaborators);
     if (window.I18N) window.I18N.apply(document.body);
   }
 
@@ -363,6 +393,7 @@
       w.gallery = safeList(w.gallery);
     });
     data.services.forEach(function(s){ s.image_url = safeUrl(s.image_url); });
+    data.collaborators.forEach(function(c){ c.logo_url = safeUrl(c.logo_url); c.link_url = safeUrl(c.link_url); });
     var st = data.settings;
     ["hero_image", "home_about_image", "linkedin", "whatsapp_channel"].forEach(function(k){ if (k in st) st[k] = safeUrl(st[k]); });
     if ("about_photos" in st) st.about_photos = safeList(st.about_photos);
@@ -376,10 +407,12 @@
     $(".services-list") ? q("services") : { data: [] },
     $(".lately-grid") ? q("lately_items") : { data: [] },
     $(".testimonials") ? q("testimonials") : { data: [] },
-    sb.from("site_settings").select("*")
+    sb.from("site_settings").select("*"),
+    $(".collab-row") ? q("collaborators") : { data: [] }
   ]).then(function(r){
     data.works = r[0].data || []; data.services = r[1].data || []; data.lately = r[2].data || [];
     data.testimonials = r[3].data || [];
+    data.collaborators = r[5].data || [];
     (r[4].data || []).forEach(function(row){ data.settings[row.key] = row.value; });
     cleanData();
     renderAll();

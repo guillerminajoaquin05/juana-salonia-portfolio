@@ -62,6 +62,13 @@
         { k: "name", l: "Nombre de quien lo dice", t: "text", req: true },
         { k: "role", l: "Cargo / empresa", t: "text" },
         { k: "role_es", l: "Cargo / empresa (Español)", t: "text" }
+      ] },
+    collaborators: { label: "Logos del footer", table: "collaborators", noun: "logo", title: "name", view: function(){ return "index.html"; }, sub: function(r){ return r.link_url ? "Enlace: " + r.link_url : "Sin enlace"; },
+      fields: [
+        { k: "name", l: "Nombre de la marca", t: "text", req: true, hint: "No se ve en la página: lo leen los buscadores y los lectores de pantalla." },
+        { k: "logo_url", l: "Logo", t: "image", logo: "cream", hint: "Subí el logo como lo tengas (PNG, JPG o SVG; mejor con fondo transparente o liso). Se pasa solo al color crema del footer, se recorta y toma el mismo tamaño que el resto." },
+        { k: "link_url", l: "Enlace a su página", t: "text", hint: "Opcional: pegá la URL completa (https://...). Al hacer clic en el logo se abre en otra pestaña." },
+        { k: "size", l: "Tamaño", t: "select", options: [["0.85", "Un poco más chico"], ["1.15", "Un poco más grande"], ["1", "Normal"]], hint: "Por si algún logo queda visualmente más grande o más chico que los demás." }
       ] }
   };
 
@@ -132,8 +139,68 @@
     }).catch(function(){ return file; });
   }
 
-  function upload(original){
-    return compress(original).then(function(file){
+  /* Footer logos: recolor to the footer cream (#FDFAF5), trim the empty
+     border and save as PNG, so every logo Juana adds matches the rest.
+     The "ink" is whatever contrasts with the background: dark or colored
+     marks on white/transparent, or light marks on a dark box. */
+  function lum(px, i){ return 0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]; }
+  function creamLogo(file){
+    return new Promise(function(resolve, reject){
+      var im = new Image();
+      im.onload = function(){ resolve(im); };
+      im.onerror = function(){ reject(new Error("no se pudo leer la imagen")); };
+      im.src = URL.createObjectURL(file);
+    }).then(function(im){
+      var w = im.naturalWidth || 600, hgt = im.naturalHeight || 300;
+      var s = Math.min(800 / w, 800 / hgt);
+      if (!/svg/.test(file.type)) s = Math.min(1, s);
+      w = Math.max(1, Math.round(w * s)); hgt = Math.max(1, Math.round(hgt * s));
+      var cv = document.createElement("canvas"); cv.width = w; cv.height = hgt;
+      var ctx = cv.getContext("2d"); ctx.drawImage(im, 0, 0, w, hgt);
+      var d = ctx.getImageData(0, 0, w, hgt), px = d.data, i;
+      var clear = 0, sum = 0, n = 0;
+      for (i = 0; i < px.length; i += 4){ if (px[i + 3] < 20) clear++; else if (px[i + 3] > 200){ sum += lum(px, i); n++; } }
+      var corners = [0, (w - 1) * 4, (hgt - 1) * w * 4, ((hgt - 1) * w + w - 1) * 4];
+      var bg = corners.reduce(function(a, c){ return a + lum(px, c); }, 0) / 4;
+      var mode = clear / (w * hgt) > 0.1 ? (n && sum / n > 200 ? "alpha" : "dark") : (bg < 128 ? "light" : "dark");
+      var orig = new Uint8ClampedArray(px);
+      var x0, y0, x1, y1;
+      /* box = [bx0, by0, bx1, by1]: only pixels inside it can be ink */
+      function ink(mode, box){
+        var solid = 0;
+        x0 = w; y0 = hgt; x1 = -1; y1 = -1;
+        for (var y = 0; y < hgt; y++) for (var x = 0; x < w; x++){
+          i = (y * w + x) * 4;
+          var l = lum(orig, i);
+          var t = mode === "alpha" ? 1 : mode === "dark" ? (245 - l) / 30 : (l - 95) / 120;
+          var a = Math.round(orig[i + 3] * Math.max(0, Math.min(1, t)));
+          if (box && (x < box[0] || x > box[2] || y < box[1] || y > box[3])) a = 0;
+          px[i] = 253; px[i + 1] = 250; px[i + 2] = 245; px[i + 3] = a;
+          if (a > 128) solid++;
+          if (a > 12){ if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+        }
+        return solid;
+      }
+      var solid = ink(mode);
+      if (x1 < 0) throw new Error("no se encontró el logo en la imagen");
+      /* the "logo" came out as a solid block: it's a light logo on a dark box
+         (e.g. white text on a black banner), so take the light marks inside it */
+      if (mode === "dark" && solid / ((x1 - x0 + 1) * (y1 - y0 + 1)) > 0.7){
+        var b = [x0 + 2, y0 + 2, x1 - 2, y1 - 2];
+        ink("light", b);
+        if (x1 < 0) throw new Error("no se encontró el logo en la imagen");
+      }
+      ctx.putImageData(d, 0, 0);
+      var out = document.createElement("canvas"); out.width = x1 - x0 + 1; out.height = y1 - y0 + 1;
+      out.getContext("2d").drawImage(cv, x0, y0, out.width, out.height, 0, 0, out.width, out.height);
+      return new Promise(function(resolve){
+        out.toBlob(function(blob){ resolve(new File([blob], file.name.replace(/\.[^.]+$/, "") + "-footer.png", { type: "image/png" })); }, "image/png");
+      });
+    });
+  }
+
+  function upload(original, f){
+    return (f && f.logo === "cream" ? creamLogo(original) : compress(original)).then(function(file){
       var path = Date.now() + "-" + slug(file.name);
       return sb.storage.from("media").upload(path, file, { cacheControl: "31536000", upsert: false }).then(function(r){
         if (r.error) throw r.error;
@@ -170,7 +237,7 @@
       get = function(){ return li.value.split("\n").map(function(s){ return s.trim(); }).filter(Boolean); };
     } else if (f.t === "image"){
       var url = value || "";
-      var box = h("div", { class: "img-field" });
+      var box = h("div", { class: "img-field" + (f.logo === "cream" ? " img-field--dark" : "") });
       var prev = h("div");
       var status = h("span", { class: "hint" });
       function paint(){ prev.innerHTML = ""; prev.appendChild(url ? h("img", { src: url, alt: "" }) : h("div", { class: "ph", text: "Sin imagen" })); }
@@ -178,7 +245,7 @@
       file.addEventListener("change", function(){
         if (!file.files[0]) return;
         status.textContent = "Subiendo…";
-        upload(file.files[0]).then(function(u){ url = u; paint(); status.textContent = "Listo."; })
+        upload(file.files[0], f).then(function(u){ url = u; paint(); status.textContent = "Listo."; })
           .catch(function(e){ status.textContent = "Error al subir: " + e.message; });
       });
       var clear = h("button", { type: "button", class: "btn btn--ghost btn--sm", text: "Quitar", onclick: function(){ url = ""; paint(); } });
@@ -353,7 +420,7 @@
 
   /* ---------- backup: download everything as one JSON file ---------- */
   function backup(btn){
-    var tables = ["works", "services", "lately_items", "site_settings"];
+    var tables = ["works", "services", "lately_items", "testimonials", "collaborators", "site_settings"];
     btn.disabled = true; var old = btn.textContent; btn.textContent = "Preparando…";
     Promise.all(tables.map(function(t){ return sb.from(t).select("*"); })).then(function(res){
       for (var i = 0; i < res.length; i++) if (res[i].error) throw res[i].error;
@@ -372,7 +439,7 @@
   }
 
   /* ---------- shell ---------- */
-  var TABS = [["works", "Trabajos"], ["services", "Servicios"], ["lately", "Lately"], ["testimonials", "Testimonios"], ["settings", "Textos, fotos y contacto"]];
+  var TABS = [["works", "Trabajos"], ["services", "Servicios"], ["lately", "Lately"], ["testimonials", "Testimonios"], ["collaborators", "Logos del footer"], ["settings", "Textos, fotos y contacto"]];
   function show(key){
     Array.prototype.forEach.call(tabsEl.children, function(b){ b.setAttribute("aria-selected", b.dataset.key === key); });
     if (key === "settings") renderSettings(); else renderList(key);

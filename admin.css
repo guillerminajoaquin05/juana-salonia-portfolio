@@ -55,6 +55,7 @@ textarea{ min-height:7rem; resize:vertical; }
 .editor-actions{ display:flex; gap:.75rem; margin-top:1.5rem; flex-wrap:wrap; }
 .img-field{ display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
 .img-field img{ width:88px; height:88px; object-fit:contain; background:#fff; border:1px solid var(--line); }
+.img-field--dark img{ background:var(--ink); padding:.5rem; box-sizing:border-box; }
 .img-field .ph{ width:88px; height:88px; display:grid; place-items:center; border:1px dashed var(--line); font-size:.7rem; color:var(--muted); }
 .gallery{ display:grid; grid-template-columns:repeat(auto-fill,minmax(96px,1fr)); gap:.75rem; margin-bottom:.75rem; }
 .gallery figure{ margin:0; position:relative; }

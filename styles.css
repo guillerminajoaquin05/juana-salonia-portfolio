@@ -392,11 +392,8 @@ p{ margin: 0; }
    rather than cropped, so wordmarks don't get cut off */
 .work-list-media img{
   width: 58%; max-width: 190px; height: auto; object-fit: contain;
-  filter: grayscale(1); opacity: .8;
-  transition: filter .5s ease, opacity .5s ease;
 }
 .work-list-row:hover .work-list-media{ width: min(42%, 320px); }
-.work-list-row:hover .work-list-media img{ filter: grayscale(0); opacity: 1; }
 @media (max-width: 719px){
   .work-list-media{ display: none; }
   .work-list-meta{ margin-left: 0; width: 100%; }

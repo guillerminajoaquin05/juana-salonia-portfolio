@@ -96,7 +96,7 @@
     { group: "Contacto", fields: [
       { k: "email", l: "Email", t: "text" },
       { k: "linkedin", l: "LinkedIn (URL completa)", t: "text" },
-      { k: "whatsapp_channel", l: "Canal de WhatsApp (URL completa)", t: "text", hint: "El canal de búsquedas laborales. Aparece en Contact y en el pie de todas las páginas." } ] }
+      { k: "whatsapp_channel", l: "Canal de WhatsApp (URL completa)", t: "text", hint: "El canal de búsquedas laborales. Aparece en la página de Contact." } ] }
   ];
 
   /* ---------- helpers ---------- */

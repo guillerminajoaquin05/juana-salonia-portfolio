@@ -236,6 +236,22 @@
     }
   }
 
+  /* Collage: photos go in groups of three on a 6-column grid — one big photo
+     and two stacked small ones, the big one alternating left/right. A last
+     group of two is two halves, a single leftover photo goes full width.
+     Returns a shape per photo. */
+  function collageShapes(n){
+    var groups = [];
+    for (var left = n; left > 0; left -= 3) groups.push(Math.min(3, left));
+    var out = [], flip = false;
+    groups.forEach(function(g){
+      if (g === 3){ out.push.apply(out, flip ? ["small", "big", "small"] : ["big", "small", "small"]); flip = !flip; }
+      else if (g === 2) out.push("half", "half");
+      else out.push("full");
+    });
+    return out;
+  }
+
   function renderWorkDetail(works){
     var page = $(".project-copy");
     if (!page) return;
@@ -271,7 +287,7 @@
       blocks[i].style.display = vals[i] ? "" : "none";
       if (vals[i] && p) p.innerHTML = rich(vals[i]);
     }
-    /* photo gallery (masonry grid + lightbox) */
+    /* photo gallery (collage + lightbox) */
     var gal = $(".gallery-grid");
     if (gal){
       var photos = [];
@@ -279,8 +295,9 @@
       if (!photos.length){ gal.style.display = "none"; return; }
       gal.style.display = "";
       var title = pick(w, "title");
+      var shapes = collageShapes(photos.length);
       gal.innerHTML = photos.map(function(p, i){
-        return '<button type="button" class="gallery-item" data-i="' + i + '" aria-label="' + esc(t("Open photo")) + " " + (i + 1) + '">' +
+        return '<button type="button" class="gallery-item gallery-item--' + shapes[i] + '" data-i="' + i + '" aria-label="' + esc(t("Open photo")) + " " + (i + 1) + '">' +
           '<img src="' + esc(p) + '" alt="' + esc(title) + " — " + (i + 1) + '" loading="lazy" decoding="async"></button>';
       }).join("");
       Array.prototype.forEach.call(gal.querySelectorAll(".gallery-item"), function(b){

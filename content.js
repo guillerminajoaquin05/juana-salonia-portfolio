@@ -278,11 +278,15 @@
     }
     var facts = document.querySelectorAll(".project-meta > div");
     if (facts.length >= 4){
-      facts[0].lastElementChild.textContent = cats.join(", ");
-      facts[1].lastElementChild.textContent = pick(w, "year_place") || "";
-      facts[2].lastElementChild.textContent = pick(w, "role") || "";
+      /* a fact with no value is hidden instead of showing a bare label */
+      [cats.join(", "), pick(w, "year_place") || "", pick(w, "role") || ""].forEach(function(v, k){
+        facts[k].lastElementChild.textContent = v;
+        facts[k].style.display = v ? "" : "none";
+      });
       facts[3].lastElementChild.innerHTML = w.drive_url ? '<a href="' + esc(w.drive_url) + '" target="_blank" rel="noopener" class="link-arrow">' + esc(t("Gallery →")) + '<span class="visually-hidden"> ' + esc(t("(opens in a new tab)")) + "</span></a>" : "";
       facts[3].style.display = w.drive_url ? "" : "none";
+      var band = $(".project-facts");
+      if (band) band.style.display = Array.prototype.some.call(facts, function(d){ return d.style.display !== "none"; }) ? "" : "none";
     }
     var blocks = page.children;
     var vals = [pick(w, "context"), pick(w, "role_text"), pick(w, "highlights")];

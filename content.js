@@ -36,6 +36,12 @@
   }
   function $(sel){ return document.querySelector(sel); }
   function pad(n){ return (n < 10 ? "0" : "") + n; }
+  /* photos framed in the admin carry their focus point as "#f=x,y" (percent):
+     turns it into the object-position that keeps that part of the photo in view */
+  function focus(u){
+    var m = /#f=(\d{1,3}),(\d{1,3})$/.exec(u || "");
+    return m ? ' style="object-position:' + m[1] + "% " + m[2] + '%"' : "";
+  }
   function q(table){ return sb.from(table).select("*").order("position", { ascending: true }); }
 
   var data = { works: [], services: [], lately: [], testimonials: [], collaborators: [], settings: {} };
@@ -73,7 +79,7 @@
     function item(w, hidden){
       var title = pick(w, "title");
       var media = w.cover_url
-        ? '<div class="work-carousel-image"><img src="' + esc(w.cover_url) + '" alt="" decoding="async"></div>'
+        ? '<div class="work-carousel-image"><img src="' + esc(w.cover_url) + '" alt="" decoding="async"' + focus(w.cover_url) + "></div>"
         : '<div class="work-carousel-image work-carousel-image--empty"><span>' + esc(title) + "</span></div>";
       return '<a href="work-detail.html?id=' + esc(w.id) + '" class="work-carousel-item"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : "") + ">" +
         media +
@@ -270,8 +276,6 @@
       linkBox.hidden = !w.link_url;
       linkBox.innerHTML = w.link_url ? '<a href="' + esc(w.link_url) + '" target="_blank" rel="noopener" class="btn btn-primary">' + esc(t(labels[w.link_label] || labels.more)) + '<span class="visually-hidden"> ' + esc(t("(opens in a new tab)")) + "</span></a>" : "";
     }
-    var hero = $(".project-hero-media");
-    if (hero) hero.innerHTML = w.cover_url ? '<img src="' + esc(w.cover_url) + '" alt="' + esc(pick(w, "title")) + '">' : "";
     var facts = document.querySelectorAll(".project-meta > div");
     if (facts.length >= 4){
       facts[0].lastElementChild.textContent = cats.join(", ");
@@ -287,18 +291,20 @@
       blocks[i].style.display = vals[i] ? "" : "none";
       if (vals[i] && p) p.innerHTML = rich(vals[i]);
     }
-    /* photo gallery (collage + lightbox) */
+    /* photo collage at the top (cover photo first, then the gallery) + lightbox */
     var gal = $(".gallery-grid");
     if (gal){
       var photos = [];
       try { photos = JSON.parse(w.gallery || "[]"); } catch (e) {}
+      if (w.cover_url) photos.unshift(w.cover_url);
+      photos = photos.filter(function(p, i){ return photos.indexOf(p) === i; });
       if (!photos.length){ gal.style.display = "none"; return; }
       gal.style.display = "";
       var title = pick(w, "title");
       var shapes = collageShapes(photos.length);
       gal.innerHTML = photos.map(function(p, i){
         return '<button type="button" class="gallery-item gallery-item--' + shapes[i] + '" data-i="' + i + '" aria-label="' + esc(t("Open photo")) + " " + (i + 1) + '">' +
-          '<img src="' + esc(p) + '" alt="' + esc(title) + " — " + (i + 1) + '" loading="lazy" decoding="async"></button>';
+          '<img src="' + esc(p) + '" alt="' + esc(title) + " — " + (i + 1) + '"' + (i > 2 ? ' loading="lazy"' : "") + ' decoding="async"' + focus(p) + "></button>";
       }).join("");
       Array.prototype.forEach.call(gal.querySelectorAll(".gallery-item"), function(b){
         b.addEventListener("click", function(){ openLightbox(photos, parseInt(b.getAttribute("data-i"), 10), title); });

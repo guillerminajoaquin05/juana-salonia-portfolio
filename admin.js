@@ -19,14 +19,14 @@
         { k: "meta", l: "Línea corta (lista de Work)", t: "text", hint: "Ej: Podcast Production · USA · 2025–Present" },
         { k: "meta_es", l: "Línea corta (Español)", t: "text" },
         { k: "logo_url", l: "Logo (PNG con fondo transparente)", t: "image", hint: "Aparece al pasar el mouse por la fila en Work." },
-        { k: "cover_url", l: "Foto de portada", t: "image", hint: "Se usa en la cinta de la home y arriba del caso de estudio." },
+        { k: "cover_url", l: "Foto de portada", t: "image", frame: true, hint: "Se usa en la cinta de la home y es la primera foto del collage del trabajo. Al elegirla se abre un recuadro para acomodarla; después podés cambiarlo con \"Encuadrar\"." },
         { k: "summary", l: "Resumen (una frase)", t: "textarea", rows: 2 },
         { k: "summary_es", l: "Resumen (Español)", t: "textarea", rows: 2 },
         { k: "year_place", l: "Año y lugar", t: "text" },
         { k: "year_place_es", l: "Año y lugar (Español)", t: "text" },
         { k: "role", l: "Mi rol (corto)", t: "text" },
         { k: "role_es", l: "Mi rol (Español)", t: "text" },
-        { k: "gallery", l: "Galería de fotos", t: "gallery", hint: "Se muestran en este orden en la página del trabajo. Podés subir varias juntas; se achican solas." },
+        { k: "gallery", l: "Galería de fotos", t: "gallery", frame: true, hint: "Arman el collage de la página del trabajo, en este orden y después de la foto de portada. Podés subir varias juntas: se abre el recuadro para acomodar cada una, y se achican solas." },
         { k: "drive_url", l: "Link a la galería completa (Drive)", t: "text", hint: "Opcional: aparece como enlace \"Gallery\" en los datos del proyecto." },
         { k: "link_url", l: "Enlace del botón (sitio, podcast, etc.)", t: "text", hint: "Opcional: pegá la URL completa (https://...). Si lo dejás vacío, el botón no aparece." },
         { k: "link_label", l: "Texto del botón", t: "select", options: [["site", "Ver sitio"], ["podcast", "Ver podcast"], ["more", "Ver más"]] },
@@ -209,6 +209,62 @@
     });
   }
 
+  /* ---------- framing ----------
+     Work photos are shown cropped (collage tiles, home ribbon). Juana drags
+     each photo inside a frame to pick the part that must stay in view; the
+     choice travels with the URL as "#f=x,y" (percent) and the site turns it
+     into object-position. Older photos without it stay centered. */
+  function getFocus(u){ var m = /#f=(\d{1,3}),(\d{1,3})$/.exec(u || ""); return m ? [+m[1], +m[2]] : [50, 50]; }
+  function setFocus(u, fc){ return String(u).replace(/#f=\d{1,3},\d{1,3}$/, "") + "#f=" + Math.round(fc[0]) + "," + Math.round(fc[1]); }
+  function focusCss(u){ var fc = getFocus(u); return fc[0] + "% " + fc[1] + "%"; }
+  /* resolves to [x, y] (percent) or null if cancelled */
+  function frameDialog(src, start, label){
+    return new Promise(function(resolve){
+      var fc = start.slice();
+      var big = h("img", { src: src, alt: "", draggable: "false" });
+      var minis = [h("img", { src: src, alt: "" }), h("img", { src: src, alt: "" })];
+      function paint(){ [big].concat(minis).forEach(function(im){ im.style.objectPosition = fc[0] + "% " + fc[1] + "%"; }); }
+      var frame = h("div", { class: "framer-frame" }, [big]);
+      var done = h("button", { class: "btn", type: "button", text: "Listo", onclick: function(){ close(fc); } });
+      var dlg = h("div", { class: "framer", role: "dialog", "aria-modal": "true", "aria-label": "Encuadrar foto" }, [
+        h("div", { class: "framer-box" }, [
+          h("h3", { text: "Encuadrá la foto " + (label || "") }),
+          h("p", { class: "hint", text: "Arrastrá la foto dentro del recuadro para elegir qué parte se ve. Abajo, cómo queda en otros tamaños del collage." }),
+          frame,
+          h("div", { class: "framer-minis" }, [
+            h("figure", {}, [h("div", { class: "framer-mini framer-mini--square" }, [minis[0]]), h("figcaption", { text: "Más cuadrada" })]),
+            h("figure", {}, [h("div", { class: "framer-mini framer-mini--wide" }, [minis[1]]), h("figcaption", { text: "Panorámica" })])
+          ]),
+          h("div", { class: "editor-actions" }, [done,
+            h("button", { class: "btn btn--ghost", type: "button", text: "Centrar", onclick: function(){ fc = [50, 50]; paint(); } }),
+            h("button", { class: "btn btn--ghost", type: "button", text: "Cancelar", onclick: function(){ close(null); } })
+          ])
+        ])
+      ]);
+      function onKey(e){ if (e.key === "Escape") close(null); }
+      function close(v){ document.removeEventListener("keydown", onKey); dlg.remove(); resolve(v); }
+      document.addEventListener("keydown", onKey);
+      var drag = null;
+      frame.addEventListener("pointerdown", function(e){
+        var r = frame.getBoundingClientRect(), nw = big.naturalWidth, nh = big.naturalHeight;
+        if (!nw) return;
+        var s = Math.max(r.width / nw, r.height / nh);
+        drag = { x: e.clientX, y: e.clientY, fc: fc.slice(), ox: nw * s - r.width, oy: nh * s - r.height };
+        frame.setPointerCapture(e.pointerId); e.preventDefault();
+      });
+      frame.addEventListener("pointermove", function(e){
+        if (!drag) return;
+        function axis(d, over, from){ return over > 0.5 ? Math.max(0, Math.min(100, from - d / over * 100)) : from; }
+        fc = [axis(e.clientX - drag.x, drag.ox, drag.fc[0]), axis(e.clientY - drag.y, drag.oy, drag.fc[1])];
+        paint();
+      });
+      ["pointerup", "pointercancel"].forEach(function(t){ frame.addEventListener(t, function(){ drag = null; }); });
+      paint();
+      document.body.appendChild(dlg);
+      done.focus();
+    });
+  }
+
   /* one field -> { el, get() } */
   function buildField(f, value){
     var wrap = h("div", { class: "field" });
@@ -240,17 +296,27 @@
       var box = h("div", { class: "img-field" + (f.logo === "cream" ? " img-field--dark" : "") });
       var prev = h("div");
       var status = h("span", { class: "hint" });
-      function paint(){ prev.innerHTML = ""; prev.appendChild(url ? h("img", { src: url, alt: "" }) : h("div", { class: "ph", text: "Sin imagen" })); }
+      var reframe = f.frame ? h("button", { type: "button", class: "btn btn--ghost btn--sm", text: "Encuadrar", onclick: function(){
+        frameDialog(url, getFocus(url)).then(function(fc){ if (fc){ url = setFocus(url, fc); paint(); } });
+      } }) : null;
+      function paint(){
+        prev.innerHTML = "";
+        prev.appendChild(url ? h("img", { src: url, alt: "", style: f.frame ? "object-fit:cover;object-position:" + focusCss(url) : false }) : h("div", { class: "ph", text: "Sin imagen" }));
+        if (reframe) reframe.hidden = !url;
+      }
       var file = h("input", { type: "file", accept: "image/*", id: id });
       file.addEventListener("change", function(){
-        if (!file.files[0]) return;
-        status.textContent = "Subiendo…";
-        upload(file.files[0], f).then(function(u){ url = u; paint(); status.textContent = "Listo."; })
-          .catch(function(e){ status.textContent = "Error al subir: " + e.message; });
+        var picked = file.files[0];
+        if (!picked) return;
+        (f.frame ? frameDialog(URL.createObjectURL(picked), [50, 50]) : Promise.resolve(null)).then(function(fc){
+          if (f.frame && !fc){ file.value = ""; return; }
+          status.textContent = "Subiendo…";
+          return upload(picked, f).then(function(u){ url = fc ? setFocus(u, fc) : u; paint(); status.textContent = "Listo."; });
+        }).catch(function(e){ status.textContent = "Error al subir: " + e.message; });
       });
       var clear = h("button", { type: "button", class: "btn btn--ghost btn--sm", text: "Quitar", onclick: function(){ url = ""; paint(); } });
       paint();
-      box.appendChild(prev); box.appendChild(h("div", {}, [file, h("div", {}, [clear, status])]));
+      box.appendChild(prev); box.appendChild(h("div", {}, [file, h("div", {}, [reframe, clear, status])]));
       wrap.appendChild(box); get = function(){ return url; };
     } else if (f.t === "gallery"){
       var urls = [];
@@ -261,11 +327,14 @@
         grid.innerHTML = "";
         urls.forEach(function(u, idx){
           function mv(dir){ var j = idx + dir; if (j < 0 || j >= urls.length) return; var t = urls[idx]; urls[idx] = urls[j]; urls[j] = t; draw(); }
-          var fig = h("figure", {}, [
-            h("img", { src: u, alt: "" }),
+          var fig = h("figure", { class: f.frame ? "is-framed" : "" }, [
+            h("img", { src: u, alt: "", style: f.frame ? "object-position:" + focusCss(u) : false }),
             h("button", { type: "button", class: "btn btn--sm", text: "✕", "aria-label": "Quitar foto", onclick: function(){ urls.splice(idx, 1); draw(); } }),
             h("div", { class: "gallery-move" }, [
               h("button", { type: "button", class: "btn btn--ghost btn--sm", text: "‹", "aria-label": "Mover antes", disabled: idx === 0 ? "disabled" : false, onclick: function(){ mv(-1); } }),
+              f.frame ? h("button", { type: "button", class: "btn btn--ghost btn--sm", text: "Encuadrar", onclick: function(){
+                frameDialog(u, getFocus(u)).then(function(fc){ if (fc){ urls[idx] = setFocus(u, fc); draw(); } });
+              } }) : null,
               h("button", { type: "button", class: "btn btn--ghost btn--sm", text: "›", "aria-label": "Mover después", disabled: idx === urls.length - 1 ? "disabled" : false, onclick: function(){ mv(1); } })
             ])
           ]);
@@ -275,9 +344,23 @@
       var add = h("input", { type: "file", accept: "image/*", multiple: "multiple", id: id });
       add.addEventListener("change", function(){
         var files = Array.prototype.slice.call(add.files); if (!files.length) return;
-        gs.textContent = "Subiendo…";
-        Promise.all(files.map(upload)).then(function(us){ urls = urls.concat(us); draw(); gs.textContent = "Listo."; })
-          .catch(function(e){ gs.textContent = "Error al subir: " + e.message; });
+        /* frame each photo first (one after the other); a cancelled one is skipped */
+        var picks = [];
+        var chain = Promise.resolve();
+        if (f.frame) files.forEach(function(fl, k){
+          chain = chain.then(function(){
+            return frameDialog(URL.createObjectURL(fl), [50, 50], files.length > 1 ? "(" + (k + 1) + " de " + files.length + ")" : "")
+              .then(function(fc){ if (fc) picks.push([fl, fc]); });
+          });
+        });
+        else picks = files.map(function(fl){ return [fl, null]; });
+        chain.then(function(){
+          add.value = "";
+          if (!picks.length) return;
+          gs.textContent = "Subiendo…";
+          return Promise.all(picks.map(function(p){ return upload(p[0]).then(function(u){ return p[1] ? setFocus(u, p[1]) : u; }); }))
+            .then(function(us){ urls = urls.concat(us); draw(); gs.textContent = "Listo."; });
+        }).catch(function(e){ gs.textContent = "Error al subir: " + e.message; });
       });
       draw();
       wrap.appendChild(grid); wrap.appendChild(add); wrap.appendChild(gs);
